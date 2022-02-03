@@ -4,32 +4,32 @@ import {Observable, of} from 'rxjs';
 import {Token} from "../user/token";
 import {catchError} from "rxjs/operators";
 import {Router} from "@angular/router";
+import {LoginDTO} from "../interfaces/loginDto";
+
 @Injectable({
   providedIn: 'root'
 })
 export class AppService {
-  error: string ="";
-  token : string | undefined;
+  error: string = "";
 
-   login(data: {username: string; password: string}): Observable<Token> {
-     this.error = "";
-     return this.http
-       .post<Token>(`http://localhost:3000/auth/login`, data).pipe(
-         catchError(this.handleError<Token>("Invalid profile"))
-       )
-   }
+  login(data: LoginDTO): Observable<Token> {
+    this.error = "";
+    return this.http
+      .post<Token>(`http://localhost:3000/auth/login`, data).pipe(
+        catchError(this.handleError<Token>("Invalid profile"))
+      )
+  }
 
   private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-      console.error(error);
-      console.log(operation);
+    return (): Observable<T> => {
       this.error = operation;
 
       return of(result as T);
     }
   }
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router) {
+  }
 
   navigate(strings: string[], token: string | undefined) {
     this.router.navigate(strings, {queryParams: {token: token}});

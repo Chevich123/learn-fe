@@ -10,7 +10,6 @@ import {IUser} from "../user/iuser";
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  token: string | undefined;
   user: IUser = new IUser('', '');
 
   constructor(private tokenService: TokenService,
@@ -35,15 +34,16 @@ export class LoginComponent implements OnInit {
   }
 
   redirect() {
-    if (this.getError().length > 0) return;
+    if (this.getError().length) {
+    }
 
-    this.appService.navigate(['/profile'], this.token);
+    this.appService.navigate(['/profile'], this.tokenService.getToken());
   }
 
-  login(data: { username: string; password: string }) {
-    return this.appService.login(data).subscribe(
+  login() {
+    return this.appService.login(this.user).subscribe(
       x => {
-        this.token = x?.access_token;
+        this.tokenService.setToken(x?.access_token);
         this.redirect()
       }
     );
