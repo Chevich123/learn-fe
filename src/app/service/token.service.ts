@@ -6,9 +6,6 @@ import {Injectable} from '@angular/core';
 export class TokenService {
   private token?: string = "";
 
-  constructor() {
-  }
-
   setToken(token: string | undefined) {
     this.token = token;
   }
@@ -16,5 +13,4 @@ export class TokenService {
   getToken() {
     return this.token;
   }
-
 }

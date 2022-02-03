@@ -7,7 +7,7 @@ import {IUser} from "../user/iuser";
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
   user: IUser = new IUser('', '');
@@ -42,8 +42,8 @@ export class LoginComponent implements OnInit {
 
   login() {
     return this.appService.login(this.user).subscribe(
-      x => {
-        this.tokenService.setToken(x?.access_token);
+      token => {
+        this.tokenService.setToken(token?.access_token);
         this.redirect()
       }
     );
