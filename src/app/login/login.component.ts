@@ -34,6 +34,7 @@ export class LoginComponent implements OnInit {
 
   redirect() {
     if (this.getError().length) {
+      return;
     }
 
     this.appService.navigate(['/profile'], this.tokenService.getToken());
