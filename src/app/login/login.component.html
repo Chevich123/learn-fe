@@ -1,6 +1,6 @@
 <div class="main" *ngIf="!getToken()">
   <div><p>Login</p></div>
-  <div class="inn">
+  <div class="inner">
     <div *ngIf="getError().length">
       Error:{{getError()}}
       <br/>
@@ -27,7 +27,7 @@
         <mat-error *ngIf="form.invalid">{{getErrorMessage()}}</mat-error>
       </mat-form-field>
       <br/>
-      <button mat-raised-button color="primary" class="addButton" (click)="login()">Log in</button>
+      <button mat-raised-button color="primary" class="add-button" (click)="login()">Log in</button>
     </form>
     <br/>
   </div>
