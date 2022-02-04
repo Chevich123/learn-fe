@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {TokenService} from "../service/token.service";
 import {AppService} from "../service/app.service";
 import {IUser} from "../user/iuser";
+import {FormControl, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-login',
@@ -11,6 +12,7 @@ import {IUser} from "../user/iuser";
 })
 export class LoginComponent implements OnInit {
   user: IUser = new IUser('', '');
+  form = new FormControl('', [Validators.required]);
 
   constructor(private tokenService: TokenService,
               private route: ActivatedRoute,
@@ -30,6 +32,14 @@ export class LoginComponent implements OnInit {
 
   getError() {
     return this.appService.error;
+  }
+
+  getErrorMessage() {
+    if (this.form.hasError('required')) {
+      return 'You must enter a value';
+    }
+
+    return this.form.hasError('form') ? 'Not a valid form' : '';
   }
 
   redirect() {
