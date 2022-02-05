@@ -1,16 +1,5 @@
-<div *ngIf="profile" class="wrapper">
-  <h1>You're welcome {{profile.username}} </h1>
-  <p>Your id: {{profile.userId}}</p>
-  <button mat-raised-button color="primary" (click)="logout()">LOGOUT</button>
+<div routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}">
+  <a routerLink="">Main</a>
+  <a routerLink="/login">Login</a>
 </div>
-
-<div class="wrapper"> 
-  <form *ngIf='!profile'>
-    <mat-form-field appearance="fill">
-      <mat-label for="authToken">Leave a Token</mat-label>
-      <input matInput id="authToken" [(ngModel)]="authToken" [ngModelOptions]="{standalone: true}" placeholder="Token">
-      <span *ngIf='error' class="error">{{error}}</span>
-    </mat-form-field>
-    <button mat-raised-button color="primary" (click)="getUser()" class="btn">check</button>
-  </form>
-</div>
+<router-outlet></router-outlet>

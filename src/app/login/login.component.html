@@ -1,0 +1,35 @@
+<div class="main" *ngIf="!getToken()">
+  <div *ngIf="getError().length">
+    Error:{{getError()}}
+    <br/>
+  </div>
+
+  <form>
+    <mat-form-field appearance="standard">
+      <mat-label for="username">Username:</mat-label>
+      <input matInput id="username"
+             [(ngModel)]="user.username"
+             [ngModelOptions]="{ standalone: true }"
+             placeholder="username">
+    </mat-form-field>
+    <br/>
+
+    <mat-form-field appearance="standard">
+      <mat-label for="password">Password:</mat-label>
+      <input matInput id="password"
+             [(ngModel)]="user.password"
+             [ngModelOptions]="{ standalone: true }"
+             placeholder="password">
+    </mat-form-field>
+    <br/>
+    <button mat-stroked-button color="primary" class="addButton" (click)="login()">Log in</button>
+  </form>
+  <br/>
+</div>
+
+<div *ngIf="getToken()" class="wrapper">
+  {{getUser()}}
+  <h1>You're welcome {{user.username}} </h1>
+  <p>Your id: {{user.userId}}</p>
+  <button mat-stroked-button color="primary" (click)="logout()" class="outBtn">Logout</button>
+</div>
