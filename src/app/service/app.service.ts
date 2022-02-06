@@ -12,8 +12,14 @@ import {LoginDTO} from "../interfaces/loginDto";
 export class AppService {
   error: string = "";
 
-  login(data: LoginDTO): Observable<Token> {
+  login(data: LoginDTO, registration: boolean): Observable<Token> {
+    if (registration && data.password != data.passwordRepeat) {
+      this.error = "Password mismatch";
+      throw Error("Password mismatch");
+    }
+
     this.error = "";
+
     return this.http
       .post<Token>(`http://localhost:3000/auth/login`, data).pipe(
         catchError(this.handleError<Token>("Invalid profile"))

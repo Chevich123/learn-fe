@@ -3,7 +3,7 @@ import {BrowserModule} from '@angular/platform-browser';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatFormFieldModule} from "@angular/material/form-field";
@@ -12,6 +12,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {LoginComponent} from './login/login.component';
 import {RouterModule} from "@angular/router";
 import {MatTabsModule} from "@angular/material/tabs";
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 @NgModule({
   declarations: [
@@ -19,6 +20,9 @@ import {MatTabsModule} from "@angular/material/tabs";
     LoginComponent
   ],
   imports: [
+    MatCheckboxModule,
+    ReactiveFormsModule,
+    RouterModule,
     MatTabsModule,
     MatFormFieldModule,
     RouterModule,

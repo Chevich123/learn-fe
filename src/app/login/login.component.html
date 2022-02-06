@@ -6,26 +6,38 @@
       <br/>
     </div>
 
-    <form class="main-form">
+    <form [formGroup]="loginForm" class="main-form">
       <mat-form-field appearance="outline">
         <mat-label for="username">Username:</mat-label>
-        <input matInput id="username" required
+        <input matInput id="username"
+               formControlName="username"
                [(ngModel)]="user.username"
-               [ngModelOptions]="{ standalone: true }"
-               placeholder="username">
-        <mat-error *ngIf="form.invalid">{{getErrorMessage()}}</mat-error>
+               placeholder="username" required>
+        <mat-error *ngIf="username?.invalid">You must enter a value</mat-error>
       </mat-form-field>
       <br/>
-
       <mat-form-field appearance="outline">
         <mat-label for="password">Password:</mat-label>
-        <input matInput id="password" required
+        <input matInput id="password"
+               formControlName="password"
                [(ngModel)]="user.password"
-               [ngModelOptions]="{ standalone: true }"
                placeholder="password"
-               type="password">
-        <mat-error *ngIf="form.invalid">{{getErrorMessage()}}</mat-error>
+               type="password" required>
+        <mat-error *ngIf="password?.invalid">You must enter a value</mat-error>
       </mat-form-field>
+      <br/>
+      <mat-form-field appearance="outline" *ngIf="getRegistration()">
+        <mat-label for="passwordRepeat">Password:</mat-label>
+        <input matInput id="passwordRepeat"
+               formControlName="passwordRepeat"
+               [(ngModel)]="user.passwordRepeat"
+               placeholder="passwordRepeat" required>
+        <mat-error *ngIf="passwordRepeat?.invalid">You must enter a value</mat-error>
+      </mat-form-field>
+      <br/>
+      <section class="example-section">
+        <mat-checkbox class="example-margin" (change)="setRegistration()">Registration</mat-checkbox>
+      </section>
       <br/>
       <button mat-raised-button color="primary" class="add-button" (click)="login()">Log in</button>
     </form>
@@ -33,6 +45,6 @@
   </div>
 </div>
 
-<div *ngIf="getToken()" class="main">
-  <p>login works!</p>
+<div *ngIf="getToken() && !getRegistration()"  class="main">
+  <p>User log in!</p>
 </div>

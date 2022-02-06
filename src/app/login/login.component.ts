@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {TokenService} from "../service/token.service";
 import {AppService} from "../service/app.service";
 import {IUser} from "../user/iuser";
-import {FormControl, Validators} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-login',
@@ -12,12 +12,29 @@ import {FormControl, Validators} from "@angular/forms";
 })
 export class LoginComponent implements OnInit {
   user: IUser = new IUser('', '');
-  form = new FormControl('', [Validators.required]);
+  registration: boolean = false;
+  loginForm = new FormGroup({
+    username: new FormControl('', [Validators.required, Validators.minLength(1)]),
+    password: new FormControl('', [Validators.required, Validators.minLength(1)]),
+    passwordRepeat: new FormControl('', [Validators.required, Validators.minLength(1)])
+  })
 
   constructor(private tokenService: TokenService,
               private route: ActivatedRoute,
               private router: Router,
               private appService: AppService) {
+  }
+
+  get username() {
+    return this.loginForm.get('username');
+  }
+
+  get password() {
+    return this.loginForm.get('password');
+  }
+
+  get passwordRepeat() {
+    return this.loginForm.get('passwordRepeat');
   }
 
   ngOnInit() {
@@ -34,12 +51,12 @@ export class LoginComponent implements OnInit {
     return this.appService.error;
   }
 
-  getErrorMessage() {
-    if (this.form.hasError('required')) {
-      return 'You must enter a value';
-    }
+  getRegistration() {
+    return this.registration;
+  }
 
-    return this.form.hasError('form') ? 'Not a valid form' : '';
+  setRegistration() {
+    this.registration = !this.registration;
   }
 
   redirect() {
@@ -51,7 +68,7 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    return this.appService.login(this.user).subscribe(
+    return this.appService.login(this.user, this.registration).subscribe(
       token => {
         this.tokenService.setToken(token?.access_token);
         this.redirect()
