@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TokenService} from "../service/token.service";
 import {AppService} from "../service/app.service";
-import {IUser} from "../user/iuser";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
@@ -11,7 +10,6 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  user: IUser = new IUser('', '');
   registration: boolean = false;
   loginForm = new FormGroup({
     username: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
@@ -60,7 +58,7 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    return this.appService.login(this.user, this.registration).subscribe(
+    return this.appService.login(this.loginForm, this.registration).subscribe(
       token => {
         this.tokenService.setToken(token?.access_token);
         this.redirect()

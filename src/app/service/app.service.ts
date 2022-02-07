@@ -4,7 +4,7 @@ import {Observable, of} from 'rxjs';
 import {Token} from "../user/token";
 import {catchError} from "rxjs/operators";
 import {Router} from "@angular/router";
-import {LoginDTO} from "../interfaces/loginDto";
+import {FormGroup} from "@angular/forms";
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +12,8 @@ import {LoginDTO} from "../interfaces/loginDto";
 export class AppService {
   error: string = "";
 
-  login(data: LoginDTO, registration: boolean): Observable<Token> {
-    if (registration && data.password != data.passwordRepeat) {
+  login(data: FormGroup, registration: boolean): Observable<Token> {
+    if (registration && data.get('password')?.value != data.get('passwordRepeat')?.value) {
       this.error = "Password mismatch";
       throw Error("Password mismatch");
     }
@@ -21,7 +21,7 @@ export class AppService {
     this.error = "";
 
     return this.http
-      .post<Token>(`http://localhost:3000/auth/login`, data).pipe(
+      .post<Token>(`http://localhost:3000/auth/login`, {username: data.get('username')?.value, password: data.get('password')?.value}).pipe(
         catchError(this.handleError<Token>("Invalid profile"))
       )
   }
