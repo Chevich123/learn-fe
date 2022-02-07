@@ -14,9 +14,9 @@ export class LoginComponent implements OnInit {
   user: IUser = new IUser('', '');
   registration: boolean = false;
   loginForm = new FormGroup({
-    username: new FormControl('', [Validators.required, Validators.minLength(1)]),
-    password: new FormControl('', [Validators.required, Validators.minLength(1)]),
-    passwordRepeat: new FormControl('', [Validators.required, Validators.minLength(1)])
+    username: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
+    password: new FormControl('', [Validators.required]),
+    passwordRepeat: new FormControl('', [Validators.required])
   })
 
   constructor(private tokenService: TokenService,
@@ -27,14 +27,6 @@ export class LoginComponent implements OnInit {
 
   get username() {
     return this.loginForm.get('username');
-  }
-
-  get password() {
-    return this.loginForm.get('password');
-  }
-
-  get passwordRepeat() {
-    return this.loginForm.get('passwordRepeat');
   }
 
   ngOnInit() {

@@ -1,5 +1,6 @@
 <div class="main" *ngIf="!getToken()">
-  <div><p>Login</p></div>
+  <div *ngIf="!getRegistration()"><p>Login</p></div>
+  <div *ngIf="getRegistration()"><p>Registration</p></div>
   <div class="inner">
     <div *ngIf="getError().length">
       Error:{{getError()}}
@@ -13,7 +14,8 @@
                formControlName="username"
                [(ngModel)]="user.username"
                placeholder="username" required>
-        <mat-error *ngIf="username?.invalid">You must enter a value</mat-error>
+        <mat-error *ngIf="username?.errors?.['required']">You must enter a value</mat-error>
+        <mat-error *ngIf="username?.errors?.['pattern']">Username must contain only letters</mat-error>
       </mat-form-field>
       <br/>
       <mat-form-field appearance="outline">
@@ -23,7 +25,7 @@
                [(ngModel)]="user.password"
                placeholder="password"
                type="password" required>
-        <mat-error *ngIf="password?.invalid">You must enter a value</mat-error>
+        <mat-error>You must enter a value</mat-error>
       </mat-form-field>
       <br/>
       <mat-form-field appearance="outline" *ngIf="getRegistration()">
@@ -32,7 +34,7 @@
                formControlName="passwordRepeat"
                [(ngModel)]="user.passwordRepeat"
                placeholder="passwordRepeat" required>
-        <mat-error *ngIf="passwordRepeat?.invalid">You must enter a value</mat-error>
+        <mat-error>You must enter a value</mat-error>
       </mat-form-field>
       <br/>
       <section class="example-section">
