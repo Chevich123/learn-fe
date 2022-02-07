@@ -11,6 +11,7 @@ import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
 import {LoginComponent} from './login/login.component';
 import {RouterModule} from "@angular/router";
+import {MatTabsModule} from "@angular/material/tabs";
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import {RouterModule} from "@angular/router";
     LoginComponent
   ],
   imports: [
+    MatTabsModule,
     MatFormFieldModule,
     RouterModule,
     MatButtonModule,
