@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {TokenService} from "../service/token.service";
-import {AppService} from "../service/app.service";
-import {IUser} from "../user/iuser";
-import {FormControl, Validators} from "@angular/forms";
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { TokenService } from "../service/token.service";
+import { AppService } from "../service/app.service";
+import { IUser } from "../user/iuser";
+import { FormControl, Validators } from "@angular/forms";
 
 @Component({
   selector: 'app-login',
@@ -15,9 +15,9 @@ export class LoginComponent implements OnInit {
   form = new FormControl('', [Validators.required]);
 
   constructor(private tokenService: TokenService,
-              private route: ActivatedRoute,
-              private router: Router,
-              private appService: AppService) {
+    private route: ActivatedRoute,
+    private router: Router,
+    private appService: AppService) {
   }
 
   ngOnInit() {
@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    this.appService.navigate(['/profile'], this.tokenService.getToken());
+    this.appService.navigate(['/'], undefined);
   }
 
   login() {

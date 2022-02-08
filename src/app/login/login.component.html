@@ -1,38 +1,29 @@
 <div class="main" *ngIf="!getToken()">
-  <div><p>Login</p></div>
-  <div class="inner">
-    <div *ngIf="getError().length">
-      Error:{{getError()}}
-      <br/>
+    <div>
+        <p>Login</p>
     </div>
+    <div class="inner">
+        <div *ngIf="getError().length">
+            Error:{{getError()}}
+            <br />
+        </div>
 
-    <form class="main-form">
-      <mat-form-field appearance="outline">
-        <mat-label for="username">Username:</mat-label>
-        <input matInput id="username" required
-               [(ngModel)]="user.username"
-               [ngModelOptions]="{ standalone: true }"
-               placeholder="username">
-        <mat-error *ngIf="form.invalid">{{getErrorMessage()}}</mat-error>
-      </mat-form-field>
-      <br/>
+        <form class="main-form">
+            <mat-form-field appearance="outline">
+                <mat-label for="username">Username:</mat-label>
+                <input matInput id="username" required [(ngModel)]="user.username" [ngModelOptions]="{ standalone: true }" placeholder="username">
+                <mat-error *ngIf="form.invalid">{{getErrorMessage()}}</mat-error>
+            </mat-form-field>
+            <br />
 
-      <mat-form-field appearance="outline">
-        <mat-label for="password">Password:</mat-label>
-        <input matInput id="password" required
-               [(ngModel)]="user.password"
-               [ngModelOptions]="{ standalone: true }"
-               placeholder="password"
-               type="password">
-        <mat-error *ngIf="form.invalid">{{getErrorMessage()}}</mat-error>
-      </mat-form-field>
-      <br/>
-      <button mat-raised-button color="primary" class="add-button" (click)="login()">Log in</button>
-    </form>
-    <br/>
-  </div>
-</div>
-
-<div *ngIf="getToken()" class="main">
-  <p>login works!</p>
+            <mat-form-field appearance="outline">
+                <mat-label for="password">Password:</mat-label>
+                <input matInput id="password" required [(ngModel)]="user.password" [ngModelOptions]="{ standalone: true }" placeholder="password" type="password">
+                <mat-error *ngIf="form.invalid">{{getErrorMessage()}}</mat-error>
+            </mat-form-field>
+            <br />
+            <button mat-raised-button color="primary" class="add-button" (click)="login()">Log in</button>
+        </form>
+        <br />
+    </div>
 </div>

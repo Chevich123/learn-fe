@@ -1,4 +1,7 @@
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
+import { AppService } from './service/app.service';
+import { TokenService } from './service/token.service';
+import { IUser } from './user/iuser';
 
 
 @Component({
@@ -8,4 +11,24 @@ import {Component} from '@angular/core';
 })
 export class AppComponent {
   title = 'my-app';
+  user: IUser = new IUser('', '');
+
+  constructor(private tokenService: TokenService,
+    private appService: AppService) {
+  }
+
+  getToken() {
+    return this.tokenService.getToken();
+  }
+
+  getUser() {
+    this.appService.getUser().subscribe(
+      (response: any) => {
+        this.user = response;
+      });
+  }
+
+  logout() {
+    return this.appService.logout();
+  }
 }
