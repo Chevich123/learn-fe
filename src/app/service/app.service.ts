@@ -1,10 +1,12 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {Observable, of} from 'rxjs';
-import {Token} from "../user/token";
-import {catchError} from "rxjs/operators";
-import {Router} from "@angular/router";
-import {LoginDTO} from "../interfaces/loginDto";
+import { Injectable } from '@angular/core';
+import { HttpClient } from "@angular/common/http";
+import { Observable, of } from 'rxjs';
+import { Token } from "../user/token";
+import { catchError } from "rxjs/operators";
+import { Router } from "@angular/router";
+import { LoginDTO } from "../interfaces/loginDto";
+import { TokenService } from './token.service';
+
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +22,16 @@ export class AppService {
       )
   }
 
+  getUser() {
+    const token = this.tokenService.getToken();
+    return this.http.get('http://localhost:3000/profile',
+      { headers: { 'Authorization': `Bearer ${token}` } })
+  }
+
+  logout() {
+    this.tokenService.setToken(undefined);
+  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (): Observable<T> => {
       this.error = operation;
@@ -28,10 +40,10 @@ export class AppService {
     }
   }
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient, private router: Router, private tokenService: TokenService) {
   }
 
   navigate(strings: string[], token: string | undefined) {
-    this.router.navigate(strings, {queryParams: {token: token}});
+    this.router.navigate(strings, { queryParams: { token: token } });
   }
 }
