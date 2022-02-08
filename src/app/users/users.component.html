@@ -1,0 +1,49 @@
+<div class="body">
+  <div *ngIf="loaded" class="main">
+    <table mat-table [dataSource]="dataSource" class="mat-table">
+
+      <ng-container matColumnDef="userId">
+        <th class="trh" mat-header-cell *matHeaderCellDef> Id</th>
+        <td class="tdb" mat-cell *matCellDef="let user"> {{user.userId}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="username">
+        <th class="trh" mat-header-cell *matHeaderCellDef> Username</th>
+        <td class="tdb" mat-cell *matCellDef="let user"> {{user.username}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="delete">
+        <th class="trh" mat-header-cell *matHeaderCellDef> Delete</th>
+        <td class="tdb" mat-cell *matCellDef="let user">
+          <div class="button-container">
+            <button mat-icon-button color="primary" aria-label="Delete icon">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="redact">
+        <th class="trh" mat-header-cell *matHeaderCellDef> Redact</th>
+        <td class="tdb" mat-cell *matCellDef="let user">
+          <div class="button-container">
+            <button mat-icon-button color="primary" aria-label="Menu icon">
+              <mat-icon>menu</mat-icon>
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr class="trd" mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr class="trd" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <button mat-raised-button color="primary">New user</button>
+
+
+  </div>
+  <div *ngIf="!loaded" class="main">
+    <mat-spinner class="spinner"></mat-spinner>
+  </div>
+</div>
+
+

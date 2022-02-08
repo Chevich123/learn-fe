@@ -17,7 +17,7 @@ export class AppComponent {
     private appService: AppService) {
   }
 
-  getToken() {
+  get getToken() {
     return this.tokenService.getToken();
   }
 
