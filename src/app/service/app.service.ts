@@ -12,7 +12,14 @@ import { TokenService } from './token.service';
   providedIn: 'root'
 })
 export class AppService {
-  error: string = "";
+  error = "";
+
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private tokenService: TokenService,
+  ) {
+  }
 
   login(data: LoginDTO): Observable<Token> {
     this.error = "";
@@ -38,9 +45,6 @@ export class AppService {
 
       return of(result as T);
     }
-  }
-
-  constructor(private http: HttpClient, private router: Router, private tokenService: TokenService) {
   }
 
   navigate(strings: string[], token: string | undefined) {
