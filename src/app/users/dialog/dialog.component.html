@@ -1,0 +1,12 @@
+
+<mat-dialog-content class="dialog">
+  <p>Do you want to delete this user?</p>
+  <mat-dialog-actions align="end">
+    <button mat-button [mat-dialog-close]="false" cdkFocusInitial></button>
+    <button mat-button mat-dialog-close [mat-dialog-close]="data.userId" cdkFocusInitial>
+      Yes
+    </button>
+  </mat-dialog-actions>
+
+
+</mat-dialog-content>

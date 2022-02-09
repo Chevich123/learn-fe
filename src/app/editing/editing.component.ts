@@ -10,6 +10,7 @@ import { EditDialogComponent } from './edit-dialog/edit-dialog.component';
 @Component({
   selector: 'app-editing',
   templateUrl: './editing.component.html',
+  styleUrls: ['./editing.component.scss'],
 })
 export class EditingComponent implements OnInit {
 

@@ -1,8 +1,9 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UsersService } from '../service/users.service';
 import { TokenService } from '../service/token.service';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
+import { DialogComponent } from './dialog/dialog.component';
 
 @Component({
   selector: 'app-users',
@@ -30,10 +31,9 @@ export class UsersComponent implements OnInit {
   }
 
   public getServerData(event?: PageEvent | null) {
-    console.log(event);
     if (event?.pageSize) {
       this.pageSize = event.pageSize;
-      this.start = event.pageIndex * event.pageSize + 1;
+      this.start = event.pageIndex * event.pageSize;
     }
 
     this.usersService.getPage(this.start, this.pageSize, this.tokenService.getToken()).subscribe(
@@ -61,7 +61,7 @@ export class UsersComponent implements OnInit {
       this.usersService.delete(this.tokenService.getToken(), userId).subscribe(
         () => {
           this.setLength();
-          if (this.start == this.length) {
+          if (this.start === this.length) {
             this.start = this.length - this.pageSize;
           }
           this.getServerData();
@@ -77,21 +77,5 @@ export class UsersComponent implements OnInit {
         this.length = users.length;
       },
     );
-  }
-}
-
-@Component({
-  selector: 'dialog-content-example-dialog',
-  templateUrl: 'dialog.component.html',
-  styleUrls: ['./dialog.component.scss'],
-})
-export class DialogComponent {
-  constructor(
-    public dialogRef: MatDialogRef<DialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { userId: string }) {
-  }
-
-  onNoClick(): void {
-    this.dialogRef.close();
   }
 }
