@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    this.appService.navigate(['/'], undefined);
+    this.appService.navigate(['/dashboard'], undefined);
   }
 
   login() {
