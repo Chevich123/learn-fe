@@ -79,19 +79,3 @@ export class UsersComponent implements OnInit {
     );
   }
 }
-
-@Component({
-  selector: 'dialog-content-example-dialog',
-  templateUrl: 'dialog.component.html',
-  styleUrls: ['./dialog.component.scss'],
-})
-export class DialogComponent {
-  constructor(
-    public dialogRef: MatDialogRef<DialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { userId: string }) {
-  }
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-}

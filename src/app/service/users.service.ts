@@ -56,7 +56,7 @@ export class UsersService {
     const url = `http://localhost:3000/users/${userId}`;
     return this.http.patch<String>(url, user, {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${ token }`,
       },
     });
   }
