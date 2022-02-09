@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import {UsersService} from "../service/users.service";
-import {TokenService} from "../service/token.service";
+import { Component, OnInit } from '@angular/core';
+import { UsersService } from "../service/users.service";
+import { TokenService } from "../service/token.service";
 
 @Component({
   selector: 'app-users',
@@ -8,7 +8,7 @@ import {TokenService} from "../service/token.service";
   styleUrls: ['./users.component.scss']
 })
 export class UsersComponent implements OnInit {
-  displayedColumns: string[] = ['userId', 'username', 'delete', 'redact'];
+  displayedColumns: string[] = ['userId', 'username', 'delete', 'edit'];
   dataSource: any;
   loaded = false;
 
@@ -16,6 +16,10 @@ export class UsersComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getAll();
+  }
+
+  private getAll() {
     this.usersService.getAll(this.tokenService.getToken()).subscribe(
       users => {
         this.dataSource = users;
@@ -24,4 +28,13 @@ export class UsersComponent implements OnInit {
     )
   }
 
+  delete(userId: string) {
+    this.usersService.delete(this.tokenService.getToken(), userId).subscribe(
+      () => {
+        this.getAll();
+      }
+    );
+  }
+
 }
+//for commit

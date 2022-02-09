@@ -1,0 +1,31 @@
+<div class="body">
+  <div class="main-form">
+    <div *ngIf="error.length">
+      Error:{{error}}
+      <br/>
+    </div>
+    <form class="m-form">
+      <mat-form-field appearance="outline">
+        <mat-label for="username">Username:</mat-label>
+        <input matInput id="username" required
+               [(ngModel)]="user.username"
+               [ngModelOptions]="{ standalone: true }"
+               placeholder="username">
+        <mat-error *ngIf="form.invalid">You must enter a value</mat-error>
+      </mat-form-field>
+      <br/>
+
+      <mat-form-field appearance="outline">
+        <mat-label for="password">Password:</mat-label>
+        <input matInput id="password" required
+               [(ngModel)]="user.password"
+               [ngModelOptions]="{ standalone: true }"
+               placeholder="password"
+               type="password">
+        <mat-error *ngIf="form.invalid">You must enter a value</mat-error>
+      </mat-form-field>
+      <br/>
+      <button mat-raised-button color="primary" class="add-button" (click)="newUser()">New User</button>
+    </form>
+  </div>
+</div>
