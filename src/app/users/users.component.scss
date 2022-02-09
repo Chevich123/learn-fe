@@ -39,9 +39,8 @@ table {
   height: 100%;
   width: 100%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
 }
 
 button {
@@ -54,10 +53,23 @@ button {
   margin-right: 3px;
 }
 
-.main {
-  min-width: 50rem;
+.main, .tabl {
+  min-width: 93rem;
   flex-direction: column;
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
+.main {
+  height: 100%;
+}
+
+.head {
+  flex-direction: row;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+

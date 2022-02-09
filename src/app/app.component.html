@@ -1,16 +1,16 @@
-<nav mat-tab-nav-bar class="navbar">
-    <a mat-tab-link routerLink="/">Main</a>
-    <a *ngIf="!getToken" mat-tab-link routerLink="/login">Login</a>
-    <a *ngIf="getToken" mat-tab-link routerLink="/users">Users</a>
-    <a *ngIf="getToken" mat-tab-link routerLink="/dashboard">Dashboard</a>
-    <button *ngIf='getToken' mat-icon-button [matMenuTriggerFor]="menu" aria-label="icon-button with a menu" class="menu">
+<nav mat-tab-nav-bar routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}" class="navbar">
+  <a mat-tab-link routerLink="">Main</a>
+  <a *ngIf="!getToken" mat-tab-link routerLink="/login">Login</a>
+  <a *ngIf="getToken" mat-tab-link routerLink="/users">Users</a>
+  <a *ngIf="getToken" mat-tab-link routerLink="/dashboard">Dashboard</a>
+  <button *ngIf='getToken' mat-icon-button [matMenuTriggerFor]="menu" aria-label="icon-button with a menu" class="menu">
     <mat-icon>menu</mat-icon>
   </button>
 </nav>
 <router-outlet></router-outlet>
 
 <mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="logout()">
+  <button mat-menu-item (click)="logout()">
     <mat-icon>logout</mat-icon>
     <span>Logout</span>
   </button>
