@@ -17,12 +17,14 @@ import {MatTableModule} from "@angular/material/table";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatIconModule} from "@angular/material/icon";
 import { MatMenuModule } from '@angular/material/menu';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    UsersComponent
+    UsersComponent,
+    DashboardComponent
   ],
   imports: [
     MatProgressSpinnerModule,

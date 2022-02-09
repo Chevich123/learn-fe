@@ -11,7 +11,6 @@ import { IUser } from './user/iuser';
 })
 export class AppComponent {
   title = 'my-app';
-  user: IUser = new IUser('', '');
 
   constructor(private tokenService: TokenService,
     private appService: AppService) {
@@ -19,13 +18,6 @@ export class AppComponent {
 
   get getToken() {
     return this.tokenService.getToken();
-  }
-
-  getUser() {
-    this.appService.getUser().subscribe(
-      (response: any) => {
-        this.user = response;
-      });
   }
 
   logout() {
