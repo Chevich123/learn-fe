@@ -1,5 +1,7 @@
 <div class="body">
   <div *ngIf="loaded" class="main">
+    <router-outlet></router-outlet>
+
     <table mat-table [dataSource]="dataSource" class="mat-table">
 
       <ng-container matColumnDef="userId">
@@ -24,12 +26,14 @@
       </ng-container>
 
       <ng-container matColumnDef="redact">
-        <th class="trh" mat-header-cell *matHeaderCellDef> Redact</th>
+        <th class="trh" mat-header-cell *matHeaderCellDef>Edit</th>
         <td class="tdb" mat-cell *matCellDef="let user">
           <div class="button-container">
-            <button mat-icon-button color="primary" aria-label="Menu icon">
-              <mat-icon>menu</mat-icon>
-            </button>
+            <nav>
+              <button routerLink="/users/{{user.userId}}/edit" mat-icon-button color="primary" aria-label="Menu icon">
+                <mat-icon>menu</mat-icon>
+              </button>
+            </nav>
           </div>
         </td>
       </ng-container>
@@ -39,11 +43,8 @@
     </table>
     <button mat-raised-button color="primary">New user</button>
 
-
   </div>
   <div *ngIf="!loaded" class="main">
     <mat-spinner class="spinner"></mat-spinner>
   </div>
 </div>
-
-

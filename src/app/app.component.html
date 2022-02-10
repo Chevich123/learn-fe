@@ -1,4 +1,4 @@
-<nav mat-tab-nav-bar routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}" class="navbar">
+<nav mat-tab-nav-bar class="navbar">
     <a mat-tab-link routerLink="/">Main</a>
     <a *ngIf="!getToken" mat-tab-link routerLink="/login">Login</a>
     <a *ngIf="getToken" mat-tab-link routerLink="/users">Users</a>

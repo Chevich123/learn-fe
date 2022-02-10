@@ -18,13 +18,15 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatIconModule} from "@angular/material/icon";
 import { MatMenuModule } from '@angular/material/menu';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { EditingComponent } from './editing/editing.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     UsersComponent,
-    DashboardComponent
+    DashboardComponent,
+    EditingComponent
   ],
   imports: [
     MatProgressSpinnerModule,
