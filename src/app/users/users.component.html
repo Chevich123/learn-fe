@@ -1,5 +1,6 @@
 <div class="body">
   <div *ngIf="loaded" class="tabl">
+    <button mat-raised-button color="primary" routerLink="/newUser">New User</button>
     <table mat-table [dataSource]="dataSource" class="mat-table">
 
       <ng-container matColumnDef="userId">
@@ -16,9 +17,23 @@
         <th class="trh" mat-header-cell *matHeaderCellDef> Delete</th>
         <td class="tdb" mat-cell *matCellDef="let user">
           <div class="button-container">
-            <button mat-icon-button color="primary" aria-label="Delete icon"  (click)="delete(user.userId)">
+            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Delete icon">
               <mat-icon>delete</mat-icon>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="delete(user.userId)">
+                  <mat-icon>delete</mat-icon>
+                  <span>Delete</span>
+                </button>
+
+                <button mat-menu-item>
+                  <mat-icon>home</mat-icon>
+                  <span>Cancel</span>
+                </button>
+              </mat-menu>
             </button>
+            <!--<button mat-icon-button color="primary" aria-label="Delete icon"  >
+              <mat-icon>delete</mat-icon>
+            </button>-->
           </div>
         </td>
       </ng-container>
@@ -39,7 +54,6 @@
       <tr class="trd" mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr class="trd" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <button mat-raised-button color="primary">New user</button>
 
   </div>
 
@@ -47,3 +61,5 @@
     <mat-spinner class="spinner"></mat-spinner>
   </div>
 </div>
+
+

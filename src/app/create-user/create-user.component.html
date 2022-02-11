@@ -25,7 +25,10 @@
         <mat-error *ngIf="form.invalid">You must enter a value</mat-error>
       </mat-form-field>
       <br/>
-      <button mat-raised-button color="primary" class="add-button" (click)="newUser()">New User</button>
+      <div class="buttons">
+        <button mat-raised-button color="primary" class="add-button" (click)="newUser()">Create</button>
+        <button mat-raised-button color="primary" class="add-button" (click)="cancel()">Cancel</button>
+      </div>
     </form>
   </div>
 </div>

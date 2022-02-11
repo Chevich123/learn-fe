@@ -48,9 +48,13 @@ export class CreateUserComponent implements OnInit {
     }
 
     this.usersService.create(this.tokenService.getToken(), this.user).subscribe(
-      user => alert("User created"),
+      user => this.router.navigate(['/users']),
       error => alert(error.name),
       () => this.getAll(),
     );
+  }
+
+  cancel() {
+    this.router.navigate(['/users']);
   }
 }
