@@ -1,5 +1,6 @@
 <div class="body">
   <div *ngIf="loaded" class="tabl">
+    <button mat-raised-button color="primary" routerLink="/newUser">New User</button>
     <div class="head">
       <button mat-raised-button color="primary" routerLink="/newUser">New User</button>
       <mat-paginator [length]="length"
@@ -41,8 +42,19 @@
         <th class="trh" mat-header-cell *matHeaderCellDef>Delete</th>
         <td class="tdb" mat-cell *matCellDef="let user">
           <div class="button-container">
-            <button mat-icon-button aria-label="Delete icon" (click)="openDialog(user.userId)">
+            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Delete icon">
               <mat-icon>delete</mat-icon>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="delete(user.userId)">
+                  <mat-icon>delete</mat-icon>
+                  <span>Delete</span>
+                </button>
+
+                <button mat-menu-item>
+                  <mat-icon>home</mat-icon>
+                  <span>Cancel</span>
+                </button>
+              </mat-menu>
             </button>
           </div>
         </td>
