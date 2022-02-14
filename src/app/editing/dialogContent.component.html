@@ -1,0 +1,12 @@
+<form>
+    <mat-form-field class="mat-typography">
+        <mat-label for="username">Username:</mat-label>
+        <input matInput id="username" required [(ngModel)]="name" [ngModelOptions]="{ standalone: true }"
+            placeholder="username">
+        <mat-error *ngIf="form.invalid">You must enter a value</mat-error>
+    </mat-form-field>
+    <mat-dialog-actions align="end">
+        <button mat-button [mat-dialog-close]="cancel()">Cancel</button>
+        <button mat-button [mat-dialog-close]="confirm()">Confirm</button>
+    </mat-dialog-actions>
+</form>

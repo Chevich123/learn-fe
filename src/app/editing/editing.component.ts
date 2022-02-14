@@ -1,21 +1,36 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TokenService } from '../service/token.service';
 import { UsersService } from '../service/users.service';
 import { IUser } from '../user/iuser';
 import { MatDialog } from '@angular/material/dialog';
 import { AppService } from '../service/app.service';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'dialog-content-example',
-  templateUrl: 'dialogContent.edit.html',
+  templateUrl: 'dialogContent.component.html',
 })
 export class DialogContent {
-  constructor(public dialog: MatDialog) { }
+  constructor() { }
 
   name: string = '';
-}
+  form = new FormControl('', [Validators.required]);
 
+  cancel() {
+    return false;
+  }
+
+  confirm() {
+    if (this.name == '') {
+      return false;
+    }
+    else {
+      return true;
+    }
+  }
+
+}
 
 @Component({
   selector: 'app-editing',
@@ -35,14 +50,22 @@ export class EditingComponent implements OnInit {
   id: string | null = '';
   username: string = '';
   user: IUser = new IUser('', '');
-  check: boolean = false;
+  data = false;
+
 
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id');
-    const dialogRef = this.dialog.open(DialogContent);
+    const dialogRef = this.dialog.open(DialogContent, { disableClose: true });
+
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);    
-      this.edit(dialogRef.componentInstance.name)
+      this.data = result;
+      this.username = dialogRef.componentInstance.name;
+      if (!this.data) {
+        this.redirect()
+      }
+      else {
+        this.edit(this.username)
+      }
     });
   }
 
@@ -50,10 +73,9 @@ export class EditingComponent implements OnInit {
     this.appService.navigate(['/users'], undefined);
   }
 
-  edit(name: string) {
-    this.user.username = name;
-    this.usersService.edit(this.tokenService.getToken(), this.user, this.id).subscribe(
-    );
+  edit(username: string) {
+    this.user.username = username;
+    this.usersService.edit(this.tokenService.getToken(), this.user, this.id).subscribe();
     this.redirect();
   }
 }

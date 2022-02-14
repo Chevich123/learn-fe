@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import {UsersService} from "../service/users.service";
-import {TokenService} from "../service/token.service";
+import { Component, OnInit } from '@angular/core';
+import { UsersService } from "../service/users.service";
+import { TokenService } from "../service/token.service";
 
 @Component({
   selector: 'app-users',
