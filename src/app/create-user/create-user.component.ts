@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from '../service/users.service';
 import { TokenService } from '../service/token.service';
-import { IUser } from '../user/iuser';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { IUser } from '../user/iuser';
 import { Router } from '@angular/router';
 
 @Component({
@@ -28,6 +28,7 @@ export class CreateUserComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAll();
+
   }
 
   private getAll() {
@@ -47,12 +48,7 @@ export class CreateUserComponent implements OnInit {
       return;
     }
 
-    if (this.user.username == '' || this.user.password == '') {
-      this.error = 'You must write a value';
-      return;
-    }
-
-    this.usersService.create(this.tokenService.getToken(), this.user).subscribe(
+    this.usersService.create(this.tokenService.getToken(), this.userForms).subscribe(
       user => this.router.navigate(['/users']),
       error => alert(error.name),
       () => this.getAll(),

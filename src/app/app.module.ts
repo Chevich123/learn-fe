@@ -54,6 +54,7 @@ import { CreateUserComponent } from './create-user/create-user.component';
     BrowserAnimationsModule,
     MatMenuModule,
     MatIconModule
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
