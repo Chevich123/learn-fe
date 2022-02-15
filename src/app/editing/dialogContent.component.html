@@ -1,12 +1,34 @@
-<form>
-    <mat-form-field class="mat-typography">
-        <mat-label for="username">Username:</mat-label>
-        <input matInput id="username" required [(ngModel)]="name" [ngModelOptions]="{ standalone: true }"
-            placeholder="username">
-        <mat-error *ngIf="form.invalid">You must enter a value</mat-error>
-    </mat-form-field>
-    <mat-dialog-actions align="end">
-        <button mat-button [mat-dialog-close]="cancel()">Cancel</button>
-        <button mat-button [mat-dialog-close]="confirm()">Confirm</button>
-    </mat-dialog-actions>
-</form>
+<div class="container">
+    <form [formGroup]="myForm">
+        <h3>Edit form</h3>
+        <div>
+            <mat-form-field class="mat-typography">
+                <mat-label for="username">Username:</mat-label>
+                <input matInput id="username" [(ngModel)]="name" formControlName="username" placeholder="username">
+                <mat-error *ngIf="myForm.invalid">Invalid username</mat-error>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field class="mat-typography">
+                <input matInput id="email" [(ngModel)]="email" formControlName="email" placeholder="email">
+                <mat-error *ngIf="myForm.invalid">Invalid email</mat-error>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field class="mat-typography">
+                <input matInput id="phone" [(ngModel)]="phone" formControlName="phone" placeholder="phone">
+                <mat-error *ngIf="myForm.invalid">Invalid phone</mat-error>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field class="mat-typography">
+                <input matInput id="site" [(ngModel)]="site" formControlName="site" placeholder="site">
+                <mat-error *ngIf="myForm.invalid">Invalid site</mat-error>
+            </mat-form-field>
+        </div>
+        <mat-dialog-actions align="end">
+            <button mat-button [mat-dialog-close]>Cancel</button>
+            <button mat-button [mat-dialog-close]='true' [disabled]="myForm.invalid">Confirm</button>
+        </mat-dialog-actions>
+    </form>
+</div>

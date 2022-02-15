@@ -1,35 +1,43 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { TokenService } from '../service/token.service';
 import { UsersService } from '../service/users.service';
 import { IUser } from '../user/iuser';
 import { MatDialog } from '@angular/material/dialog';
 import { AppService } from '../service/app.service';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'dialog-content-example',
   templateUrl: 'dialogContent.component.html',
 })
 export class DialogContent {
-  constructor() { }
+  constructor() {
+  }
+
+  myForm = new FormGroup({
+    "username": new FormControl("", [
+      Validators.required,
+      Validators.minLength(3)
+    ]),
+    "email": new FormControl("", [
+      Validators.required,
+      Validators.email
+    ]),
+    "phone": new FormControl("", [
+      Validators.required,
+      Validators.pattern("[0-9]{12}",)
+    ]),
+    "site": new FormControl("", [
+      Validators.required,
+      Validators.minLength(7)
+    ])
+  });
 
   name: string = '';
-  form = new FormControl('', [Validators.required]);
-
-  cancel() {
-    return false;
-  }
-
-  confirm() {
-    if (this.name == '') {
-      return false;
-    }
-    else {
-      return true;
-    }
-  }
-
+  email: string = '';
+  phone: string = '';
+  site: string = '';
 }
 
 @Component({
@@ -49,9 +57,11 @@ export class EditingComponent implements OnInit {
 
   id: string | null = '';
   username: string = '';
+  email: string = '';
+  phone: string = '';
+  site: string = '';
   user: IUser = new IUser('', '');
   data = false;
-
 
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id');
@@ -60,11 +70,14 @@ export class EditingComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       this.data = result;
       this.username = dialogRef.componentInstance.name;
+      this.email = dialogRef.componentInstance.email;
+      this.phone = dialogRef.componentInstance.phone;
+      this.site = dialogRef.componentInstance.site;
       if (!this.data) {
         this.redirect()
       }
       else {
-        this.edit(this.username)
+        this.edit(this.username, this.email, this.phone, this.site)
       }
     });
   }
@@ -73,8 +86,11 @@ export class EditingComponent implements OnInit {
     this.appService.navigate(['/users'], undefined);
   }
 
-  edit(username: string) {
+  edit(username: string, email: string, phone: string, site: string) {
     this.user.username = username;
+    this.user.email = email;
+    this.user.phone = phone;
+    this.user.site = site;
     this.usersService.edit(this.tokenService.getToken(), this.user, this.id).subscribe();
     this.redirect();
   }

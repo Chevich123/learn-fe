@@ -8,7 +8,7 @@ import { TokenService } from "../service/token.service";
   styleUrls: ['./users.component.scss']
 })
 export class UsersComponent implements OnInit {
-  displayedColumns: string[] = ['userId', 'username', 'delete', 'redact'];
+  displayedColumns: string[] = ['userId', 'username', 'email', 'phone', 'site', 'delete', 'redact'];
   dataSource: any;
   loaded = false;
 
