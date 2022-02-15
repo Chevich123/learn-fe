@@ -1,6 +1,15 @@
 <div class="body">
   <div *ngIf="loaded" class="tabl">
-    <button mat-raised-button color="primary" routerLink="/newUser">New User</button>
+    <div class="head">
+      <button mat-raised-button color="primary" routerLink="/newUser">New User</button>
+      <mat-paginator [length]="length"
+                     [pageSize]="10"
+                     [pageSizeOptions]="[5, 10, 25, 100]"
+                     (page)="getServerData($event)"
+                     aria-label="Select page">
+      </mat-paginator>
+    </div>
+
     <table mat-table [dataSource]="dataSource" class="mat-table">
 
       <ng-container matColumnDef="userId">
@@ -13,27 +22,28 @@
         <td class="tdb" mat-cell *matCellDef="let user"> {{user.username}} </td>
       </ng-container>
 
+      <ng-container matColumnDef="email">
+        <th class="trh" mat-header-cell *matHeaderCellDef> Email</th>
+        <td class="tdb" mat-cell *matCellDef="let user"> {{user.email}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="phone">
+        <th class="trh" mat-header-cell *matHeaderCellDef> Phone</th>
+        <td class="tdb" mat-cell *matCellDef="let user"> {{user.phone}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="site">
+        <th class="trh" mat-header-cell *matHeaderCellDef> Site</th>
+        <td class="tdb" mat-cell *matCellDef="let user"> {{user.site}} </td>
+      </ng-container>
+
       <ng-container matColumnDef="delete">
         <th class="trh" mat-header-cell *matHeaderCellDef> Delete</th>
         <td class="tdb" mat-cell *matCellDef="let user">
           <div class="button-container">
-            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Delete icon">
+            <button mat-icon-button aria-label="Delete icon" (click)="openDialog(user.userId)">
               <mat-icon>delete</mat-icon>
-              <mat-menu #menu="matMenu">
-                <button mat-menu-item (click)="delete(user.userId)">
-                  <mat-icon>delete</mat-icon>
-                  <span>Delete</span>
-                </button>
-
-                <button mat-menu-item>
-                  <mat-icon>home</mat-icon>
-                  <span>Cancel</span>
-                </button>
-              </mat-menu>
             </button>
-            <!--<button mat-icon-button color="primary" aria-label="Delete icon"  >
-              <mat-icon>delete</mat-icon>
-            </button>-->
           </div>
         </td>
       </ng-container>

@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from '../service/users.service';
 import { TokenService } from '../service/token.service';
-import { IUser } from '../user/iuser';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
@@ -13,8 +12,13 @@ import { Router } from '@angular/router';
 export class CreateUserComponent implements OnInit {
   error = '';
   users: any;
-  user: IUser = new IUser('', '');
-  form = new FormControl('', [Validators.required]);
+  userForms = new FormGroup({
+    username: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z0-9]*')]),
+    password: new FormControl('', [Validators.required]),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    phone: new FormControl('', [Validators.required, Validators.pattern('[0-9]*')]),
+    site: new FormControl('', [Validators.required]),
+  });
 
   constructor(private usersService: UsersService,
               private tokenService: TokenService,
@@ -23,6 +27,7 @@ export class CreateUserComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAll();
+
   }
 
   private getAll() {
@@ -34,20 +39,15 @@ export class CreateUserComponent implements OnInit {
   }
 
   newUser() {
-    this.error = "";
-    let ourUser = this.users.find((user1: { username: string; }) => user1.username==this.user.username);
+    this.error = '';
+    let ourUser = this.users.find((user1: { username: string; }) => user1.username == this.userForms.get('username')?.value);
 
     if (ourUser) {
       this.error = 'User already exists';
       return;
     }
 
-    if (this.user.username == '' || this.user.password == '') {
-      this.error = 'You must write a value';
-      return;
-    }
-
-    this.usersService.create(this.tokenService.getToken(), this.user).subscribe(
+    this.usersService.create(this.tokenService.getToken(), this.userForms).subscribe(
       user => this.router.navigate(['/users']),
       error => alert(error.name),
       () => this.getAll(),

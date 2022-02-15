@@ -1,33 +1,71 @@
 <div class="body">
   <div class="main-form">
+    <h3><b>Add new user</b></h3>
     <div *ngIf="error.length">
       Error:{{error}}
       <br/>
     </div>
-    <form class="m-form">
+    <form class="m-form" [formGroup]="userForms">
       <mat-form-field appearance="outline">
         <mat-label for="username">Username:</mat-label>
         <input matInput id="username" required
-               [(ngModel)]="user.username"
-               [ngModelOptions]="{ standalone: true }"
+               formControlName="username"
                placeholder="username">
-        <mat-error *ngIf="form.invalid">You must enter a value</mat-error>
+
+        <mat-error *ngIf="userForms.get('username')?.errors?.['required']">You must enter a value</mat-error>
+        <mat-error *ngIf="userForms.get('username')?.errors?.['pattern']">Username must contain only letters</mat-error>
       </mat-form-field>
       <br/>
 
       <mat-form-field appearance="outline">
         <mat-label for="password">Password:</mat-label>
         <input matInput id="password" required
-               [(ngModel)]="user.password"
-               [ngModelOptions]="{ standalone: true }"
                placeholder="password"
+               formControlName="password"
                type="password">
-        <mat-error *ngIf="form.invalid">You must enter a value</mat-error>
+
+        <mat-error *ngIf="userForms.invalid">You must enter a value</mat-error>
+      </mat-form-field>
+      <br/>
+
+      <mat-form-field appearance="outline">
+        <mat-label for="email">Email:</mat-label>
+        <input matInput id="email" required
+               placeholder="email"
+               formControlName="email"
+               type="email">
+
+        <mat-error *ngIf="userForms.get('email')?.errors?.['required']">You must enter a value</mat-error>
+        <mat-error *ngIf="userForms.get('email')?.errors?.['email']">Value doesn't look like an email</mat-error>
+      </mat-form-field>
+      <br/>
+
+      <mat-form-field appearance="outline">
+        <mat-label for="phone">Phone:</mat-label>
+        <input matInput id="phone" required
+               placeholder="phone"
+               formControlName="phone"
+               type="phone">
+
+        <mat-error *ngIf="userForms.get('phone')?.errors?.['required']">You must enter a value</mat-error>
+        <mat-error *ngIf="userForms.get('phone')?.errors?.['pattern']">Phone must contain only numbers</mat-error>
+      </mat-form-field>
+      <br/>
+
+      <mat-form-field appearance="outline">
+        <mat-label for="site">Site:</mat-label>
+        <input matInput id="site" required
+               placeholder="site"
+               formControlName="site"
+               type="site">
+
+        <mat-error *ngIf="userForms.invalid">You must enter a value</mat-error>
       </mat-form-field>
       <br/>
       <div class="buttons">
-        <button mat-raised-button color="primary" class="add-button" (click)="newUser()">Create</button>
         <button mat-raised-button color="primary" class="add-button" (click)="cancel()">Cancel</button>
+        <button mat-raised-button color="primary" class="add-button" (click)="newUser()" *ngIf="!userForms.invalid">Create</button>
+        <button mat-flat-button disabled *ngIf="userForms.invalid">Create</button>
       </div>
     </form>
   </div>
