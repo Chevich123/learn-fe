@@ -14,7 +14,6 @@ export class UsersComponent implements OnInit {
   dataSource: any;
   loaded = false;
   length = 0;
-  finish = 0;
   start = 0;
   private pageSize = 0;
 
@@ -31,13 +30,13 @@ export class UsersComponent implements OnInit {
   }
 
   public getServerData(event?: PageEvent | null) {
+    console.log(event);
     if (event?.pageSize) {
       this.pageSize = event.pageSize;
-      this.finish = (event.pageIndex + 1) * this.pageSize;
-      this.start = this.finish - this.pageSize + 1;
+      this.start = event.pageIndex * event.pageSize;
     }
 
-    this.usersService.getPage(this.start, this.finish, this.tokenService.getToken()).subscribe(
+    this.usersService.getPage(this.start, this.pageSize, this.tokenService.getToken()).subscribe(
       users => {
         this.dataSource = users;
         this.loaded = true;
@@ -62,9 +61,8 @@ export class UsersComponent implements OnInit {
       this.usersService.delete(this.tokenService.getToken(), userId).subscribe(
         () => {
           this.setLength();
-          if (this.finish > this.length) {
-            this.finish = this.length;
-            this.start = this.finish - this.pageSize;
+          if (this.start == this.length) {
+            this.start = this.length - this.pageSize;
           }
           this.getServerData();
         },
