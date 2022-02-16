@@ -10,15 +10,21 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 @Component({
   selector: 'dialog-content-example',
   templateUrl: 'dialogContent.component.html',
+  styleUrls: ['./editing.component.scss']
 })
 export class DialogContent {
-  constructor() {
-  }
+  constructor() { }
 
-  myForm = new FormGroup({
+  name: string = '';
+  email: string = '';
+  phone: string = '';
+  site: string = '';
+
+  userForm = new FormGroup({
     "username": new FormControl("", [
       Validators.required,
-      Validators.minLength(3)
+      Validators.minLength(3),
+      Validators.pattern("(?!^ |.* $)^[^\t]+$")
     ]),
     "email": new FormControl("", [
       Validators.required,
@@ -30,20 +36,15 @@ export class DialogContent {
     ]),
     "site": new FormControl("", [
       Validators.required,
-      Validators.minLength(7)
+      Validators.minLength(7),
+      Validators.pattern("(?!^ |.* $)^[^\t]+$")
     ])
   });
-
-  name: string = '';
-  email: string = '';
-  phone: string = '';
-  site: string = '';
 }
 
 @Component({
   selector: 'app-editing',
   templateUrl: './editing.component.html',
-  styleUrls: ['./editing.component.scss']
 })
 export class EditingComponent implements OnInit {
 
