@@ -8,11 +8,13 @@ import { TokenService } from './service/token.service';
 import { MatMenuModule } from '@angular/material/menu';
 
 describe('AppComponent', () => {
+  const mockUsersService = {};
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [HttpClientModule, RouterTestingModule, MatMenuModule],
       providers: [
-        { provide: UsersService },
+        { provide: UsersService, useValue: mockUsersService },
         { provide: AppService },
         { provide: TokenService },
       ],
