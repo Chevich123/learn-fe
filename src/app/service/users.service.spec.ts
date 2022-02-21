@@ -3,6 +3,16 @@ import { UsersService } from './users.service';
 import { HttpClient } from '@angular/common/http';
 import { IUser } from '../user/iuser';
 import { of } from 'rxjs';
+import { HttpClientModule } from '@angular/common/http';
+import { RouterTestingModule } from '@angular/router/testing';
+import { AppComponent } from '../app.component';
+import { UsersComponent } from '../users/users.component';
+import { TokenService } from './token.service';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { EMPTY } from 'rxjs';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { CreateUserComponent } from '../create-user/create-user.component';
+import { Router } from '@angular/router';
 
 describe('UsersService', () => {
   let service: UsersService;

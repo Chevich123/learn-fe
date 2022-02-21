@@ -1,6 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UsersComponent } from './users.component';
+import { HttpClientModule } from '@angular/common/http';
+import { RouterTestingModule } from '@angular/router/testing';
+import { UsersService } from '../service/users.service';
+import { AppService } from '../service/app.service';
+import { TokenService } from '../service/token.service';
+import { MatDialogModule } from '@angular/material/dialog';
 
 describe('UsersComponent', () => {
   let component: UsersComponent;
@@ -8,6 +14,8 @@ describe('UsersComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [HttpClientModule, RouterTestingModule, MatDialogModule],
+      providers: [UsersService, AppService, TokenService],
       declarations: [ UsersComponent ]
     })
     .compileComponents();
@@ -22,4 +30,8 @@ describe('UsersComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should render title', () => {
+    expect(component.displayedColumns).toContain('username');
+  })
 });
