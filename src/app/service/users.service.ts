@@ -31,7 +31,8 @@ export class UsersService {
 
   create(token: string | undefined, user: FormGroup): Observable<IUser> {
     return this.http.post<IUser>(`http://localhost:3000/users`,
-      {username: user.get('username')?.value,
+      {
+        username: user.get('username')?.value,
         email: user.get('email')?.value,
         phone: user.get('phone')?.value,
         password: user.get('password')?.value,

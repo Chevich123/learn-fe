@@ -13,13 +13,16 @@ import { CreateUserComponent } from '../create-user/create-user.component';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 describe('UsersService', () => {
   let service: UsersService;
   let http: HttpClient;
   const mockHttpClient = {
+    get: jasmine.createSpy(),
+    post: jasmine.createSpy(),
     patch: jasmine.createSpy(),
-    delete: jasmine.createSpy(),
+    delete: jasmine.createSpy()
   };
 
   beforeEach(() => {
@@ -84,9 +87,45 @@ describe('UsersService', () => {
       expect(result).toEqual(response);
       expect(mockHttpClient.get).toHaveBeenCalledWith(
         `http://localhost:3000/users?start=${ start }&limit=${ finish }`,
-        { headers: { Authorization: `Bearer ${token}` } },
+        { headers: { Authorization: `Bearer ${ token }` } },
       );
       done();
     });
   });
+
+  it('should get all users', () => {
+    const response = [{ a: 1 } as any];
+    const token = 'token';
+    mockHttpClient.get.and.returnValue(of(response));
+    service.getAll(token).subscribe((result) => {
+      expect(result).toEqual(response);
+      expect(mockHttpClient.get).toHaveBeenCalledWith(
+        `http://localhost:3000/users`,
+        { headers: { Authorization: `Bearer ${ token }` } },
+      );
+    });
+  });
+
+  it('should create user', () => {
+    const userForms = new FormGroup({
+      username: new FormControl('username', [Validators.required, Validators.pattern('[a-zA-Z0-9]*')]),
+      password: new FormControl('123456', [Validators.required]),
+    });
+    const token = 'token';
+    mockHttpClient.post.and.returnValue(of(userForms));
+    service.create(token, userForms).subscribe(() => {
+      expect(mockHttpClient.post).toHaveBeenCalledOnceWith(
+        'http://localhost:3000/users',
+        {
+          username: userForms.get('username')?.value,
+          email: userForms.get('email')?.value,
+          phone: userForms.get('phone')?.value,
+          password: userForms.get('password')?.value,
+          site: userForms.get('site')?.value
+        },
+        { headers: { Authorization: `Bearer ${ token }` } },
+      );
+    });
+  });
+
 });

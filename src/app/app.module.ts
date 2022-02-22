@@ -22,6 +22,9 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { EditingComponent } from './editing/editing.component';
 import { CreateUserComponent } from './create-user/create-user.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { RouterTestingModule } from '@angular/router/testing';
 
 @NgModule({
   declarations: [
@@ -53,7 +56,8 @@ import { CreateUserComponent } from './create-user/create-user.component';
     HttpClientModule,
     BrowserAnimationsModule,
     MatMenuModule,
-    ReactiveFormsModule
+    MatIconModule,
+    ReactiveFormsModule,
     MatDialogModule,
     ReactiveFormsModule,
     RouterTestingModule
