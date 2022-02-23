@@ -20,8 +20,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { DialogContent, EditingComponent } from './editing/editing.component';
+import { EditingComponent } from './editing/editing.component';
 import { CreateUserComponent } from './create-user/create-user.component';
+import { EditDialogComponent } from './editing/edit-dialog/edit-dialog.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,7 @@ import { CreateUserComponent } from './create-user/create-user.component';
     EditingComponent,
     DialogComponent,
     EditingComponent,
-    DialogContent
+    EditDialogComponent
   ],
   imports: [
     MatDialogModule,
