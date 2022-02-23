@@ -1,0 +1,10 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.validation ::ng-deep.mat-form-field-underline {
+  height: 2px;
+  background-color: green;
+}
