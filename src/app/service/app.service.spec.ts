@@ -18,7 +18,6 @@ describe('AppService', () => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule],
       providers: [
-        TokenService,
         { provide: HttpClient, useValue: mockHttpClient },
       ],
     }).compileComponents();

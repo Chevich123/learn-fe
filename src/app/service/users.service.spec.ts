@@ -13,7 +13,6 @@ import { CreateUserComponent } from '../create-user/create-user.component';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 describe('UsersService', () => {
   let service: UsersService;
@@ -89,7 +88,6 @@ describe('UsersService', () => {
         `http://localhost:3000/users?start=${ start }&limit=${ finish }`,
         { headers: { Authorization: `Bearer ${ token }` } },
       );
-      done();
     });
   });
 

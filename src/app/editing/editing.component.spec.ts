@@ -31,9 +31,7 @@ describe('EditingComponent', () => {
     // @ts-ignore
     await TestBed.configureTestingModule({
       declarations: [EditingComponent],
-      imports: [
-        BrowserAnimationsModule,
-      ],
+      imports: [ BrowserAnimationsModule, HttpClientModule, RouterTestingModule, MatDialogModule ],
       providers: [
         { provide: UsersService, useValue: mockUsersService },
         { provide: AppService, useValue: mockAppService },

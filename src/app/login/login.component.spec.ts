@@ -1,52 +1,73 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoginComponent } from './login.component';
-import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
-import { UsersService } from '../service/users.service';
 import { AppService } from '../service/app.service';
 import { TokenService } from '../service/token.service';
-import { EMPTY, of } from 'rxjs';
+import { of } from 'rxjs';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ActivatedRoute, Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { EMPTY } from 'rxjs';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
-  let appService: AppService;
-  let tokenService: TokenService;
+  let fixture: ComponentFixture<LoginComponent>;
+  const mockHttpClient = {
+    get: jasmine.createSpy(),
+    post: jasmine.createSpy(),
+  };
+  const mockAppService = {
+    // login: () => of(true),
+    login: jasmine.createSpy(),
+    http: mockHttpClient,
+    redirect: jasmine.createSpy()
+  };
+  const mockTokenService = {
+    setToken: jasmine.createSpy(),
+    getToken: jasmine.createSpy(),
+  };
+  const mockRouter = {
+  };
+  const mockActivatedRouter = {};
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule, HttpClientModule],
-      providers: [UsersService, AppService, TokenService],
+      providers: [
+        { provide: HttpClient, useValue: mockHttpClient },
+        { provides: TokenService, useValue: mockTokenService },
+        { provide: Router, useValue: mockRouter },
+        { provide: ActivatedRoute, useValue: mockActivatedRouter },
+        { provides: AppService, useValue: mockAppService },
+      ],
       declarations: [LoginComponent],
     }).compileComponents();
   });
 
   beforeEach(() => {
-    tokenService = new TokenService();
-    const spyHttp = jasmine.createSpyObj('HttpClient', { post: of({}), get: of({}) });
-    const spyRouter = jasmine.createSpyObj('Router', { post: of({}), get: of({}) })
-    const activateRoute = jasmine.createSpyObj('ActivatedRoute', { post: of({}), get: of({}) })
-    appService = new AppService(spyHttp, spyRouter, tokenService);
-    component = new LoginComponent(tokenService, activateRoute, spyRouter, appService);
-  });
-
-  it('should login', () => {
-    const spy = spyOn(appService, 'login').and.callFake(() => {
-      return EMPTY;
-    });
-
-    component.login();
-    expect(spy).toHaveBeenCalled();
-  });
-
-  it('should return token', () => {
-    const token = 'token'
-    spyOn(tokenService, 'getToken').and.returnValue(token);
-    const spyToken = component.getToken();
-    expect(spyToken).toEqual(token);
+    fixture = TestBed.createComponent(LoginComponent);
+    component = fixture.componentInstance;
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  fit('should login', () => {
+    let token = 'token';
+    mockAppService.login.and.returnValue(of(token));
+    component.login();
+    expect(mockAppService.login).toHaveBeenCalled();
+  });
+
+  fit('should return token', () => {
+    const token = 'token';
+    mockTokenService.getToken.and.returnValue(of(token));
+    mockAppService.redirect.and.callFake(() => {
+      return EMPTY;
+    });
+    expect(mockAppService.redirect).toHaveBeenCalled();
+    expect(component.getToken()).toEqual(token);
+
   });
 });
