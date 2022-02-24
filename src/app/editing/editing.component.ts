@@ -18,8 +18,9 @@ export class EditingComponent implements OnInit {
     private usersService: UsersService,
     private tokenService: TokenService,
     public dialog: MatDialog,
-    private appService: AppService
-  ) { }
+    private appService: AppService,
+  ) {
+  }
 
   id: string | null = '';
   user: IUser = new IUser('', '');
@@ -28,17 +29,16 @@ export class EditingComponent implements OnInit {
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id');
     const dialogRef = this.dialog.open(EditDialogComponent, { disableClose: true });
-      dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(result => {
       this.data = result;
       this.user.username = dialogRef.componentInstance.name;
       this.user.email = dialogRef.componentInstance.email;
       this.user.phone = dialogRef.componentInstance.phone;
       this.user.site = dialogRef.componentInstance.site;
       if (!this.data) {
-        this.redirect()
-      }
-      else {
-        this.edit()
+        this.redirect();
+      } else {
+        this.edit();
       }
     });
   }
