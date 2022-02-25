@@ -27,8 +27,8 @@ describe('EditingComponent', () => {
   beforeEach(async () => {
     // @ts-ignore
     await TestBed.configureTestingModule({
+
       imports: [
-        [MatDialogModule],
         BrowserAnimationsModule,
       ],
       providers: [
@@ -45,9 +45,7 @@ describe('EditingComponent', () => {
           },
         },
         { provide: MatDialog, useValue: mockMatDialog },
-
       ],
-      declarations: [EditingComponent],
     })
       .compileComponents();
   });
