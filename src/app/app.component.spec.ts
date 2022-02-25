@@ -9,14 +9,18 @@ import { MatMenuModule } from '@angular/material/menu';
 
 describe('AppComponent', () => {
   const mockUsersService = {};
+  const mockAppService = {};
+  const mockTokenService = {
+    getToken: jasmine.createSpy(),
+  };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [HttpClientModule, RouterTestingModule, MatMenuModule],
       providers: [
         { provide: UsersService, useValue: mockUsersService },
-        { provide: AppService },
-        { provide: TokenService },
+        { provide: AppService, useValue: mockAppService },
+        { provide: TokenService, useValue: mockTokenService },
       ],
       declarations: [
         AppComponent,

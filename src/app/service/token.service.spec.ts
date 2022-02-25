@@ -23,7 +23,7 @@ describe('TokenService', () => {
     expect(service.getToken()).toEqual(testToken);
   });
 
-  it('`setToken` should assign token variable', () => {
+  it('should assign token variable', () => {
     const token = 'token';
     service.setToken(token);
     expect(service.getToken()).toEqual(token);

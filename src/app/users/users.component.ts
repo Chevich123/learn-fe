@@ -1,8 +1,9 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UsersService } from '../service/users.service';
 import { TokenService } from '../service/token.service';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
+import { DialogComponent } from './dialog/dialog.component';
 
 @Component({
   selector: 'app-users',
@@ -30,7 +31,6 @@ export class UsersComponent implements OnInit {
   }
 
   public getServerData(event?: PageEvent | null) {
-    console.log(event);
     if (event?.pageSize) {
       this.pageSize = event.pageSize;
       this.start = event.pageIndex * event.pageSize;

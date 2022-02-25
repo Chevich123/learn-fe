@@ -1,14 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoginComponent } from './login.component';
-import { RouterTestingModule } from '@angular/router/testing';
 import { AppService } from '../service/app.service';
 import { TokenService } from '../service/token.service';
 import { of } from 'rxjs';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { EMPTY } from 'rxjs';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -18,16 +15,18 @@ describe('LoginComponent', () => {
     post: jasmine.createSpy(),
   };
   const mockAppService = {
-    // login: () => of(true),
     login: jasmine.createSpy(),
     http: mockHttpClient,
-    redirect: jasmine.createSpy()
+    redirect: jasmine.createSpy(),
+    error: '',
+    navigate: jasmine.createSpy(),
   };
   const mockTokenService = {
     setToken: jasmine.createSpy(),
     getToken: jasmine.createSpy(),
   };
   const mockRouter = {
+    navigate: jasmine.createSpy(),
   };
   const mockActivatedRouter = {};
 
@@ -35,10 +34,10 @@ describe('LoginComponent', () => {
     await TestBed.configureTestingModule({
       providers: [
         { provide: HttpClient, useValue: mockHttpClient },
-        { provides: TokenService, useValue: mockTokenService },
+        { provide: TokenService, useValue: mockTokenService },
         { provide: Router, useValue: mockRouter },
         { provide: ActivatedRoute, useValue: mockActivatedRouter },
-        { provides: AppService, useValue: mockAppService },
+        { provide: AppService, useValue: mockAppService },
       ],
       declarations: [LoginComponent],
     }).compileComponents();
@@ -53,21 +52,32 @@ describe('LoginComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  fit('should login', () => {
+  it('should not redirect if has error', () => {
+    mockAppService.navigate.and.returnValue('/login');
+    mockAppService.error = 'error';
+    let spyReturn = component.redirect();
+    expect(spyReturn).toBeUndefined();
+  });
+
+  it('should login', () => {
     let token = 'token';
     mockAppService.login.and.returnValue(of(token));
+    mockRouter.navigate.and.returnValue(of('/users'));
     component.login();
     expect(mockAppService.login).toHaveBeenCalled();
   });
 
-  fit('should return token', () => {
-    const token = 'token';
-    mockTokenService.getToken.and.returnValue(of(token));
-    mockAppService.redirect.and.callFake(() => {
-      return EMPTY;
-    });
-    expect(mockAppService.redirect).toHaveBeenCalled();
-    expect(component.getToken()).toEqual(token);
-
+  it('should redirect', () => {
+    mockAppService.navigate.and.returnValue('/login');
+    component.redirect();
+    expect(mockAppService.navigate).toHaveBeenCalled();
   });
+
+  it('should return token', () => {
+    const token = 'token';
+    mockTokenService.getToken.and.returnValue(token);
+    let tokenSpy = component.getToken();
+    expect(tokenSpy).toEqual(token);
+  });
+
 });

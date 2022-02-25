@@ -8,11 +8,11 @@ import { UsersComponent } from '../users/users.component';
 import { TokenService } from './token.service';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { EMPTY } from 'rxjs';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CreateUserComponent } from '../create-user/create-user.component';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 describe('UsersService', () => {
   let service: UsersService;
@@ -119,7 +119,7 @@ describe('UsersService', () => {
           email: userForms.get('email')?.value,
           phone: userForms.get('phone')?.value,
           password: userForms.get('password')?.value,
-          site: userForms.get('site')?.value
+          site: userForms.get('site')?.value,
         },
         { headers: { Authorization: `Bearer ${ token }` } },
       );

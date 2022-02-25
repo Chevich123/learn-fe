@@ -27,6 +27,8 @@ describe('EditingComponent', () => {
     navigate: jasmine.createSpy(),
   };
 
+  const mockTokenService = {};
+
   beforeEach(async () => {
     // @ts-ignore
     await TestBed.configureTestingModule({
@@ -35,6 +37,7 @@ describe('EditingComponent', () => {
       providers: [
         { provide: UsersService, useValue: mockUsersService },
         { provide: AppService, useValue: mockAppService },
+        { provide: TokenService, useValue: mockTokenService },
         {
           provide: ActivatedRoute,
           useValue: {

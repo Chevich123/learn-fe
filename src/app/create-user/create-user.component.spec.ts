@@ -13,23 +13,25 @@ describe('CreateUserComponent', () => {
   let fixture: ComponentFixture<CreateUserComponent>;
   const mockUsersService = {
     getAll: jasmine.createSpy(),
-    create: jasmine.createSpy()
+    create: jasmine.createSpy(),
   };
   const mockTokenService = {
     getToken: jasmine.createSpy(),
   };
-  const mockRouter = {};
+  const mockRouter = {
+    navigate: jasmine.createSpy(),
+  };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       providers: [
-        {provide: UsersService, useValue: mockUsersService},
-        {provide: TokenService, useValue: mockTokenService},
-        {provide: Router, useValue: mockRouter},
+        { provide: UsersService, useValue: mockUsersService },
+        { provide: TokenService, useValue: mockTokenService },
+        { provide: Router, useValue: mockRouter },
       ],
-      declarations: [ CreateUserComponent ]
+      declarations: [CreateUserComponent],
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
@@ -42,7 +44,7 @@ describe('CreateUserComponent', () => {
   });
 
   it('should get all', () => {
-    const user: IUser = new IUser('username','123456');
+    const user: IUser = new IUser('username', '123456');
     const users = [user];
     mockUsersService.getAll.and.returnValue(of(users));
     component.users = [];
@@ -54,27 +56,27 @@ describe('CreateUserComponent', () => {
     expect(component.users).toContain(user);
   });
 
-   fit('should create user', () => {
-     component.userForms = new FormGroup({
-       username: new FormControl('username', [Validators.required, Validators.pattern('[a-zA-Z0-9]*')]),
-       password: new FormControl('password', [Validators.required]),
-     });
-     const user: IUser = new IUser('username','123456');
-     mockUsersService.create.and.returnValue(of(user));
-     component.users = [];
-     component.newUser();
-     expect(mockUsersService.create).toHaveBeenCalled();
-   });
+  it('should create user', () => {
+    component.userForms = new FormGroup({
+      username: new FormControl('username', [Validators.required, Validators.pattern('[a-zA-Z0-9]*')]),
+      password: new FormControl('password', [Validators.required]),
+    });
+    const user: IUser = new IUser('username', '123456');
+    mockUsersService.create.and.returnValue(of(user));
+    component.users = [];
+    component.newUser();
+    expect(mockUsersService.create).toHaveBeenCalled();
+  });
 
-   it('should return error if user exists', () => {
-     component.userForms = new FormGroup({
-       username: new FormControl('username', [Validators.required, Validators.pattern('[a-zA-Z0-9]*')]),
-       password: new FormControl('password', [Validators.required]),
-     });
-     const user: IUser = new IUser('username','123456');
-     mockUsersService.create.and.returnValue(of(user));
-     component.users = [user];
-     component.newUser();
-     expect(component.error).toEqual('User already exists');
-   });
+  it('should return error if user exists', () => {
+    component.userForms = new FormGroup({
+      username: new FormControl('username', [Validators.required, Validators.pattern('[a-zA-Z0-9]*')]),
+      password: new FormControl('password', [Validators.required]),
+    });
+    const user: IUser = new IUser('username', '123456');
+    mockUsersService.create.and.returnValue(of(user));
+    component.users = [user];
+    component.newUser();
+    expect(component.error).toEqual('User already exists');
+  });
 });
