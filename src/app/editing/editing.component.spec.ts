@@ -27,7 +27,7 @@ describe('EditingComponent', () => {
   beforeEach(async () => {
     // @ts-ignore
     await TestBed.configureTestingModule({
-
+      declarations: [EditingComponent],
       imports: [
         BrowserAnimationsModule,
       ],
