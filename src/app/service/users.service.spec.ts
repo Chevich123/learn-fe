@@ -13,10 +13,10 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { IUser } from '../user/iuser';
 
 describe('UsersService', () => {
   let service: UsersService;
-  let http: HttpClient;
   const mockHttpClient = {
     get: jasmine.createSpy(),
     post: jasmine.createSpy(),
@@ -32,7 +32,6 @@ describe('UsersService', () => {
       ],
     }).compileComponents();
     service = TestBed.inject(UsersService);
-    http = TestBed.inject(HttpClient);
   });
 
   it('should be created', () => {
@@ -105,21 +104,21 @@ describe('UsersService', () => {
   });
 
   it('should create user', () => {
-    const userForms = new FormGroup({
-      username: new FormControl('username', [Validators.required, Validators.pattern('[a-zA-Z0-9]*')]),
-      password: new FormControl('123456', [Validators.required]),
-    });
     const token = 'token';
-    mockHttpClient.post.and.returnValue(of(userForms));
-    service.create(token, userForms).subscribe(() => {
+    const username = 'username';
+    const password = 'password';
+    const user: IUser = new IUser(username, password);
+    mockHttpClient.post.and.returnValue(of(user));
+
+    service.create(token, username, password, undefined, undefined, undefined).subscribe(() => {
       expect(mockHttpClient.post).toHaveBeenCalledOnceWith(
         'http://localhost:3000/users',
         {
-          username: userForms.get('username')?.value,
-          email: userForms.get('email')?.value,
-          phone: userForms.get('phone')?.value,
-          password: userForms.get('password')?.value,
-          site: userForms.get('site')?.value,
+          username: username,
+          email: undefined,
+          phone: undefined,
+          password: password,
+          site: undefined,
         },
         { headers: { Authorization: `Bearer ${ token }` } },
       );

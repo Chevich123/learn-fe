@@ -14,7 +14,7 @@ export class UsersService {
   }
 
   getPage(start: number, finish: number, token: string | undefined): Observable<IUser[]> {
-    return this.http.get<IUser[]>(`http://localhost:3000/users?start=` + start +'&limit=' + finish, {
+    return this.http.get<IUser[]>(`http://localhost:3000/users?start=` + start + '&limit=' + finish, {
       headers: {
         Authorization: `Bearer ${ token }`,
       },
@@ -29,19 +29,26 @@ export class UsersService {
     });
   }
 
-  create(token: string | undefined, user: FormGroup): Observable<IUser> {
+  create(token: string | undefined,
+         username: string | undefined,
+         password: string | undefined,
+         email: string | undefined,
+         phone: string | undefined,
+         site: string | undefined,
+  ): Observable<IUser> {
     return this.http.post<IUser>(`http://localhost:3000/users`,
       {
-        username: user.get('username')?.value,
-        email: user.get('email')?.value,
-        phone: user.get('phone')?.value,
-        password: user.get('password')?.value,
-        site: user.get('site')?.value},
-      {
-      headers: {
-        Authorization: `Bearer ${ token }`,
+        username: username,
+        email: email,
+        phone: phone,
+        password: password,
+        site: site,
       },
-    });
+      {
+        headers: {
+          Authorization: `Bearer ${ token }`,
+        },
+      });
   };
 
   delete(token: string | undefined, userId: string) {

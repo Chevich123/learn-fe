@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { UsersService } from './service/users.service';
 import { AppService } from './service/app.service';
 import { TokenService } from './service/token.service';
@@ -13,11 +13,16 @@ describe('AppComponent', () => {
   const mockTokenService = {
     getToken: jasmine.createSpy(),
   };
+  const mockHttpClient = {
+    get: jasmine.createSpy(),
+    post: jasmine.createSpy(),
+  };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HttpClientModule, RouterTestingModule, MatMenuModule],
+      imports: [RouterTestingModule, MatMenuModule],
       providers: [
+        { provide: HttpClient, useValue: mockHttpClient },
         { provide: UsersService, useValue: mockUsersService },
         { provide: AppService, useValue: mockAppService },
         { provide: TokenService, useValue: mockTokenService },

@@ -55,12 +55,11 @@ describe('LoginComponent', () => {
   it('should not redirect if has error', () => {
     mockAppService.navigate.and.returnValue('/login');
     mockAppService.error = 'error';
-    let spyReturn = component.redirect();
-    expect(spyReturn).toBeUndefined();
+    expect(component.redirect()).toBeUndefined();
   });
 
   it('should login', () => {
-    let token = 'token';
+    const token = 'token';
     mockAppService.login.and.returnValue(of(token));
     mockRouter.navigate.and.returnValue(of('/users'));
     component.login();

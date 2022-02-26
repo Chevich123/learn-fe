@@ -61,7 +61,7 @@ export class UsersComponent implements OnInit {
       this.usersService.delete(this.tokenService.getToken(), userId).subscribe(
         () => {
           this.setLength();
-          if (this.start == this.length) {
+          if (this.start === this.length) {
             this.start = this.length - this.pageSize;
           }
           this.getServerData();
