@@ -13,7 +13,6 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { IUser } from '../user/iuser';
 
 describe('UsersService', () => {
   let service: UsersService;
