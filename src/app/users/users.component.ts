@@ -31,7 +31,6 @@ export class UsersComponent implements OnInit {
   }
 
   public getServerData(event?: PageEvent | null) {
-    console.log(event);
     if (event?.pageSize) {
       this.pageSize = event.pageSize;
       this.start = (event.pageIndex * event.pageSize) + 1;

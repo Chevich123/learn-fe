@@ -27,6 +27,7 @@ describe('EditingComponent', () => {
     navigate: jasmine.createSpy(),
   };
 
+
   const mockTokenService = {
     getToken: jasmine.createSpy()
   };
