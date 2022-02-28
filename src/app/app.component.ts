@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { AppService } from './service/app.service';
 import { TokenService } from './service/token.service';
-import { IUser } from './user/iuser';
-
 
 @Component({
   selector: 'app-root',

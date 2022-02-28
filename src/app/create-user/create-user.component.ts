@@ -40,14 +40,20 @@ export class CreateUserComponent implements OnInit {
 
   newUser() {
     this.error = '';
-    let ourUser = this.users.find((user1: { username: string; }) => user1.username == this.userForms.get('username')?.value);
+    let ourUser = this.users.find((user1: { username: string; }) => user1.username === this.userForms.get('username')?.value);
 
     if (ourUser) {
       this.error = 'User already exists';
       return;
     }
 
-    this.usersService.create(this.tokenService.getToken(), this.userForms).subscribe(
+    this.usersService.create(this.tokenService.getToken(),
+      this.userForms.get('username')?.value,
+      this.userForms.get('password')?.value,
+      this.userForms.get('email')?.value,
+      this.userForms.get('phone')?.value,
+      this.userForms.get('site')?.value
+      ).subscribe(
       user => this.router.navigate(['/users']),
       error => alert(error.name),
     );

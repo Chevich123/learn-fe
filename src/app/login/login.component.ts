@@ -14,7 +14,8 @@ export class LoginComponent implements OnInit {
   user: IUser = new IUser('', '');
   form = new FormControl('', [Validators.required]);
 
-  constructor(private tokenService: TokenService,
+  constructor(
+    private tokenService: TokenService,
     private route: ActivatedRoute,
     private router: Router,
     private appService: AppService) {
