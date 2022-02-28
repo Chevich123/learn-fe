@@ -5,6 +5,8 @@ export class IUser {
   email?: string;
   phone?: string;
   site?: string;
+  passwordRepeat: string = "";
+
   constructor(username: string, password: string) {
     this.password = password;
     this.username = username;

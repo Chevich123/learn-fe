@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { MatDialogModule } from '@angular/material/dialog';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -25,6 +24,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { RouterTestingModule } from '@angular/router/testing';
 import { DialogComponent } from './users/dialog/dialog.component';
 import { EditDialogComponent } from './editing/edit-dialog/edit-dialog.component';
+import {MatCheckboxModule} from "@angular/material/checkbox";
+
 
 @NgModule({
   declarations: [
@@ -43,6 +44,9 @@ import { EditDialogComponent } from './editing/edit-dialog/edit-dialog.component
     MatProgressSpinnerModule,
     MatIconModule,
     MatTableModule,
+    MatCheckboxModule,
+    ReactiveFormsModule,
+    RouterModule,
     MatTabsModule,
     MatFormFieldModule,
     RouterModule,

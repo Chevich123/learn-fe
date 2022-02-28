@@ -4,8 +4,8 @@ import { Observable, of } from 'rxjs';
 import { Token } from "../user/token";
 import { catchError } from "rxjs/operators";
 import { Router } from "@angular/router";
-import { LoginDTO } from "../interfaces/loginDto";
 import { TokenService } from './token.service';
+import { LoginDTO } from '../interfaces/LoginDto';
 
 
 @Injectable({
