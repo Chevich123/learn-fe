@@ -24,6 +24,7 @@ import { CreateUserComponent } from './create-user/create-user.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { RouterTestingModule } from '@angular/router/testing';
 import { DialogComponent } from './users/dialog/dialog.component';
+import { EditDialogComponent } from './editing/edit-dialog/edit-dialog.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,6 @@ import { DialogComponent } from './users/dialog/dialog.component';
     LoginComponent,
     UsersComponent,
     CreateUserComponent,
-    ProfileComponent,
     DashboardComponent,
     EditingComponent,
     DialogComponent,

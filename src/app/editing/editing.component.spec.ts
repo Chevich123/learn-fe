@@ -5,11 +5,11 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { TokenService } from '../service/token.service';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { EMPTY } from 'rxjs';
 import { UsersService } from '../service/users.service';
 import { IUser } from '../user/iuser';
 import { of } from 'rxjs';
 import { AppService } from '../service/app.service';
+import { ActivatedRoute, convertToParamMap } from '@angular/router';
 
 describe('EditingComponent', () => {
   let component: EditingComponent;
@@ -27,7 +27,10 @@ describe('EditingComponent', () => {
     navigate: jasmine.createSpy(),
   };
 
-  const mockTokenService = {};
+  const mockTokenService = {
+    getToken: jasmine.createSpy()
+  };
+
   beforeEach(async () => {
     // @ts-ignore
     await TestBed.configureTestingModule({
@@ -56,6 +59,7 @@ describe('EditingComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(EditingComponent);
     component = fixture.componentInstance;
+
   });
 
   it('should create', () => {
@@ -112,11 +116,13 @@ describe('EditingComponent', () => {
   });
 
   it('should redirect user to `/users` route', () => {
+    mockTokenService.getToken.and.returnValue(of('token'));
     component.redirect();
     expect(mockAppService.navigate).toHaveBeenCalledWith(['/users'], undefined);
   });
 
   it('should edit user profile', () => {
+    mockTokenService.getToken.and.returnValue(of('token'));
     const user: IUser = new IUser('', '');
     const users = [user];
     const userId = '';

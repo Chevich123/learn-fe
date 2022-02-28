@@ -33,7 +33,7 @@ export class UsersComponent implements OnInit {
   public getServerData(event?: PageEvent | null) {
     if (event?.pageSize) {
       this.pageSize = event.pageSize;
-      this.start = event.pageIndex * event.pageSize;
+      this.start = (event.pageIndex * event.pageSize) + 1;
     }
 
     this.usersService.getPage(this.start, this.pageSize, this.tokenService.getToken()).subscribe(
