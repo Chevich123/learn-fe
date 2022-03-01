@@ -5,7 +5,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -23,6 +23,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { EditingComponent } from './editing/editing.component';
 import { CreateUserComponent } from './create-user/create-user.component';
 import { EditDialogComponent } from './editing/edit-dialog/edit-dialog.component';
+import { TokenInterceptor } from './interceptor/token.interceptor';
 
 @NgModule({
   declarations: [
@@ -35,13 +36,11 @@ import { EditDialogComponent } from './editing/edit-dialog/edit-dialog.component
     EditingComponent,
     DialogComponent,
     EditingComponent,
-    EditDialogComponent
+    EditDialogComponent,
   ],
   imports: [
-    MatDialogModule,
     MatPaginatorModule,
     MatProgressSpinnerModule,
-    MatIconModule,
     MatTableModule,
     MatTabsModule,
     MatFormFieldModule,
@@ -51,16 +50,21 @@ import { EditDialogComponent } from './editing/edit-dialog/edit-dialog.component
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
     MatMenuModule,
     MatIconModule,
     MatDialogModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      multi: true,
+      useClass: TokenInterceptor,
+    },
+  ],
+  bootstrap: [AppComponent],
 })
 export class AppModule {
 }

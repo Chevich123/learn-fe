@@ -1,18 +1,17 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
+import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { Token } from "../user/token";
-import { catchError } from "rxjs/operators";
-import { Router } from "@angular/router";
-import { LoginDTO } from "../interfaces/loginDto";
+import { Token } from '../user/token';
+import { catchError, tap } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { LoginDTO } from '../interfaces/loginDto';
 import { TokenService } from './token.service';
 
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AppService {
-  error = "";
+  error = '';
 
   constructor(
     private http: HttpClient,
@@ -22,21 +21,36 @@ export class AppService {
   }
 
   login(data: LoginDTO): Observable<Token> {
-    this.error = "";
+    this.error = '';
     return this.http
       .post<Token>(`http://localhost:3000/auth/login`, data).pipe(
-        catchError(this.handleError<Token>("Invalid profile"))
-      )
+        catchError(this.handleError<Token>('Invalid profile')),
+        tap(
+          ({ access_token }) => {
+            if (!access_token) {
+              return;
+            }
+            localStorage.setItem('auth-token', access_token);
+            this.tokenService.setToken(access_token);
+          },
+        ),
+      );
+  }
+
+  private handleUser() {
+    const tok = this.tokenService.getToken();
+    localStorage.setItem('userData', JSON.stringify(tok));
   }
 
   getUser() {
     const token = this.tokenService.getToken();
     return this.http.get('http://localhost:3000/profile',
-      { headers: { 'Authorization': `Bearer ${token}` } })
+      { headers: { 'Authorization': `Bearer ${ token }` } });
   }
 
   logout() {
     this.tokenService.setToken(undefined);
+    localStorage.clear();
   }
 
   private handleError<T>(operation = 'operation', result?: T) {
@@ -44,7 +58,7 @@ export class AppService {
       this.error = operation;
 
       return of(result as T);
-    }
+    };
   }
 
   navigate(strings: string[], token: string | undefined) {
