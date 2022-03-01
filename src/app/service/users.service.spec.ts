@@ -1,28 +1,40 @@
 import { TestBed } from '@angular/core/testing';
 import { UsersService } from './users.service';
-import { HttpClient } from '@angular/common/http';
 import { IUser } from '../user/iuser';
+import { HttpClientModule } from '@angular/common/http';
+import { RouterTestingModule } from '@angular/router/testing';
+import { AppComponent } from '../app.component';
+import { UsersComponent } from '../users/users.component';
+import { TokenService } from './token.service';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { EMPTY } from 'rxjs';
+import { CreateUserComponent } from '../create-user/create-user.component';
+import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 describe('UsersService', () => {
   let service: UsersService;
-  let http: HttpClient;
   const mockHttpClient = {
+    get: jasmine.createSpy(),
+    post: jasmine.createSpy(),
     patch: jasmine.createSpy(),
-    delete: jasmine.createSpy(),
+    delete: jasmine.createSpy()
   };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        { provide: HttpClient, useValue: mockHttpClient}
-      ]
-    });
+        UsersService,
+        { provide: HttpClient, useValue: mockHttpClient },
+      ],
+    }).compileComponents();
     service = TestBed.inject(UsersService);
   });
 
   it('should be created', () => {
-    expect(service).toBeTruthy();
+    expect(service).toBeDefined();
   });
 
   it( 'should call correct patch', (done) => {
@@ -61,4 +73,56 @@ describe('UsersService', () => {
       done();
     });
   });
+
+  it('`getPage` should call correct http.get', (done) => {
+    const start = 0;
+    const finish = 50;
+    const token = 'token';
+    const response = [{ a: 1 } as any];
+    mockHttpClient.get.and.returnValue(of(response));
+    service.getPage(start, finish, token).subscribe((result) => {
+      expect(result).toEqual(response);
+      expect(mockHttpClient.get).toHaveBeenCalledWith(
+        `http://localhost:3000/users?start=${ start }&limit=${ finish }`,
+        { headers: { Authorization: `Bearer ${ token }` } },
+      );
+      done();
+    });
+  });
+
+  it('should get all users', () => {
+    const response = [{ a: 1 } as any];
+    const token = 'token';
+    mockHttpClient.get.and.returnValue(of(response));
+    service.getAll(token).subscribe((result) => {
+      expect(result).toEqual(response);
+      expect(mockHttpClient.get).toHaveBeenCalledWith(
+        `http://localhost:3000/users`,
+        { headers: { Authorization: `Bearer ${ token }` } },
+      );
+    });
+  });
+
+  it('should create user', () => {
+    const token = 'token';
+    const username = 'username';
+    const password = 'password';
+    const user: IUser = new IUser(username, password);
+    mockHttpClient.post.and.returnValue(of(user));
+
+    service.create(token, user).subscribe(() => {
+      expect(mockHttpClient.post).toHaveBeenCalledOnceWith(
+        'http://localhost:3000/users',
+        {
+          username: user.username,
+          email: undefined,
+          phone: undefined,
+          password: user.password,
+          site: undefined,
+        },
+        { headers: { Authorization: `Bearer ${ token }` } },
+      );
+    });
+  });
+
 });

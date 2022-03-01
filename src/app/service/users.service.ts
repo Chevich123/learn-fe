@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { IUser } from '../user/iuser';
 import { HttpClient } from '@angular/common/http';
 import { FormGroup } from '@angular/forms';
@@ -14,7 +14,7 @@ export class UsersService {
   }
 
   getPage(start: number, finish: number, token: string | undefined): Observable<IUser[]> {
-    return this.http.get<IUser[]>(`http://localhost:3000/users?start=` + start +'&limit=' + finish, {
+    return this.http.get<IUser[]>(`http://localhost:3000/users?start=` + start + '&limit=' + finish, {
       headers: {
         Authorization: `Bearer ${ token }`,
       },
@@ -29,18 +29,22 @@ export class UsersService {
     });
   }
 
-  create(token: string | undefined, user: FormGroup): Observable<IUser> {
+  create(token: string | undefined,
+         user: any
+  ): Observable<IUser> {
     return this.http.post<IUser>(`http://localhost:3000/users`,
-      {username: user.get('username')?.value,
-        email: user.get('email')?.value,
-        phone: user.get('phone')?.value,
-        password: user.get('password')?.value,
-        site: user.get('site')?.value},
       {
-      headers: {
-        Authorization: `Bearer ${ token }`,
+        username: user.username,
+        email: user.email,
+        phone: user.phone,
+        password: user.password,
+        site: user.site,
       },
-    });
+      {
+        headers: {
+          Authorization: `Bearer ${ token }`,
+        },
+      });
   };
 
   delete(token: string | undefined, userId: string) {
@@ -56,7 +60,7 @@ export class UsersService {
     const url = `http://localhost:3000/users/${userId}`;
     return this.http.patch<String>(url, user, {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${ token }`,
       },
     });
   }
