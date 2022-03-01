@@ -5,15 +5,17 @@ import { UsersComponent } from './users/users.component';
 import { CreateUserComponent } from './create-user/create-user.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { EditingComponent } from './editing/editing.component';
+import { LoggedInGuard } from './guard/loggedInGuard';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: 'newUser', component: CreateUserComponent },
+  { path: 'newUser', component: CreateUserComponent, canActivate: [LoggedInGuard] },
   {
     path: 'users',
+    canActivate: [LoggedInGuard],
     children: [
       { path: '', component: UsersComponent },
-      { path: ':id/edit', component: EditingComponent },
+      { path: ':id/edit',  component: EditingComponent },
     ],
   },
   { path: 'dashboard', component: DashboardComponent },

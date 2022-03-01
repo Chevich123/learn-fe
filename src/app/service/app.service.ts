@@ -10,7 +10,7 @@ import { TokenService } from './token.service';
 @Injectable({
   providedIn: 'root',
 })
-export class AppService {
+export class AppService{
   error = '';
 
   constructor(
@@ -37,11 +37,6 @@ export class AppService {
       );
   }
 
-  private handleUser() {
-    const tok = this.tokenService.getToken();
-    localStorage.setItem('userData', JSON.stringify(tok));
-  }
-
   getUser() {
     const token = this.tokenService.getToken();
     return this.http.get('http://localhost:3000/profile',
@@ -51,6 +46,7 @@ export class AppService {
   logout() {
     this.tokenService.setToken(undefined);
     localStorage.clear();
+    this.router.navigate(['/'])
   }
 
   private handleError<T>(operation = 'operation', result?: T) {
