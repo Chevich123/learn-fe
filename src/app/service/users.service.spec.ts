@@ -86,6 +86,7 @@ describe('UsersService', () => {
         `http://localhost:3000/users?start=${ start }&limit=${ finish }`,
         { headers: { Authorization: `Bearer ${ token }` } },
       );
+      done();
     });
   });
 
@@ -109,14 +110,14 @@ describe('UsersService', () => {
     const user: IUser = new IUser(username, password);
     mockHttpClient.post.and.returnValue(of(user));
 
-    service.create(token, username, password, undefined, undefined, undefined).subscribe(() => {
+    service.create(token, user).subscribe(() => {
       expect(mockHttpClient.post).toHaveBeenCalledOnceWith(
         'http://localhost:3000/users',
         {
-          username: username,
+          username: user.username,
           email: undefined,
           phone: undefined,
-          password: password,
+          password: user.password,
           site: undefined,
         },
         { headers: { Authorization: `Bearer ${ token }` } },

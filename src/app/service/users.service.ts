@@ -30,19 +30,15 @@ export class UsersService {
   }
 
   create(token: string | undefined,
-         username: string | undefined,
-         password: string | undefined,
-         email: string | undefined,
-         phone: string | undefined,
-         site: string | undefined,
+         user: any
   ): Observable<IUser> {
     return this.http.post<IUser>(`http://localhost:3000/users`,
       {
-        username: username,
-        email: email,
-        phone: phone,
-        password: password,
-        site: site,
+        username: user.username,
+        email: user.email,
+        phone: user.phone,
+        password: user.password,
+        site: user.site,
       },
       {
         headers: {

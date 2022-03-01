@@ -4,6 +4,7 @@ import { TokenService } from '../service/token.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { IUser } from '../user/iuser';
 import { Router } from '@angular/router';
+import { ValidatePhone, ValidateUrl } from '../validators/url.validator';
 
 @Component({
   selector: 'app-create-user',
@@ -17,8 +18,8 @@ export class CreateUserComponent implements OnInit {
     username: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z0-9]*')]),
     password: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required, Validators.email]),
-    phone: new FormControl('', [Validators.required, Validators.pattern('[0-9]*')]),
-    site: new FormControl('', [Validators.required]),
+    phone: new FormControl('', [Validators.required,  Validators.pattern('[0-9]*')]),
+    site: new FormControl('', [Validators.required, ValidateUrl]),
   });
 
   constructor(private usersService: UsersService,
@@ -48,13 +49,8 @@ export class CreateUserComponent implements OnInit {
       return;
     }
 
-    this.usersService.create(this.tokenService.getToken(),
-      this.userForms.get('username')?.value,
-      this.userForms.get('password')?.value,
-      this.userForms.get('email')?.value,
-      this.userForms.get('phone')?.value,
-      this.userForms.get('site')?.value
-      ).subscribe(
+    const user  = this.userForms.value;
+    this.usersService.create(this.tokenService.getToken(), user).subscribe(
       user => this.router.navigate(['/users']),
       error => alert(error.name),
     );
