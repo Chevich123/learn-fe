@@ -10,12 +10,10 @@ export class AuthGuard implements CanActivate {
 
   constructor(
     private tokenService: TokenService,
-  ) { }
+  ) {
+  }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-    if (this.tokenService.isAuthenticated()) {
-      return of(false);
-    }
-    return of(true);
+    return of(this.tokenService.isAuthenticated());
   }
 }
