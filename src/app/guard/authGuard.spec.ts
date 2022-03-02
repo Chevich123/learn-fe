@@ -1,7 +1,6 @@
-import { TestBed, getTestBed } from '@angular/core/testing';
-import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
+import { TestBed } from '@angular/core/testing';
+import { Router } from '@angular/router';
 import { AuthGuard } from './authGuard';
-import { of } from 'rxjs';
 
 describe('AuthGuard', () => {
 
@@ -16,7 +15,7 @@ describe('AuthGuard', () => {
   };
 
   const routerStateMock: any = {
-    snapshot: jasmine.createSpy()
+    snapshot: jasmine.createSpy(),
   };
 
   beforeEach(() => {
@@ -29,7 +28,7 @@ describe('AuthGuard', () => {
   });
 
   it('should allow redirect to login for authorized user', () => {
-    expect(mockTokenService.isAuthorized.and.returnValue(of(false)));
+    mockTokenService.isAuthorized.and.returnValue(false);
     expect(guard.canActivate(routeMock, routerStateMock)).toBeTruthy();
   });
 });
