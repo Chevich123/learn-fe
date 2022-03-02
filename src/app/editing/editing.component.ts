@@ -19,8 +19,7 @@ export class EditingComponent implements OnInit {
     private tokenService: TokenService,
     public dialog: MatDialog,
     private appService: AppService,
-  ) {
-  }
+  ) { }
 
   id: string | null = '';
   user: IUser = new IUser('', '');
