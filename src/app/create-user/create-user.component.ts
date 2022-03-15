@@ -3,7 +3,7 @@ import { UsersService } from '../service/users.service';
 import { TokenService } from '../service/token.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ValidatePhone, ValidateUrl } from '../validators/url.validator';
+import { ValidateEmail, ValidateName, ValidatePassword, ValidatePhone, ValidateUrl } from '../validators/url.validator';
 
 @Component({
   selector: 'app-create-user',
@@ -14,10 +14,11 @@ export class CreateUserComponent implements OnInit {
   error = '';
   users: any;
   userForms = new FormGroup({
-    username: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z0-9]*')]),
-    password: new FormControl('', [Validators.required]),
-    email: new FormControl('', [Validators.required, Validators.email]),
-    phone: new FormControl('', [Validators.required,  Validators.pattern('[0-9]*')]),
+    username: new FormControl('', [Validators.required, ValidateName]),
+    password: new FormControl('', [Validators.required, ValidatePassword]),
+    passwordRepeat: new FormControl('', [Validators.required, ValidatePassword]),
+    email: new FormControl('', [Validators.required, ValidateEmail]),
+    phone: new FormControl('', [Validators.required,  ValidatePhone]),
     site: new FormControl('', [Validators.required, ValidateUrl]),
   });
 

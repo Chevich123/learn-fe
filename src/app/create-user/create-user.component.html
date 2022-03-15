@@ -38,7 +38,7 @@
                formControlName="passwordRepeat"
                type="password">
         <mat-error *ngIf="userForms.get('passwordRepeat')?.errors?.['required']">You must enter a value</mat-error>
-        <mat-error *ngIf="userForms.get('passwordRepeat')?.errors?.['invalidPassword']">Value must contain special symbols, digits and letters</mat-error>
+        <mat-error *ngIf="userForms.get('passwordRepeat')?.errors?.['invalidPassword']">Value must contain digits and letters</mat-error>
       </mat-form-field>
       <br/>
 

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ValidateEmail, ValidateName, ValidatePhone, ValidateUrl } from '../../validators/url.validator';
 
 @Component({
   selector: 'app-edit-dialog',
@@ -18,22 +19,21 @@ export class EditDialogComponent {
   userForm = new FormGroup({
     "username": new FormControl("", [
       Validators.required,
-      Validators.minLength(3),
-      Validators.pattern("(?!^ |.* $)^[^\t]+$")
+      ValidateName
     ]),
     "email": new FormControl("", [
       Validators.required,
-      Validators.email
+      ValidateEmail
     ]),
     "phone": new FormControl("", [
       Validators.required,
-      Validators.pattern("[0-9]{12}",)
+      ValidatePhone
     ]),
     "site": new FormControl("", [
       Validators.required,
-      Validators.minLength(7),
-      Validators.pattern("(?!^ |.* $)^[^\t]+$")
+      ValidateUrl
     ])
   });
+
 
 }
