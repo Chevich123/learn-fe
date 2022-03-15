@@ -3,6 +3,7 @@ import { UsersService } from '../service/users.service';
 import { TokenService } from '../service/token.service';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
+import { IUser } from '../user/iuser';
 
 @Component({
   selector: 'app-users',
@@ -10,12 +11,15 @@ import { PageEvent } from '@angular/material/paginator';
   styleUrls: ['./users.component.scss'],
 })
 export class UsersComponent implements OnInit {
-  displayedColumns: string[] = ['userId', 'username', 'email', 'phone', 'site', 'delete', 'edit'];
+  displayedColumns: string[] = ['userId', 'username', 'img', 'email', 'phone', 'site', 'delete', 'edit', 'info'];
   dataSource: any;
   loaded = false;
   length = 0;
   start = 0;
+  imagePreview?: string | ArrayBuffer | null;
+
   private pageSize = 0;
+  public user: IUser = new IUser('', '');
 
   constructor(private usersService: UsersService,
               private tokenService: TokenService,
@@ -29,16 +33,37 @@ export class UsersComponent implements OnInit {
     this.getServerData();
   }
 
+  getUserImage(image: string | ArrayBuffer | null) {
+    const token = this.tokenService.getToken();
+    this.usersService.getImage(token, image).subscribe(
+      (response: any) => {
+        this.createImageFromBlob(response);
+      });
+  }
+
+  createImageFromBlob(image: Blob) {
+    let reader = new FileReader();
+    reader.addEventListener('load', () => {
+      this.imagePreview = reader.result;
+    }, false);
+    if (image) {
+      this.user.avatar = this.imagePreview;
+      reader.readAsDataURL(image);
+    }
+  }
+
   public getServerData(event?: PageEvent | null) {
-    console.log(event);
     if (event?.pageSize) {
       this.pageSize = event.pageSize;
       this.start = event.pageIndex * event.pageSize + 1;
     }
-
     this.usersService.getPage(this.start, this.pageSize, this.tokenService.getToken()).subscribe(
       users => {
-        this.dataSource = users;
+        this.dataSource = users.map((user) => {
+          this.imagePreview = user.avatar;
+          this.getUserImage(this.imagePreview as string);
+          return { ...user, avatar: this.imagePreview };
+        });
         this.loaded = true;
       },
     );

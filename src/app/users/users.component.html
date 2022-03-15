@@ -14,12 +14,17 @@
 
       <ng-container matColumnDef="userId">
         <th class="trh" mat-header-cell *matHeaderCellDef> Id</th>
-        <td class="tdb" mat-cell *matCellDef="let user"> {{user.userId}} </td>
+        <td class="tdb" mat-cell *matCellDef="let user"> <img [src]="user.avatar"></td>
       </ng-container>
 
       <ng-container matColumnDef="username">
         <th class="trh" mat-header-cell *matHeaderCellDef> Username</th>
         <td class="tdb" mat-cell *matCellDef="let user"> {{user.username}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="img">
+        <th class="trh" mat-header-cell *matHeaderCellDef> img</th>
+        <td class="tdb" mat-cell *matCellDef="let user"> {{user.avatar}} </td>
       </ng-container>
 
       <ng-container matColumnDef="email">
@@ -61,10 +66,22 @@
         </td>
       </ng-container>
 
+      <ng-container matColumnDef="info">
+        <th class="trh" mat-header-cell *matHeaderCellDef>Info</th>
+        <td class="tdb" mat-cell *matCellDef="let user">
+          <div class="button-container">
+            <nav>
+              <button routerLink="/users/{{user.userId}}/profile" mat-icon-button color="primary" aria-label="Menu icon">
+                <mat-icon>home</mat-icon>
+              </button>
+            </nav>
+          </div>
+        </td>
+      </ng-container>
+
       <tr class="trd" mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr class="trd" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-
   </div>
 
   <div *ngIf="!loaded" class="main">

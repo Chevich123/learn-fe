@@ -26,6 +26,7 @@ export class UsersService {
       headers: {
         Authorization: `Bearer ${ token }`,
       },
+      responseType: "json",
     });
   }
 
@@ -37,6 +38,7 @@ export class UsersService {
         phone: user.get('phone')?.value,
         password: user.get('password')?.value,
         site: user.get('site')?.value,
+        avatar: user.get('avatar')?.value,
       },
       {
         headers: {
@@ -61,5 +63,24 @@ export class UsersService {
         Authorization: `Bearer ${ token }`,
       },
     });
+  }
+
+  getImage(token: string | undefined, image: string | ArrayBuffer | null | undefined){
+    const url = `http://localhost:3000/images/${image}`
+    return this.http.get(url, {
+      headers: {
+        Authorization: `Bearer ${ token }`,
+      },
+      responseType: 'blob'
+    })
+  }
+
+  sendImage(token: string | undefined, formData: FormData){
+    return this.http.post(`http://localhost:3000/images`, formData, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
+      observe: "response",
+    })
   }
 }

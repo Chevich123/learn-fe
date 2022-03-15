@@ -1,15 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { UsersService } from '../service/users.service';
 import { TokenService } from '../service/token.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-create-user',
   templateUrl: './create-user.component.html',
   styleUrls: ['./create-user.component.scss'],
 })
+
 export class CreateUserComponent implements OnInit {
+
+  @ViewChild('input') inputRef: ElementRef = {} as ElementRef;
+
   error = '';
   users: any;
   userForms = new FormGroup({
@@ -46,7 +51,6 @@ export class CreateUserComponent implements OnInit {
       this.error = 'User already exists';
       return;
     }
-
     this.usersService.create(this.tokenService.getToken(), this.userForms).subscribe(
       user => this.router.navigate(['/users']),
       error => alert(error.name),

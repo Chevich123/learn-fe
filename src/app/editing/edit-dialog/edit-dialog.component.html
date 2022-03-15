@@ -29,6 +29,10 @@
         <mat-error *ngIf="userForm.invalid">Invalid site</mat-error>
       </mat-form-field>
     </div>
+    <div>
+      <input type="file" class="view" #input (change)="onFileUpload($event)">
+      <button (click)="triggerClick()">load</button>
+    </div>
     <mat-dialog-actions align="end">
       <button mat-button [mat-dialog-close]>Cancel</button>
       <button mat-button [mat-dialog-close]='true' [disabled]="userForm.invalid">Confirm</button>
