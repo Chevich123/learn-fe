@@ -4,6 +4,9 @@ import { TokenService } from '../service/token.service';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { IUser } from '../user/iuser';
+import { map, mergeAll, mergeMap, Observable, of, Subject, take, toArray } from 'rxjs';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-users',
@@ -17,12 +20,12 @@ export class UsersComponent implements OnInit {
   length = 0;
   start = 0;
   imagePreview?: string | ArrayBuffer | null;
-
-  private pageSize = 0;
   public user: IUser = new IUser('', '');
+  private pageSize = 0;
 
   constructor(private usersService: UsersService,
               private tokenService: TokenService,
+              private sanitizer: DomSanitizer,
               private dialog: MatDialog) {
   }
 
@@ -33,23 +36,25 @@ export class UsersComponent implements OnInit {
     this.getServerData();
   }
 
-  getUserImage(image: string | ArrayBuffer | null) {
+  getUserImage(image: string): Observable<SafeUrl | null> {
     const token = this.tokenService.getToken();
-    this.usersService.getImage(token, image).subscribe(
-      (response: any) => {
-        this.createImageFromBlob(response);
-      });
-  }
+    return this.usersService.getImage(token, image).pipe(
+      mergeMap((blob) => {
+        const sub$ = new Subject<SafeUrl>();
 
-  createImageFromBlob(image: Blob) {
-    let reader = new FileReader();
-    reader.addEventListener('load', () => {
-      this.imagePreview = reader.result;
-    }, false);
-    if (image) {
-      this.user.avatar = this.imagePreview;
-      reader.readAsDataURL(image);
-    }
+        let reader = new FileReader();
+        reader.addEventListener('load', () => {
+          const safe: any = this.sanitizer.bypassSecurityTrustUrl(reader.result?.toString() || '');
+          sub$.next(safe);
+        }, false);
+        reader.readAsDataURL(blob);
+
+        return sub$;
+      }),
+      catchError(() => {
+        return of(null);
+      }),
+    );
   }
 
   public getServerData(event?: PageEvent | null) {
@@ -57,13 +62,21 @@ export class UsersComponent implements OnInit {
       this.pageSize = event.pageSize;
       this.start = event.pageIndex * event.pageSize + 1;
     }
-    this.usersService.getPage(this.start, this.pageSize, this.tokenService.getToken()).subscribe(
+    this.usersService.getPage(this.start, this.pageSize, this.tokenService.getToken()).pipe(
+      mergeAll(),
+      mergeMap((user) => {
+        if (user.avatar) {
+          return this.getUserImage(user.avatar).pipe(
+            map(imagePreview => ({ ...user, imagePreview })),
+            take(1),
+          );
+        }
+        return of(user);
+      }),
+      toArray(),
+    ).subscribe(
       users => {
-        this.dataSource = users.map((user) => {
-          this.imagePreview = user.avatar;
-          this.getUserImage(this.imagePreview as string);
-          return { ...user, avatar: this.imagePreview };
-        });
+        this.dataSource = users;
         this.loaded = true;
       },
     );
