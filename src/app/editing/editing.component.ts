@@ -34,6 +34,7 @@ export class EditingComponent implements OnInit {
       this.user.email = dialogRef.componentInstance.email;
       this.user.phone = dialogRef.componentInstance.phone;
       this.user.site = dialogRef.componentInstance.site;
+      this.user.avatar = dialogRef.componentInstance.imagePreview as string
       if (!this.data) {
         this.redirect();
       } else {

@@ -1,0 +1,11 @@
+<p>user-profile works!</p>
+<div>
+  <input type="file" class="view" #input (change)="onFileUpload($event)">
+  <button (click)="triggerClick()">load</button>
+  <button (click)="submit()">send</button>
+  <button (click)="getUserImage()">get</button>
+
+</div>
+<div>
+  <img [src]="imagePreview" >
+</div>
