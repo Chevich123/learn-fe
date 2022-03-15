@@ -12,7 +12,9 @@
                formControlName="username"
                placeholder="username">
         <mat-error *ngIf="userForms.get('username')?.errors?.['required']">You must enter a value</mat-error>
-        <mat-error *ngIf="userForms.get('username')?.errors?.['pattern']">Username must contain only letters</mat-error>
+        <mat-error *ngIf="userForms.get('username')?.errors?.['invalidName']">Incorrect username</mat-error>
+        <mat-error *ngIf="userForms.get('username')?.errors?.['toShort']">Username is to short</mat-error>
+        <mat-error *ngIf="userForms.get('username')?.errors?.['toLong']">Username is to long</mat-error>
       </mat-form-field>
       <br/>
 
@@ -23,7 +25,20 @@
                formControlName="password"
                type="password">
 
-        <mat-error *ngIf="userForms.invalid">You must enter a value</mat-error>
+        <mat-error *ngIf="userForms.get('password')?.errors?.['required']">You must enter a value</mat-error>
+        <mat-error *ngIf="userForms.get('password')?.errors?.['invalidLength']">Password is to short</mat-error>
+        <mat-error *ngIf="userForms.get('password')?.errors?.['invalidPassword']">Value must contain digits and letters</mat-error>
+      </mat-form-field>
+      <br/>
+
+      <mat-form-field appearance="outline">
+        <mat-label for="passwordRepeat">Repeat Password:</mat-label>
+        <input matInput id="passwordRepeat" required
+               placeholder="passwordRepeat"
+               formControlName="passwordRepeat"
+               type="password">
+        <mat-error *ngIf="userForms.get('passwordRepeat')?.errors?.['required']">You must enter a value</mat-error>
+        <mat-error *ngIf="userForms.get('passwordRepeat')?.errors?.['invalidPassword']">Value must contain special symbols, digits and letters</mat-error>
       </mat-form-field>
       <br/>
 
@@ -35,7 +50,7 @@
                type="email">
 
         <mat-error *ngIf="userForms.get('email')?.errors?.['required']">You must enter a value</mat-error>
-        <mat-error *ngIf="userForms.get('email')?.errors?.['email']">Value doesn't look like an email</mat-error>
+        <mat-error *ngIf="userForms.get('email')?.errors?.['invalidEmail']">Value doesn't look like an email</mat-error>
       </mat-form-field>
       <br/>
 
@@ -47,7 +62,8 @@
                type="phone">
 
         <mat-error *ngIf="userForms.get('phone')?.errors?.['required']">You must enter a value</mat-error>
-        <mat-error *ngIf="userForms.get('phone')?.errors?.['pattern']">Phone must contain only numbers</mat-error>
+        <mat-error *ngIf="userForms.get('phone')?.errors?.['invalidPhone']">Incorrect phone</mat-error>
+        <mat-error *ngIf="userForms.get('phone')?.errors?.['invalidLength']">Invalid length</mat-error>
       </mat-form-field>
       <br/>
 
@@ -58,7 +74,8 @@
                formControlName="site"
                type="site">
 
-        <mat-error *ngIf="userForms.invalid">You must enter a value</mat-error>
+        <mat-error *ngIf="userForms.get('site')?.errors?.['required']">You must enter a value</mat-error>
+        <mat-error *ngIf="userForms.invalid">Invalid site</mat-error>
       </mat-form-field>
       <br/>
       <div class="buttons">

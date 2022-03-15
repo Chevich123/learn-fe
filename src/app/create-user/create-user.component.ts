@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { UsersService } from '../service/users.service';
 import { TokenService } from '../service/token.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { IUser } from '../user/iuser';
 import { Router } from '@angular/router';
 import { ValidatePhone, ValidateUrl } from '../validators/url.validator';
 
@@ -49,12 +48,18 @@ export class CreateUserComponent implements OnInit {
       return;
     }
 
-    const user  = this.userForms.value;
-    this.usersService.create(this.tokenService.getToken(), user).subscribe(
+    if(this.userForms.get('password')?.value != this.userForms.get('passwordRepeat')?.value) {
+      this.error = 'Passwords do not match';
+      return;
+    }
+    this.usersService.create(this.tokenService.getToken(),
+      this.userForms.value
+    ).subscribe(
       user => this.router.navigate(['/users']),
       error => alert(error.name),
     );
   }
+
 
   cancel() {
     this.router.navigate(['/users']);

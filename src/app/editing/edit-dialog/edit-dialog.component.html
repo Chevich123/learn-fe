@@ -5,21 +5,28 @@
       <mat-form-field class="mat-typography" [ngClass]="{validation:userForm.controls['username'].valid}">
         <mat-label for="username">Username:</mat-label>
         <input matInput id="username" [(ngModel)]="name" formControlName="username" placeholder="username">
-        <mat-error *ngIf="userForm.invalid">Invalid username</mat-error>
+        <mat-error *ngIf="userForm.get('username')?.errors?.['required']">You must enter a value</mat-error>
+        <mat-error *ngIf="userForm.get('username')?.errors?.['invalidName']">Invalid
+          username</mat-error>
+        <mat-error *ngIf="userForm.get('username')?.errors?.['toShort']">Username is to short</mat-error>
+        <mat-error *ngIf="userForm.get('username')?.errors?.['toLong']">Username is to long</mat-error>
       </mat-form-field>
     </div>
     <div>
       <mat-form-field class="mat-typography" [ngClass]="{validation:userForm.controls['email'].valid}">
         <mat-label for="username">Email:</mat-label>
         <input matInput id="email" [(ngModel)]="email" formControlName="email" placeholder="email">
-        <mat-error *ngIf="userForm.invalid">Invalid email</mat-error>
+        <mat-error *ngIf="userForm.get('email')?.errors?.['required']">You must enter a value</mat-error>
+        <mat-error *ngIf="userForm.get('email')?.errors?.['invalidEmail']">Invalid email</mat-error>
       </mat-form-field>
     </div>
     <div>
       <mat-form-field class="mat-typography" [ngClass]="{validation:userForm.controls['phone'].valid}">
         <mat-label for="username">Phone:</mat-label>
         <input matInput id="phone" [(ngModel)]="phone" formControlName="phone" placeholder="phone">
-        <mat-error *ngIf="userForm.invalid">Invalid phone</mat-error>
+        <mat-error *ngIf="userForm.get('phone')?.errors?.['required']">You must enter a value</mat-error>
+        <mat-error *ngIf="userForm.get('phone')?.errors?.['invalidPhone']">Invalid phone</mat-error>
+        <mat-error *ngIf="userForm.get('phone')?.errors?.['invalidLength']">Invalid length</mat-error>
       </mat-form-field>
     </div>
     <div>
