@@ -65,7 +65,7 @@ export class UsersService {
     });
   }
 
-  getImage(token: string | undefined, image: string | ArrayBuffer | null | undefined){
+  getImage(token: string | undefined, image: string): Observable<Blob>{
     const url = `http://localhost:3000/images/${image}`
     return this.http.get(url, {
       headers: {
