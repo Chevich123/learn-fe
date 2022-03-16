@@ -6,11 +6,11 @@ import { CreateUserComponent } from './create-user/create-user.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { EditingComponent } from './editing/editing.component';
 import { LoggedInGuard } from './guard/loggedInGuard';
-import { AuthGuard } from './guard/authGuard';
+import { NoAuthGuard } from './guard/authGuard';
 
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent, canActivate: [AuthGuard]},
+  { path: 'login', component: LoginComponent, canActivate: [NoAuthGuard]},
   { path: 'newUser', component: CreateUserComponent, canActivate: [LoggedInGuard] },
   {
     path: 'users',
