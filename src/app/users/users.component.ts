@@ -14,7 +14,7 @@ import { catchError } from 'rxjs/operators';
   styleUrls: ['./users.component.scss'],
 })
 export class UsersComponent implements OnInit {
-  displayedColumns: string[] = ['userId', 'username', 'img', 'email', 'phone', 'site', 'delete', 'edit', 'info'];
+  displayedColumns: string[] = ['userId', 'username', 'email', 'phone', 'site', 'delete', 'edit'];
   dataSource: any;
   loaded = false;
   length = 0;

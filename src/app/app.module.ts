@@ -24,7 +24,6 @@ import { EditingComponent } from './editing/editing.component';
 import { CreateUserComponent } from './create-user/create-user.component';
 import { EditDialogComponent } from './editing/edit-dialog/edit-dialog.component';
 import { TokenInterceptor } from './interceptor/token.interceptor';
-import { UserProfileComponent } from './user-profile/user-profile.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +37,6 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     DialogComponent,
     EditingComponent,
     EditDialogComponent,
-    UserProfileComponent,
   ],
   imports: [
     MatPaginatorModule,
