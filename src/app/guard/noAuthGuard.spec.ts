@@ -1,10 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
-import { AuthGuard } from './authGuard';
+import { NoAuthGuard } from './noAuthGuard';
 
 describe('AuthGuard', () => {
 
-  let guard: AuthGuard;
+  let guard: NoAuthGuard;
 
   const routeMock: any = {
     snapshot: jasmine.createSpy(),
@@ -20,11 +20,11 @@ describe('AuthGuard', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [AuthGuard,
+      providers: [NoAuthGuard,
         { provide: Router, useValue: routerStateMock },
       ],
     });
-    guard = TestBed.inject(AuthGuard);
+    guard = TestBed.inject(NoAuthGuard);
   });
 
   it('should allow redirect to login for authorized user', () => {

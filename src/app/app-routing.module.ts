@@ -6,7 +6,7 @@ import { CreateUserComponent } from './create-user/create-user.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { EditingComponent } from './editing/editing.component';
 import { LoggedInGuard } from './guard/loggedInGuard';
-import { NoAuthGuard } from './guard/authGuard';
+import { NoAuthGuard } from './guard/noAuthGuard';
 
 
 const routes: Routes = [
