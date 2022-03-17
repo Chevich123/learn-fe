@@ -1,6 +1,5 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { UserProfileComponent } from '../../user-profile/user-profile.component';
 import { UsersService } from '../../service/users.service';
 import { TokenService } from '../../service/token.service';
 

@@ -31,7 +31,7 @@
     </div>
     <div>
       <input type="file" class="view" #input (change)="onFileUpload($event)">
-      <button (click)="triggerClick()">load</button>
+      <button mat-stroked-button color="primary" (click)="triggerClick()" class="custom-file-upload">Choose file</button>
     </div>
     <mat-dialog-actions align="end">
       <button mat-button [mat-dialog-close]>Cancel</button>
