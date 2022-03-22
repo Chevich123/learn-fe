@@ -57,12 +57,10 @@ export class EditDialogComponent {
       this.imagePreview = file.result;
     }
 
-    const token = this.tokenService.getToken()
-
     const formData = new FormData();
     formData.append('file', this.image);
 
-    this.usersService.sendImage(token, formData).subscribe(
+    this.usersService.sendImage(formData).subscribe(
       (response: any) => {
         this.imagePreview = response.body.filename
       }
