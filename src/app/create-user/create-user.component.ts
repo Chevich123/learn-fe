@@ -3,7 +3,6 @@ import { UsersService } from '../service/users.service';
 import { TokenService } from '../service/token.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-create-user',
@@ -36,7 +35,7 @@ export class CreateUserComponent implements OnInit {
   }
 
   private getAll() {
-    this.usersService.getAll(this.tokenService.getToken()).subscribe(
+    this.usersService.getAll().subscribe(
       users => {
         this.users = users;
       },
@@ -51,7 +50,7 @@ export class CreateUserComponent implements OnInit {
       this.error = 'User already exists';
       return;
     }
-    this.usersService.create(this.tokenService.getToken(), this.userForms).subscribe(
+    this.usersService.create(this.userForms).subscribe(
       user => this.router.navigate(['/users']),
       error => alert(error.name),
     );

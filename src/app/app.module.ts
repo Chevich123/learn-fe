@@ -24,6 +24,9 @@ import { EditingComponent } from './editing/editing.component';
 import { CreateUserComponent } from './create-user/create-user.component';
 import { EditDialogComponent } from './editing/edit-dialog/edit-dialog.component';
 import { TokenInterceptor } from './interceptor/token.interceptor';
+import { MessageComponent } from './message/message.component';
+import { ErrorInterceptor } from './interceptor/error-interceptor';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -37,6 +40,7 @@ import { TokenInterceptor } from './interceptor/token.interceptor';
     DialogComponent,
     EditingComponent,
     EditDialogComponent,
+    MessageComponent,
   ],
   imports: [
     MatPaginatorModule,
@@ -56,6 +60,7 @@ import { TokenInterceptor } from './interceptor/token.interceptor';
     MatIconModule,
     MatDialogModule,
     ReactiveFormsModule,
+    MatSnackBarModule
   ],
   providers: [
     {
@@ -63,6 +68,12 @@ import { TokenInterceptor } from './interceptor/token.interceptor';
       multi: true,
       useClass: TokenInterceptor,
     },
+    {
+      provide: HTTP_INTERCEPTORS,
+      multi: true,
+      useClass: ErrorInterceptor,
+    },
+    MessageComponent
   ],
   bootstrap: [AppComponent],
 })

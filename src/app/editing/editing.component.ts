@@ -48,7 +48,7 @@ export class EditingComponent implements OnInit {
   }
 
   edit() {
-    this.usersService.edit(this.tokenService.getToken(), this.user, this.id).subscribe();
+    this.usersService.edit(this.user, this.id).subscribe();
     this.redirect();
   }
 }

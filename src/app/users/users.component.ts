@@ -38,7 +38,7 @@ export class UsersComponent implements OnInit {
 
   getUserImage(image: string): Observable<SafeUrl | null> {
     const token = this.tokenService.getToken();
-    return this.usersService.getImage(token, image).pipe(
+    return this.usersService.getImage(image).pipe(
       mergeMap((blob) => {
         const sub$ = new Subject<SafeUrl>();
 
@@ -62,7 +62,7 @@ export class UsersComponent implements OnInit {
       this.pageSize = event.pageSize;
       this.start = event.pageIndex * event.pageSize + 1;
     }
-    this.usersService.getPage(this.start, this.pageSize, this.tokenService.getToken()).pipe(
+    this.usersService.getPage(this.start, this.pageSize).pipe(
       mergeAll(),
       mergeMap((user) => {
         if (user.avatar) {
@@ -96,7 +96,7 @@ export class UsersComponent implements OnInit {
 
   delete(userId: string) {
     if (userId.length > 0) {
-      this.usersService.delete(this.tokenService.getToken(), userId).subscribe(
+      this.usersService.delete(userId).subscribe(
         () => {
           this.setLength();
           if (this.start == this.length) {
@@ -110,7 +110,7 @@ export class UsersComponent implements OnInit {
   }
 
   private setLength() {
-    return this.usersService.getAll(this.tokenService.getToken()).subscribe(
+    return this.usersService.getAll().subscribe(
       users => {
         this.length = users.length;
       },
