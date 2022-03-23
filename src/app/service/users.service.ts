@@ -14,13 +14,12 @@ export class UsersService {
   }
 
   getPage(start: number, finish: number): Observable<IUser[]> {
-    return this.http.get<IUser[]>(`http://localhost:3000/users?start=` + start + '&limit=' + finish, {
-    });
+    return this.http.get<IUser[]>(`http://localhost:3000/users?start=` + start + '&limit=' + finish, {});
   }
 
   getAll(): Observable<IUser[]> {
     return this.http.get<IUser[]>(`http://localhost:3000/users`, {
-      responseType: "json",
+      responseType: 'json',
     });
   }
 
@@ -46,16 +45,16 @@ export class UsersService {
     return this.http.patch<String>(url, user);
   }
 
-  getImage(image: string): Observable<Blob>{
-    const url = `http://localhost:3000/images/${image}`
+  getImage(image: string): Observable<Blob> {
+    const url = `http://localhost:3000/images/${ image }`;
     return this.http.get(url, {
-      responseType: 'blob'
-    })
+      responseType: 'blob',
+    });
   }
 
-  sendImage(formData: FormData){
+  sendImage(formData: FormData) {
     return this.http.post(`http://localhost:3000/images`, formData, {
-      observe: "response",
-    })
+      observe: 'response',
+    });
   }
 }

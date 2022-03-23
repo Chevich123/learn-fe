@@ -19,7 +19,8 @@ export class EditingComponent implements OnInit {
     private tokenService: TokenService,
     public dialog: MatDialog,
     private appService: AppService,
-  ) { }
+  ) {
+  }
 
   id: string | null = '';
   user: IUser = new IUser('', '');
@@ -34,7 +35,7 @@ export class EditingComponent implements OnInit {
       this.user.email = dialogRef.componentInstance.email;
       this.user.phone = dialogRef.componentInstance.phone;
       this.user.site = dialogRef.componentInstance.site;
-      this.user.avatar = dialogRef.componentInstance.imagePreview as string
+      this.user.avatar = dialogRef.componentInstance.imagePreview as string;
       if (!this.data) {
         this.redirect();
       } else {

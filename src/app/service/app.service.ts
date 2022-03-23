@@ -10,7 +10,7 @@ import { TokenService } from './token.service';
 @Injectable({
   providedIn: 'root',
 })
-export class AppService{
+export class AppService {
   error = '';
 
   constructor(
@@ -46,7 +46,7 @@ export class AppService{
   logout() {
     this.tokenService.setToken(undefined);
     localStorage.clear();
-    this.router.navigate(['/'])
+    this.router.navigate(['/']);
   }
 
   private handleError<T>(operation = 'operation', result?: T) {
