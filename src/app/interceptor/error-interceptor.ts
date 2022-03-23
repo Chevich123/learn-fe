@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { MessageComponent } from '../message/message.component';
@@ -30,25 +30,15 @@ export class ErrorInterceptor implements HttpInterceptor {
             errorMessage = `Error Status ${ returnedError.status }: ${ returnedError.error.error } - ${ returnedError.error.message }`;
             handled = this.handleServerSideError(returnedError);
           }
+          console.error(errorMessage || returnedError);
+          return of(returnedError);
 
-          console.error(errorMessage ? errorMessage : returnedError);
-
-          if (!handled) {
-            if (errorMessage) {
-              return throwError(errorMessage);
-            } else {
-              return throwError('Unexpected problem occurred');
-            }
-          } else {
-            return of(returnedError);
-          }
         }),
       );
   }
 
   private handleServerSideError(error: HttpErrorResponse): boolean {
-    let handled: boolean = false;
     this.messageComponent.openSnackBar(error.statusText);
-    return handled;
+    return false;
   }
 }
