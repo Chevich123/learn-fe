@@ -15,9 +15,6 @@ export class ErrorInterceptor implements HttpInterceptor {
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
-    let handled: boolean = false;
-
     return next.handle(request)
       .pipe(
         retry(1),
@@ -28,7 +25,7 @@ export class ErrorInterceptor implements HttpInterceptor {
             errorMessage = `Error: ${ returnedError.error.message }`;
           } else if (returnedError instanceof HttpErrorResponse) {
             errorMessage = `Error Status ${ returnedError.status }: ${ returnedError.error.error } - ${ returnedError.error.message }`;
-            handled = this.handleServerSideError(returnedError);
+            this.handleServerSideError(returnedError);
           }
           console.error(errorMessage || returnedError);
           return of(returnedError);
@@ -37,8 +34,7 @@ export class ErrorInterceptor implements HttpInterceptor {
       );
   }
 
-  private handleServerSideError(error: HttpErrorResponse): boolean {
+  private handleServerSideError(error: HttpErrorResponse) {
     this.messageComponent.openSnackBar(error.statusText);
-    return false;
   }
 }
