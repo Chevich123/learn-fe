@@ -60,7 +60,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatIconModule,
     MatDialogModule,
     ReactiveFormsModule,
-    MatSnackBarModule
+    MatSnackBarModule,
   ],
   providers: [
     {
@@ -73,7 +73,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
       multi: true,
       useClass: ErrorInterceptor,
     },
-    MessageComponent
+    MessageComponent,
   ],
   bootstrap: [AppComponent],
 })

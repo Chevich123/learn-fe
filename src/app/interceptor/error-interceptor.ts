@@ -10,7 +10,7 @@ export class ErrorInterceptor implements HttpInterceptor {
 
   constructor(
     private router: Router,
-    private messageComponent: MessageComponent
+    private messageComponent: MessageComponent,
   ) {
   }
 
@@ -48,23 +48,7 @@ export class ErrorInterceptor implements HttpInterceptor {
 
   private handleServerSideError(error: HttpErrorResponse): boolean {
     let handled: boolean = false;
-    console.log(error)
-
-    switch (error.status) {
-      case 401:
-        this.messageComponent.openSnackBar(error.statusText)
-        handled = true;
-        break;
-      case 403:
-        this.messageComponent.openSnackBar(error.statusText)
-        handled = true;
-        break
-      case 404:
-        this.messageComponent.openSnackBar(error.statusText)
-        handled = true;
-        break;
-    }
-
+    this.messageComponent.openSnackBar(error.statusText);
     return handled;
   }
 }
