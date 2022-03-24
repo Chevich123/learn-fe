@@ -14,12 +14,8 @@ export class UsersService {
   constructor(private http: HttpClient) {
   }
 
-  getPage(start: number, finish: number, token: string | undefined): Observable<IUser[]> {
-    return this.http.get<IUser[]>(`http://localhost:3000/users?start=` + start + '&limit=' + finish, {
-      headers: {
-        Authorization: `Bearer ${ token }`,
-      },
-    });
+  getPage(start: number, finish: number): Observable<IUser[]> {
+    return this.http.get<IUser[]>(`http://localhost:3000/users?start=` + start + '&limit=' + finish);
   }
 
   getAll(): Observable<IUser[]> {
