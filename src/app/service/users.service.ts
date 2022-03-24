@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { IUser } from '../user/iuser';
 import { HttpClient } from '@angular/common/http';
 import { FormGroup } from '@angular/forms';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -14,17 +15,17 @@ export class UsersService {
   }
 
   getPage(start: number, finish: number): Observable<IUser[]> {
-    return this.http.get<IUser[]>(`http://localhost:3000/users?start=` + start + '&limit=' + finish, {});
+    return this.http.get<IUser[]>(`${environment.API_URL}/users?start=` + start + '&limit=' + finish, {});
   }
 
   getAll(): Observable<IUser[]> {
-    return this.http.get<IUser[]>(`http://localhost:3000/users`, {
+    return this.http.get<IUser[]>(`${environment.API_URL}/users`, {
       responseType: 'json',
     });
   }
 
   create(user: FormGroup): Observable<IUser> {
-    return this.http.post<IUser>(`http://localhost:3000/users`,
+    return this.http.post<IUser>(`${environment.API_URL}/users`,
       {
         username: user.get('username')?.value,
         email: user.get('email')?.value,
@@ -36,24 +37,24 @@ export class UsersService {
   };
 
   delete(userId: string) {
-    const url = `${ `http://localhost:3000/users` }/${ userId }`;
+    const url = `${ `${environment.API_URL}/users` }/${ userId }`;
     return this.http.delete<String>(url);
   }
 
   edit(user: IUser, userId: string | null) {
-    const url = `http://localhost:3000/users/${ userId }`;
+    const url = `${environment.API_URL}/users/${ userId }`;
     return this.http.patch<String>(url, user);
   }
 
-  getImage(image: string): Observable<Blob> {
-    const url = `http://localhost:3000/images/${ image }`;
+  getImage(token: string | undefined, image: string): Observable<Blob>{
+    const url = `${environment.API_URL}/images/${image}`
     return this.http.get(url, {
       responseType: 'blob',
     });
   }
 
   sendImage(formData: FormData) {
-    return this.http.post(`http://localhost:3000/images`, formData, {
+    return this.http.post(`${environment.API_URL}/images`, formData, {
       observe: 'response',
     });
   }
