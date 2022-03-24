@@ -6,6 +6,7 @@ import { catchError, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { LoginDTO } from '../interfaces/loginDto';
 import { TokenService } from './token.service';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -23,7 +24,7 @@ export class AppService {
   login(data: LoginDTO): Observable<Token> {
     this.error = '';
     return this.http
-      .post<Token>(`http://localhost:3000/auth/login`, data).pipe(
+      .post<Token>(`${environment.API_URL}/auth/login`, data).pipe(
         catchError(this.handleError<Token>('Invalid profile')),
         tap(
           ({ access_token }) => {
@@ -38,9 +39,7 @@ export class AppService {
   }
 
   getUser() {
-    const token = this.tokenService.getToken();
-    return this.http.get('http://localhost:3000/profile',
-      { headers: { 'Authorization': `Bearer ${ token }` } });
+    return this.http.get(`${environment.API_URL}/profile`);
   }
 
   logout() {
