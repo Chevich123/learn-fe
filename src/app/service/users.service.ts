@@ -14,8 +14,12 @@ export class UsersService {
   constructor(private http: HttpClient) {
   }
 
-  getPage(start: number, finish: number): Observable<IUser[]> {
-    return this.http.get<IUser[]>(`${environment.API_URL}/users?start=` + start + '&limit=' + finish, {});
+  getPage(start: number, finish: number, token: string | undefined): Observable<IUser[]> {
+    return this.http.get<IUser[]>(`http://localhost:3000/users?start=` + start + '&limit=' + finish, {
+      headers: {
+        Authorization: `Bearer ${ token }`,
+      },
+    });
   }
 
   getAll(): Observable<IUser[]> {
@@ -46,7 +50,7 @@ export class UsersService {
     return this.http.patch<String>(url, user);
   }
 
-  getImage(token: string | undefined, image: string): Observable<Blob>{
+  getImage(image: string): Observable<Blob>{
     const url = `${environment.API_URL}/images/${image}`
     return this.http.get(url, {
       responseType: 'blob',
