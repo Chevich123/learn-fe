@@ -7,17 +7,25 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
-  form = new FormGroup({
-    pass: new FormControl<string>('', [
-      Validators.required,
-      Validators.minLength(6),
-    ]),
-  });
+  password = new FormControl('', [
+    Validators.required,
+    Validators.minLength(6),
+  ]);
 
-  submit() {
-    console.log(this.form.value);
+  email = new FormControl('', [Validators.required, Validators.email]);
+
+  getErrorMessage() {
+    if (this.email.hasError('required')) {
+      return 'You must enter a value';
+    }
+    return this.email.hasError('email') ? 'Not a valid email' : '';
   }
-  get pass() {
-    return this.form.controls.pass as FormControl;
+  getErrorPass() {
+    if (this.password.hasError('required')) {
+      return 'You must enter a value';
+    }
+    return this.password.hasError('password')
+      ? ''
+      : 'Password less then 6 symbols';
   }
 }
