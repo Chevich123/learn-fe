@@ -84,6 +84,12 @@ section {
       cursor: pointer;
       font-size: 1em;
       font-weight: 600;
+      transition: all 120ms linear;
+      &:hover {
+        color: white;
+        background: #ff6a00;
+        transition: all 120ms linear;
+      }
     }
     .register {
       font-size: 0.9em;
