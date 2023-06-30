@@ -1,14 +1,21 @@
 <section>
   <div class="form-box">
     <div class="form-value">
-      <form action="">
+      <form [formGroup]="form" (ngSubmit)="submit()">
         <h2>Login</h2>
         <div class="inputbox">
           <input type="email" required placeholder="Email" />
         </div>
         <div class="inputbox">
-          <input type="password" required placeholder="Password" />
+          <input
+            type="password"
+            placeholder="Password"
+            formControlName="pass"
+          />
         </div>
+        <p class="pass_error" *ngIf="pass.errors?.['minlength']">
+          Password min length: 6
+        </p>
         <div class="forget">
           <label for=""
             ><input type="checkbox" />Remember Me
@@ -20,6 +27,7 @@
           <p>Don't have a account <a href="#">Register</a></p>
         </div>
       </form>
+      <button routerLink="/">Back</button>
     </div>
   </div>
 </section>
