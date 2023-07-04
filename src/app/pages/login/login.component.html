@@ -3,9 +3,9 @@
     <h2>Login</h2>
     <mat-form-field>
       <mat-icon matSuffix class="material-symbols-outlined">mail</mat-icon>
-      <mat-label>Enter your email</mat-label>
-      <input matInput placeholder="email@example.com" formControlName="email" />
-      <mat-error *ngIf="date.controls['email'].invalid">{{
+      <mat-label>Enter your username</mat-label>
+      <input matInput placeholder="maria" formControlName="username" />
+      <mat-error *ngIf="date.controls['username'].invalid">{{
         getErrorMessage()
       }}</mat-error>
     </mat-form-field>

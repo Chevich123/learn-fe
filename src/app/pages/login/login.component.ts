@@ -12,19 +12,17 @@ export class LoginComponent {
       Validators.required,
       Validators.minLength(6),
     ]),
-    email: new FormControl('', [Validators.required, Validators.email]),
+    username: new FormControl('', [Validators.required]),
   });
 
-  getErrorMessage() {
-    if (this.date.controls['email'].hasError('required')) {
-      return 'You must enter an email';
+  getErrorMessage(): string {
+    if (this.date.controls['username'].hasError('required')) {
+      return 'You must enter a username';
     }
-    return this.date.controls['email'].hasError('email')
-      ? 'Not a valid email'
-      : '';
+    return '';
   }
 
-  getErrorPass() {
+  getErrorPass(): string {
     if (this.date.controls['password'].hasError('required')) {
       return 'You must enter a password';
     }
