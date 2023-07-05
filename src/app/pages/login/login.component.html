@@ -1,10 +1,12 @@
 <section>
   <form class="form-box" [formGroup]="date" (ngSubmit)="onSubmit()">
     <h2>Login</h2>
+    <mat-error *ngIf="error"> incorrect password </mat-error>
+
     <mat-form-field>
       <mat-icon matSuffix class="material-symbols-outlined">mail</mat-icon>
       <mat-label>Enter your username</mat-label>
-      <input matInput placeholder="maria" formControlName="username" />
+      <input matInput placeholder="username" formControlName="username" />
       <mat-error *ngIf="date.controls['username'].invalid">{{
         getErrorMessage()
       }}</mat-error>
