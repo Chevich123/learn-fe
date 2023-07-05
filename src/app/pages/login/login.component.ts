@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -7,6 +8,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
+  error = false;
   date: FormGroup = new FormGroup({
     password: new FormControl('', [
       Validators.required,
@@ -14,6 +16,8 @@ export class LoginComponent {
     ]),
     username: new FormControl('', [Validators.required]),
   });
+
+  constructor(private authService: AuthService) {}
 
   getErrorMessage(): string {
     if (this.date.controls['username'].hasError('required')) {
@@ -32,6 +36,14 @@ export class LoginComponent {
   }
 
   onSubmit() {
-    return console.log(this.date.value);
+    //return console.log(this.date.value);
+    this.authService.login(this.date.value).subscribe({
+      error: () => {
+        this.error = true;
+      },
+      next: () => {
+        this.error = false;
+      },
+    });
   }
 }
