@@ -7,5 +7,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./wrapper.component.scss'],
 })
 export class WrapperComponent {
-  constructor(public router: Router) {}
+  constructor(private router: Router) {}
+  loginVisible():boolean{
+    return this.router.url !== '/login';
+  }
 }
