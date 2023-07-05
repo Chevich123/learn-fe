@@ -1,15 +1,13 @@
-<div class="body">
-  <div class="header">
-    <div class="leftblock">
-      <label>Workshop</label>
-      <label>#3</label>
-    </div>
-    <a routerLink="/login">
-      <button>
-        <mat-icon>account_circle</mat-icon>
-        Login
-      </button>
-    </a>
+<div class="header">
+  <div class="leftblock">
+    <mat-label>Workshop</mat-label>
+    <mat-label>#3</mat-label>
   </div>
-  <router-outlet></router-outlet>
+  <a routerLink="/login" *ngIf="router.url !== '/login'">
+    <button>
+      <mat-icon>account_circle</mat-icon>
+      Login
+    </button>
+  </a>
 </div>
+<router-outlet></router-outlet>

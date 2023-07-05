@@ -1,17 +1,17 @@
+* {
+  z-index: 1;
+}
 .header {
   background: linear-gradient(to right, rgb(173, 173, 255), #ff6a00, black 80%);
   height: 40px;
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin: 0;
   .leftblock {
     color: white;
     font-size: 24px;
     display: flex;
     align-items: center;
-    height: 100%;
   }
   a {
     text-decoration: none;
