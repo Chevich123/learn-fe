@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -7,24 +8,25 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
+  error = false;
   date: FormGroup = new FormGroup({
     password: new FormControl('', [
       Validators.required,
       Validators.minLength(6),
     ]),
-    email: new FormControl('', [Validators.required, Validators.email]),
+    username: new FormControl('', [Validators.required]),
   });
 
-  getErrorMessage() {
-    if (this.date.controls['email'].hasError('required')) {
-      return 'You must enter an email';
+  constructor(private authService: AuthService) {}
+
+  getErrorMessage(): string {
+    if (this.date.controls['username'].hasError('required')) {
+      return 'You must enter a username';
     }
-    return this.date.controls['email'].hasError('email')
-      ? 'Not a valid email'
-      : '';
+    return '';
   }
 
-  getErrorPass() {
+  getErrorPass(): string {
     if (this.date.controls['password'].hasError('required')) {
       return 'You must enter a password';
     }
@@ -34,6 +36,14 @@ export class LoginComponent {
   }
 
   onSubmit() {
-    return console.log(this.date.value);
+    //return console.log(this.date.value);
+    this.authService.login(this.date.value).subscribe({
+      error: () => {
+        this.error = true;
+      },
+      next: () => {
+        this.error = false;
+      },
+    });
   }
 }
