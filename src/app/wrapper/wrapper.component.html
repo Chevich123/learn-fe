@@ -1,0 +1,13 @@
+<div class="header">
+  <div class="leftblock">
+    <mat-label>Workshop</mat-label>
+    <mat-label>#3</mat-label>
+  </div>
+  <a routerLink="/login" *ngIf="loginVisible()">
+    <button>
+      <mat-icon>account_circle</mat-icon>
+      Login
+    </button>
+  </a>
+</div>
+<router-outlet></router-outlet>
