@@ -11,7 +11,10 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  login(body: { password: string; username: string }): Observable<any> {
+  login(body: {
+    password: string;
+    username: string;
+  }): Observable<{ access_token: string }> {
     return this.http
       .post<{ access_token: string }>('http://localhost:3000/auth/login', body)
       .pipe(
