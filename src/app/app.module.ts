@@ -10,10 +10,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 import { MatButtonModule } from '@angular/material/button';
 import { WrapperComponent } from './wrapper/wrapper.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { TokenInterceptor } from './shared/interceptors/token-interceptor';
+import { ProductsComponent } from './pages/products/products.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +25,7 @@ import { TokenInterceptor } from './shared/interceptors/token-interceptor';
     LoginComponent,
     WrapperComponent,
     DashboardComponent,
+    ProductsComponent,
   ],
   imports: [
     BrowserModule,
@@ -32,6 +37,9 @@ import { TokenInterceptor } from './shared/interceptors/token-interceptor';
     MatInputModule,
     MatButtonModule,
     MatIconModule,
+    MatTableModule,
+    MatSortModule,
+    MatPaginatorModule,
     FormsModule,
   ],
   providers: [
