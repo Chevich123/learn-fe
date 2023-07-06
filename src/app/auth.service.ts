@@ -7,10 +7,9 @@ import { tap } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class AuthService {
-  private token = '';
-
+  token: string | null = null;
   constructor(private http: HttpClient) {
-    localStorage.getItem('access_token');
+    this.token = localStorage.getItem('access_token');
   }
 
   login(body: {
@@ -23,7 +22,6 @@ export class AuthService {
         tap((payload) => {
           this.token = payload.access_token;
           localStorage.setItem('access_token', this.token);
-          console.log('tyt', localStorage);
         }),
       );
   }
