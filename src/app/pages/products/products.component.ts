@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, AfterViewInit, ViewChild } from '@angular/core';
 import {MatTableDataSource } from '@angular/material/table';
 import { ProductsService } from 'src/app/products.service';
 import { Product } from 'src/app/product';
@@ -10,13 +10,17 @@ import { MatSort } from '@angular/material/sort';
   styleUrls: ['./products.component.scss']
 })
 
-export class ProductsComponent implements OnInit {
+export class ProductsComponent implements AfterViewInit {
+  @ViewChild(MatSort)
+  sort = new MatSort()
   displayedColumns: string[] = ['country_of_origin', 'manufacturer', 'name', 'width', 'height', 'dipth'];
-  dataSource = new MatTableDataSource<Product>([
-    {country_of_origin: "Belarus", depth:69, height:360, width:420, manufacturer:"scriptSQD", name:"Test product 1"},
-    {country_of_origin: "Testland", depth:38, height:92, width:106, manufacturer:"Test manufacturer", name:"Test product 2"}]);
+  dataSource = new MatTableDataSource<Product>([]);
   constructor(private productsService: ProductsService){ }
-  ngOnInit(): void {
-    //this.productsService.getProducts()
+  ngAfterViewInit(): void {
+    this.dataSource.sort = this.sort;
+    this.productsService.getProducts().subscribe({
+      next: (products) => {console.log("success"); this.dataSource.data = products.data},
+      error: (err) => console.log(err)
+    });
   }
 }
