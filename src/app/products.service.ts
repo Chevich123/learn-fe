@@ -9,7 +9,7 @@ import { AuthService } from './auth.service';
   providedIn: 'root'
 })
 export class ProductsService {
-  constructor(private http: HttpClient, private auth: AuthService) { }
+  constructor(private http: HttpClient) { }
 
   getProducts(): Observable<IPaginatedResponse<Product[]>> {
     return this.http.get<IPaginatedResponse<Product[]>>("http://localhost:3000/products");
