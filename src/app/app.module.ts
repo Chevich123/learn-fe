@@ -18,6 +18,7 @@ import { WrapperComponent } from './wrapper/wrapper.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { TokenInterceptor } from './shared/interceptors/token-interceptor';
 import { ProductsComponent } from './pages/products/products.component';
+import { UsersComponent } from './pages/users/users.component';
 
 @NgModule({
   declarations: [
