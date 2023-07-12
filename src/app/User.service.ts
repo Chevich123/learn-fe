@@ -7,8 +7,8 @@ import { AuthService } from './auth.service';
 @Injectable({
   providedIn: 'root',
 })
-export class UserServiceService {
-  constructor(private auth: AuthService, private http: HttpClient) {}
+export class UserService {
+  constructor(private http: HttpClient) {}
 
   getUsers(): Observable<{ data: User[]; total: number }> {
     const headers = new HttpHeaders().set(

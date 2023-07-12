@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../../shared/interfaces/user';
-import { AuthService } from '../../auth.service';
+import { UserService } from '../../User.service';
 
 @Component({
   selector: 'app-users',
@@ -8,7 +8,7 @@ import { AuthService } from '../../auth.service';
   styleUrls: ['./users.component.scss'],
 })
 export class UsersComponent implements OnInit {
-  constructor(private auth: AuthService) {}
+  constructor(private usService: UserService) {}
   users: User[] = [];
 
   columns = [
@@ -41,25 +41,10 @@ export class UsersComponent implements OnInit {
   dataSource = this.users;
   displayedColumns = this.columns.map((c) => c.columnDef);
 
-  loginAndFetchUsers() {
-    const username = 'scriptSQD';
-    const password = '123456';
-
-    this.auth.login({ username, password }).subscribe(
-      (response) => {
-        this.getUsers();
-      },
-      (error) => {
-        console.error('Error logging in:', error);
-      },
-    );
-  }
   getUsers() {
-    this.auth.getUsers().subscribe(
+    this.usService.getUsers().subscribe(
       (usersResponse) => {
         this.dataSource = usersResponse.data;
-
-        console.log('Users:', this.users);
       },
       (error) => {
         console.error('Error fetching users:', error);
@@ -68,6 +53,6 @@ export class UsersComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loginAndFetchUsers();
+    this.getUsers();
   }
 }

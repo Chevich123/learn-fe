@@ -26,14 +26,4 @@ export class AuthService {
         }),
       );
   }
-  getUsers(): Observable<{ data: User[]; total: number }> {
-    const headers = new HttpHeaders().set(
-      'Authorization',
-      `Bearer ${this.token}`,
-    );
-    return this.http.get<{ data: User[]; total: number }>(
-      'http://localhost:3000/users',
-      { headers },
-    );
-  }
 }
