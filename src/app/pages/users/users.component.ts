@@ -9,7 +9,6 @@ import { UserService } from '../../User.service';
 })
 export class UsersComponent implements OnInit {
   constructor(private usService: UserService) {}
-  users: User[] = [];
 
   columns = [
     {
@@ -38,7 +37,7 @@ export class UsersComponent implements OnInit {
       cell: (user: User) => `${user.site}`,
     },
   ];
-  dataSource = this.users;
+  dataSource: User[] = [];
   displayedColumns = this.columns.map((c) => c.columnDef);
 
   getUsers() {
