@@ -21,7 +21,7 @@ export class ProductsComponent implements AfterViewInit,OnInit {
   }
   ngOnInit(): void {
     this.productsService.getProducts().subscribe({
-      next: (products) => {console.log("success"); this.dataSource.data = products.data},
+      next: (products) => this.dataSource.data = products.data,
       error: (err) => console.log(err)
     });
   }

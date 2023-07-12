@@ -1,4 +1,3 @@
-
 export interface IPaginatedResponse<T> {
     total: number;
     start?: number;
