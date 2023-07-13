@@ -20,6 +20,8 @@ import { UsersComponent } from './pages/users/users.component';
 import { ProductsComponent } from './pages/products/products.component';
 import { MatTableModule } from '@angular/material/table';
 import { AddUserComponent } from './pages/users/add-user/add-user.component';
+import { AddProductComponent } from './pages/products/add/add.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,6 +31,7 @@ import { AddUserComponent } from './pages/users/add-user/add-user.component';
     UsersComponent,
     ProductsComponent,
     AddUserComponent,
+    AddProductComponent,
   ],
   imports: [
     BrowserModule,
