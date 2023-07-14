@@ -17,7 +17,7 @@ export class AddProductComponent {
     width: ['', this.positiveNumberValidator],
     height: ['', this.positiveNumberValidator],
     depth: ['', this.positiveNumberValidator],
-    image: ['', this.positiveNumberValidator],
+    image: [''],
     country_of_origin: ['']
   });
 
