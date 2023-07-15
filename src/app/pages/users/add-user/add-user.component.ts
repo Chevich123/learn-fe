@@ -5,6 +5,8 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { UserService } from '../../../user.service';
+import { UserModalService } from '../modal-user/user-modal.service';
 
 @Component({
   selector: 'app-add-user',
@@ -12,10 +14,13 @@ import {
   styleUrls: ['./add-user.component.scss'],
 })
 export class AddUserComponent {
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private userServ: UserService,
+    private modalUser: UserModalService,
+  ) {}
 
   userForm: FormGroup = this.formBuilder.group({
-    userID: ['', Validators.required],
     name: ['', [Validators.required, Validators.minLength(5)]],
     email: ['', Validators.email],
     site: [''],
@@ -34,6 +39,18 @@ export class AddUserComponent {
   }
 
   submit() {
-    console.log(this.userForm.value);
+    const { name, email, site, tel } = this.userForm.value;
+    this.userServ
+      .create({
+        userId: '',
+        username: name,
+        password: '',
+        email: email,
+        phone: tel,
+        site: site,
+      })
+      .subscribe(() => {
+        this.modalUser.close();
+      });
   }
 }
