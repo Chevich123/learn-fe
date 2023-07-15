@@ -1,0 +1,67 @@
+<form class="example-form" [formGroup]="userForm" (ngSubmit)="submit()">
+  <mat-form-field class="example-full-width">
+    <mat-label>UserId</mat-label>
+    <input matInput formControlName="userID" placeholder="userID" />
+    <mat-error *ngIf="userForm.controls['userID'].hasError('required')">
+      userID <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>Username</mat-label>
+    <input matInput formControlName="name" placeholder="Your_Username" />
+    <mat-error
+      *ngIf="
+        userForm.controls['name'].hasError('minlength') &&
+        !userForm.controls['name'].hasError('required')
+      "
+    >
+      Please enter a valid Username
+    </mat-error>
+    <mat-error *ngIf="userForm.controls['name'].hasError('required')">
+      Username <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>Email</mat-label>
+    <input
+      type="email"
+      matInput
+      formControlName="email"
+      placeholder="Ex. pat@example.com"
+    />
+    <mat-error *ngIf="userForm.controls['email'].hasError('email')">
+      Please enter a valid email address
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>Site</mat-label>
+    <input matInput placeholder="google.com" value="" />
+  </mat-form-field>
+
+  <mat-form-field class="example-full-width">
+    <mat-label>Telephone</mat-label>
+    <span matPrefix>+375 &nbsp;</span>
+    <input
+      type="tel"
+      matInput
+      formControlName="tel"
+      placeholder="555-555-1234"
+    />
+    <mat-error *ngIf="userForm.controls['tel'].hasError('isNumber')">
+      Please enter a number</mat-error
+    >
+    <mat-error
+      *ngIf="
+        userForm.controls['tel'].hasError('minLength') &&
+        userForm.controls['tel'].hasError('maxLength')
+      "
+    >
+      Please enter a correct number.</mat-error
+    >
+  </mat-form-field>
+
+  <button type="submit" mat-flat-button>Create</button>
+</form>

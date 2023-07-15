@@ -18,8 +18,9 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { TokenInterceptor } from './shared/interceptors/token-interceptor';
 import { UsersComponent } from './pages/users/users.component';
 import { ProductsComponent } from './pages/products/products.component';
-import {MatTableModule} from "@angular/material/table";
-
+import { MatTableModule } from '@angular/material/table';
+import { AddUserComponent } from './pages/users/add-user/add-user.component';
+import { ModalUserComponent } from './pages/users/modal-user/modal-user.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,6 +29,8 @@ import {MatTableModule} from "@angular/material/table";
     DashboardComponent,
     UsersComponent,
     ProductsComponent,
+    AddUserComponent,
+    ModalUserComponent,
   ],
   imports: [
     BrowserModule,

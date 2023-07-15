@@ -5,6 +5,7 @@ import { ProductsComponent } from './pages/products/products.component';
 import { WrapperComponent } from './wrapper/wrapper.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { UsersComponent } from './pages/users/users.component';
+import { AddUserComponent } from './pages/users/add-user/add-user.component';
 
 const routes: Routes = [
   {
@@ -15,6 +16,7 @@ const routes: Routes = [
       { path: 'products', component: ProductsComponent },
       { path: 'home', component: DashboardComponent },
       { path: 'users', component: UsersComponent },
+      { path: 'users/add', component: AddUserComponent },
       { path: '', redirectTo: 'home', pathMatch: 'full' },
     ],
   },
