@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from '../../shared/interfaces/user';
+import { IUser } from '../../shared/interfaces/user';
 import { UserService } from '../../user.service';
 import { UserModalService } from './modal-user/user-modal.service';
 
@@ -18,30 +18,30 @@ export class UsersComponent implements OnInit {
     {
       columnDef: 'UserID',
       header: 'ID',
-      cell: (user: User) => user.userId,
+      cell: (user: IUser) => user.userId,
     },
     {
       columnDef: 'name',
       header: 'Name',
-      cell: (user: User) => `${user.username}`,
+      cell: (user: IUser) => `${user.username}`,
     },
     {
       columnDef: 'email',
       header: 'Email',
-      cell: (user: User) => `${user.email}`,
+      cell: (user: IUser) => `${user.email}`,
     },
     {
       columnDef: 'phone',
       header: 'Phone',
-      cell: (user: User) => `${user.phone}`,
+      cell: (user: IUser) => `${user.phone}`,
     },
     {
       columnDef: 'site',
       header: 'Site',
-      cell: (user: User) => `${user.site}`,
+      cell: (user: IUser) => `${user.site}`,
     },
   ];
-  dataSource: User[] = [];
+  dataSource: IUser[] = [];
   displayedColumns = this.columns.map((c) => c.columnDef);
 
   getUsers() {
@@ -53,12 +53,6 @@ export class UsersComponent implements OnInit {
         console.error('Error fetching users:', error);
       },
     );
-  }
-
-  hide = false;
-
-  isHide() {
-    return (this.hide = !this.hide);
   }
 
   ngOnInit(): void {

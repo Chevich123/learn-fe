@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { User } from './shared/interfaces/user';
+import { IUser } from './shared/interfaces/user';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -9,9 +9,12 @@ import { HttpClient } from '@angular/common/http';
 export class UserService {
   constructor(private http: HttpClient) {}
   hide = false;
-  getUsers(): Observable<{ data: User[]; total: number }> {
-    return this.http.get<{ data: User[]; total: number }>(
+  getUsers(): Observable<{ data: IUser[]; total: number }> {
+    return this.http.get<{ data: IUser[]; total: number }>(
       'http://localhost:3000/users',
     );
+  }
+  create(user: IUser): Observable<IUser> {
+    return this.http.post<IUser>('http://localhost:3000/users', user);
   }
 }
