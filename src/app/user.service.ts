@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class UserService {
   constructor(private http: HttpClient) {}
-
+  hide = false;
   getUsers(): Observable<{ data: User[]; total: number }> {
     return this.http.get<{ data: User[]; total: number }>(
       'http://localhost:3000/users',

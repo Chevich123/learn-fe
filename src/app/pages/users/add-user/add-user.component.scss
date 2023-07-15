@@ -1,0 +1,16 @@
+form {
+  display: flex;
+  flex-direction: column;
+}
+span {
+  padding-left: 7px;
+  color: lightgray;
+}
+
+mat-form-field {
+  margin-bottom: 8px;
+}
+
+button {
+  width: 50px;
+}
