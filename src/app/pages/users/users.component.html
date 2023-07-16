@@ -1,5 +1,5 @@
 <a mat-button color="primary" routerLink="/home">Home</a>
-
+<a mat-button color="primary" routerLink="/user/add">Add User</a>
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
   <ng-container
     *ngFor="let column of columns"
@@ -16,16 +16,3 @@
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 </table>
-
-<button
-  mat-fab
-  color="warn"
-  aria-label="Example icon button with a home icon"
-  (click)="modalUser.open()"
->
-  <mat-icon>add</mat-icon>
-</button>
-
-<app-modal-user *ngIf="modalUser.isVisible$ | async" title="create new user">
-  <app-add-user></app-add-user>
-</app-modal-user>
