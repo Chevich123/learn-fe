@@ -6,7 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { UserService } from '../../../user.service';
-import { UserModalService } from '../modal-user/user-modal.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-user',
@@ -17,40 +17,38 @@ export class AddUserComponent {
   constructor(
     private formBuilder: FormBuilder,
     private userServ: UserService,
-    private modalUser: UserModalService,
+    private router: Router,
   ) {}
 
   userForm: FormGroup = this.formBuilder.group({
-    name: ['', [Validators.required, Validators.minLength(5)]],
+    name: ['', [Validators.required, Validators.minLength(4)]],
     email: ['', Validators.email],
+    password: ['', [Validators.required, Validators.minLength(6)]],
     site: [''],
-    tel: [
-      '',
-      [Validators.minLength(7), Validators.maxLength(7), this.isNumber],
-    ],
+    tel: ['', this.phoneVal],
   });
 
-  isNumber(control: FormControl): { isNumber: boolean } | null {
+  phoneVal(control: FormControl): { isPhoneValid: boolean } | null {
+    const phoneRegex = /^\+\d\(\d{2}\)\d{3}-\d{2}-\d{2}$/;
     const value = control.value;
-    if (isNaN(value) || Number(value) <= 0) {
-      return { isNumber: true };
+    if (!phoneRegex.test(value)) {
+      return { isPhoneValid: true };
     }
     return null;
   }
 
   submit() {
-    const { name, email, site, tel } = this.userForm.value;
+    const { name, email, password, site, tel } = this.userForm.value;
     this.userServ
       .create({
-        userId: '',
         username: name,
-        password: '',
+        password: password,
         email: email,
         phone: tel,
         site: site,
       })
       .subscribe(() => {
-        this.modalUser.close();
+        this.router.navigate(['/users']);
       });
   }
 }

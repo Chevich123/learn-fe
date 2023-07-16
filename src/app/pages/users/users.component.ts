@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IUser } from '../../shared/interfaces/user';
 import { UserService } from '../../user.service';
-import { UserModalService } from './modal-user/user-modal.service';
 
 @Component({
   selector: 'app-users',
@@ -9,10 +8,7 @@ import { UserModalService } from './modal-user/user-modal.service';
   styleUrls: ['./users.component.scss'],
 })
 export class UsersComponent implements OnInit {
-  constructor(
-    private usService: UserService,
-    public modalUser: UserModalService,
-  ) {}
+  constructor(private usService: UserService) {}
 
   columns = [
     {
@@ -24,6 +20,11 @@ export class UsersComponent implements OnInit {
       columnDef: 'name',
       header: 'Name',
       cell: (user: IUser) => `${user.username}`,
+    },
+    {
+      columnDef: 'password',
+      header: 'Password',
+      cell: (user: IUser) => `${user.password}`,
     },
     {
       columnDef: 'email',
@@ -48,6 +49,7 @@ export class UsersComponent implements OnInit {
     this.usService.getUsers().subscribe(
       (usersResponse) => {
         this.dataSource = usersResponse.data;
+        console.log(usersResponse.data);
       },
       (error) => {
         console.error('Error fetching users:', error);
