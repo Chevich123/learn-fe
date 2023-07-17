@@ -29,7 +29,7 @@ export class AddUserComponent {
   });
 
   phoneVal(control: FormControl): { isPhoneValid: boolean } | null {
-    const phoneRegex = /^\+\d\(\d{2}\)\d{3}-\d{2}-\d{2}$/;
+    const phoneRegex = /^\+?\d{1,3}\s*\(?\d{2}\)?\s*?\d{3}-?\d{2}-?\d{2}$/;
     const value = control.value;
     if (!phoneRegex.test(value)) {
       return { isPhoneValid: true };
