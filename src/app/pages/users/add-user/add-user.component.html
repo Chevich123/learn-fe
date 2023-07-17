@@ -1,3 +1,4 @@
+<a mat-button color="primary" routerLink="/users">Back</a>
 <form class="example-form" [formGroup]="userForm" (ngSubmit)="submit()">
   <mat-form-field class="example-full-width">
     <mat-label>Username</mat-label>
@@ -52,18 +53,12 @@
       formControlName="tel"
       placeholder="+5(55)-555-12-34"
     />
-    <mat-error *ngIf="userForm.controls['tel'].hasError('phoneVal')">
+    <mat-error *ngIf="userForm.controls['tel'].hasError('isPhoneValid')">
       Введите телефон в формате +X(XX)-XXX-XX-XX
     </mat-error>
   </mat-form-field>
 
-  <button
-    class="button"
-    type="submit"
-    [disabled]="
-      userForm.controls['name'].invalid || userForm.controls['password'].invalid
-    "
-  >
+  <button class="button" type="submit" [disabled]="userForm.invalid">
     Create
   </button>
 </form>
