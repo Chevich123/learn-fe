@@ -9,7 +9,7 @@ import { UserService } from '../../user.service';
 })
 export class UsersComponent implements OnInit {
   constructor(private usService: UserService) {}
-
+  hide = false;
   columns = [
     {
       columnDef: 'UserID',
@@ -49,12 +49,15 @@ export class UsersComponent implements OnInit {
     this.usService.getUsers().subscribe(
       (usersResponse) => {
         this.dataSource = usersResponse.data;
-        console.log(usersResponse.data);
       },
       (error) => {
         console.error('Error fetching users:', error);
       },
     );
+  }
+
+  hideButton() {
+    this.hide = !this.hide;
   }
 
   ngOnInit(): void {
