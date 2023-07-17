@@ -27,6 +27,10 @@ export class ProductsComponent implements AfterViewInit, OnInit {
     this.dataSource.paginator = this.paginator;
   }
   ngOnInit(): void {
+    this.getProducts();
+  }
+
+  private getProducts() {
     this.productsService.getProducts().subscribe({
       next: (products) => this.dataSource.data = products.data,
       error: (err) => console.log(err)
@@ -37,12 +41,14 @@ export class ProductsComponent implements AfterViewInit, OnInit {
     const dialogRef = this.dialog.open(ConfirmDeleteComponent);
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.productsService.deleteProduct(productId).subscribe({
-          next: (ret) => this.dataSource.data = this.dataSource.data.filter(el => el._id != productId),
-          error: (err) => console.log(err)
-        });
-      }
+      result && this.deleteProduct(productId);
+    });
+  }
+
+  private deleteProduct(productId: string) {
+    this.productsService.deleteProduct(productId).subscribe({
+      next: (ret) => this.dataSource.data = this.dataSource.data.filter(el => el._id != productId),
+      error: (err) => console.log(err)
     });
   }
 }
