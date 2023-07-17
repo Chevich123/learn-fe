@@ -13,6 +13,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
 import { WrapperComponent } from './wrapper/wrapper.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { TokenInterceptor } from './shared/interceptors/token-interceptor';
@@ -21,6 +22,7 @@ import { ProductsComponent } from './pages/products/products.component';
 import { MatTableModule } from '@angular/material/table';
 import { AddUserComponent } from './pages/users/add-user/add-user.component';
 import { AddProductComponent } from './pages/products/add/add.component';
+import { ConfirmDeleteComponent } from './pages/products/confirm-delete/confirm-delete.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +34,7 @@ import { AddProductComponent } from './pages/products/add/add.component';
     ProductsComponent,
     AddUserComponent,
     AddProductComponent,
+    ConfirmDeleteComponent,
   ],
   imports: [
     BrowserModule,
@@ -46,6 +49,7 @@ import { AddProductComponent } from './pages/products/add/add.component';
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
+    MatDialogModule,
     FormsModule,
   ],
   providers: [
