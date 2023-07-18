@@ -1,4 +1,5 @@
 <div class="productpage">
+    <a mat-raised-button color="primary" routerLink="add">Add Product</a>
     <table mat-table [dataSource]="dataSource" matSort>
 
         <ng-container matColumnDef="name">
@@ -29,6 +30,13 @@
         <ng-container matColumnDef="depth">
         <th mat-header-cell *matHeaderCellDef> Depth </th>
         <td mat-cell *matCellDef="let element"> {{element.depth}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="delete">
+            <th mat-header-cell *matHeaderCellDef> Delete </th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-icon-button (click)="confirmDelete(element._id)"> <mat-icon>delete</mat-icon></button>
+            </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

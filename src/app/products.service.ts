@@ -17,4 +17,7 @@ export class ProductsService {
   createProduct(product: Product): Observable<Product> {
     return this.http.post<Product>("http://localhost:3000/products", product);
   }
+  deleteProduct(productId: string): Observable<string> {
+    return this.http.delete<string>("http://localhost:3000/products/" + productId);
+  }
 }

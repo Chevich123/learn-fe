@@ -1,0 +1,34 @@
+<form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+    <h1>Create a new product</h1>
+    
+    <mat-form-field>
+      <input matInput formControlName="name" placeholder="Name" required>
+      <mat-error *ngIf="productForm.get('name')?.hasError('required')">Is required</mat-error>
+    </mat-form-field>
+    
+    <mat-form-field>
+      <input matInput formControlName="manufacturer" placeholder="Manufacturer" required>
+      <mat-error *ngIf="productForm.get('manufacturer')?.hasError('required')">Is required</mat-error>
+    </mat-form-field>
+    
+    <mat-form-field>
+      <input matInput formControlName="width" placeholder="Width" type="number">
+      <mat-error *ngIf="productForm.get('width')?.hasError('positiveNumber')">Must be a positive number</mat-error>
+    </mat-form-field>
+    
+    <mat-form-field>
+      <input matInput formControlName="height" placeholder="Height" type="number">
+      <mat-error *ngIf="productForm.get('height')?.hasError('positiveNumber')">Must be a positive number</mat-error>
+    </mat-form-field>
+    
+    <mat-form-field>
+      <input matInput formControlName="depth" placeholder="Depth" type="number">
+      <mat-error *ngIf="productForm.get('depth')?.hasError('positiveNumber')">Must be a positive number</mat-error>
+    </mat-form-field>
+    
+    <mat-form-field>
+      <input matInput formControlName="country_of_origin" placeholder="Country of Origin">
+    </mat-form-field>
+    
+    <button mat-raised-button color="primary" type="submit" [disabled]="productForm.invalid">Add Product</button>
+</form>
