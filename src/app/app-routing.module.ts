@@ -14,8 +14,10 @@ const routes: Routes = [
     component: WrapperComponent,
     children: [
       { path: 'login', component: LoginComponent },
-      { path: 'products/add', component: AddProductComponent },
-      { path: 'products', component: ProductsComponent },
+      { path: 'products', children : [
+        { path: 'add', component: AddProductComponent },
+        { path: '', component: ProductsComponent, pathMatch: 'full'}
+      ]},
       { path: 'home', component: DashboardComponent },
       {
         path: 'users',

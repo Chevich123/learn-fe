@@ -47,7 +47,7 @@ export class ProductsComponent implements AfterViewInit, OnInit {
 
   private deleteProduct(productId: string) {
     this.productsService.deleteProduct(productId).subscribe({
-      next: (ret) => this.dataSource.data = this.dataSource.data.filter(el => el._id != productId),
+      next: () => this.dataSource.data = this.dataSource.data.filter(el => el._id != productId),
       error: (err) => console.log(err)
     });
   }

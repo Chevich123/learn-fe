@@ -12,17 +12,17 @@
     </mat-form-field>
     
     <mat-form-field>
-      <input matInput formControlName="width" placeholder="Width">
+      <input matInput formControlName="width" placeholder="Width" type="number">
       <mat-error *ngIf="productForm.get('width')?.hasError('positiveNumber')">Must be a positive number</mat-error>
     </mat-form-field>
     
     <mat-form-field>
-      <input matInput formControlName="height" placeholder="Height">
+      <input matInput formControlName="height" placeholder="Height" type="number">
       <mat-error *ngIf="productForm.get('height')?.hasError('positiveNumber')">Must be a positive number</mat-error>
     </mat-form-field>
     
     <mat-form-field>
-      <input matInput formControlName="depth" placeholder="Depth">
+      <input matInput formControlName="depth" placeholder="Depth" type="number">
       <mat-error *ngIf="productForm.get('depth')?.hasError('positiveNumber')">Must be a positive number</mat-error>
     </mat-form-field>
     
@@ -30,5 +30,5 @@
       <input matInput formControlName="country_of_origin" placeholder="Country of Origin">
     </mat-form-field>
     
-    <button mat-raised-button color="primary" type="submit">Add Product</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="productForm.invalid">Add Product</button>
 </form>

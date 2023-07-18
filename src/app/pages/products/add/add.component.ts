@@ -24,7 +24,7 @@ export class AddProductComponent {
   onSubmit(): void {
     this.productForm.valid &&
     this.productsService.createProduct(this.productForm.value).subscribe({
-      next: (ret) => this.router.navigateByUrl('/products'),
+      next: () => this.router.navigateByUrl('/products'),
       error: (err) => console.log(err)
     });
   }
