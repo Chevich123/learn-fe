@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { AuthService } from 'src/app/auth.service';
 
 @Component({
   selector: 'app-wrapper',
@@ -7,8 +7,16 @@ import { Router } from '@angular/router';
   styleUrls: ['./wrapper.component.scss'],
 })
 export class WrapperComponent {
-  constructor(private router: Router) {}
-  loginVisible():boolean{
-    return this.router.url !== '/login';
+  constructor(private auth: AuthService) {}
+  loginVisible(): boolean {
+    return !this.auth.username;
+  }
+
+  get username() {
+    return this.auth.username;
+  }
+
+  logout() {
+    this.auth.logout();
   }
 }

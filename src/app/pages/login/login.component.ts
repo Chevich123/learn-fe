@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,7 @@ export class LoginComponent {
     username: new FormControl('', [Validators.required]),
   });
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   getErrorMessage(): string {
     if (this.date.controls['username'].hasError('required')) {
@@ -36,13 +37,12 @@ export class LoginComponent {
   }
 
   onSubmit() {
-    //return console.log(this.date.value);
     this.authService.login(this.date.value).subscribe({
       error: () => {
         this.error = true;
       },
       next: () => {
-        this.error = false;
+        this.router.navigate(['/']);
       },
     });
   }

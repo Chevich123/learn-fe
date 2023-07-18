@@ -8,8 +8,17 @@ import { tap } from 'rxjs/operators';
 })
 export class AuthService {
   token: string | null = null;
+  username: string | null = null;
   constructor(private http: HttpClient) {
     this.token = localStorage.getItem('access_token');
+    this.username = localStorage.getItem('username');
+  }
+
+  logout() {
+    localStorage.removeItem('username');
+    localStorage.removeItem('access_token');
+    this.token = null;
+    this.username = null;
   }
 
   login(body: {
@@ -21,7 +30,9 @@ export class AuthService {
       .pipe(
         tap((payload) => {
           this.token = payload.access_token;
+          this.username = body.username;
           localStorage.setItem('access_token', this.token);
+          localStorage.setItem('username', this.username);
         }),
       );
   }
