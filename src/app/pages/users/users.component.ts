@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IUser } from '../../shared/interfaces/user';
-import { UserService } from '../../user.service';
+import { UserService } from './user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-users',
@@ -8,7 +9,8 @@ import { UserService } from '../../user.service';
   styleUrls: ['./users.component.scss'],
 })
 export class UsersComponent implements OnInit {
-  constructor(private usService: UserService) {}
+  constructor(private userService: UserService, private rout: Router) {}
+
   columns = [
     {
       columnDef: 'UserID',
@@ -45,7 +47,7 @@ export class UsersComponent implements OnInit {
   displayedColumns = this.columns.map((c) => c.columnDef);
 
   getUsers() {
-    this.usService.getUsers().subscribe(
+    this.userService.getUsers().subscribe(
       (usersResponse) => {
         this.dataSource = usersResponse.data;
       },
@@ -53,6 +55,22 @@ export class UsersComponent implements OnInit {
         console.error('Error fetching users:', error);
       },
     );
+  }
+
+  deleteUser(userID: string): void {
+    let bool = confirm('Вы уверены что хотите удалить?');
+    if (bool) {
+      this.userService.delete(userID).subscribe(
+        () => {
+          this.getUsers();
+        },
+        (error) => {
+          console.log(error);
+        },
+      );
+    } else {
+      return;
+    }
   }
 
   ngOnInit(): void {
