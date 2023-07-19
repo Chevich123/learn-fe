@@ -1,7 +1,9 @@
 <div class="header">
-  <div class="leftblock">
-    <mat-label>Workshop</mat-label>
-    <mat-label>#3</mat-label>
+  <div>
+    <button class="leftblock" routerLink="/">
+      <mat-label>Workshop</mat-label>
+      <mat-label>#3</mat-label>
+    </button>
   </div>
   <mat-label class="welcome" *ngIf="!loginVisible()"
     >Welcome, {{ username }}!</mat-label
