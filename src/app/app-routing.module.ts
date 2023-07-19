@@ -1,5 +1,10 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { Injectable, NgModule } from '@angular/core';
+import {
+  RouterModule,
+  RouterStateSnapshot,
+  Routes,
+  TitleStrategy,
+} from '@angular/router';
 import { LoginComponent } from './pages/login/login.component';
 import { ProductsComponent } from './pages/products/products.component';
 import { AddProductComponent } from './pages/products/add/add.component';
@@ -7,6 +12,21 @@ import { WrapperComponent } from './wrapper/wrapper.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { UsersComponent } from './pages/users/users.component';
 import { AddUserComponent } from './pages/users/add-user/add-user.component';
+import { Title } from '@angular/platform-browser';
+
+@Injectable()
+export class TemplatePageTitleStrategy extends TitleStrategy {
+  constructor(private readonly title: Title) {
+    super();
+  }
+
+  override updateTitle(routerState: RouterStateSnapshot) {
+    const title = this.buildTitle(routerState);
+    if (title !== undefined) {
+      this.title.setTitle(`${title} | Workshop #3`);
+    }
+  }
+}
 
 const routes: Routes = [
   {
@@ -16,7 +36,7 @@ const routes: Routes = [
       {
         path: 'login',
         component: LoginComponent,
-        title: 'Login | Workshop #3',
+        title: 'Login',
       },
 
       {
@@ -25,13 +45,13 @@ const routes: Routes = [
           {
             path: 'add',
             component: AddProductComponent,
-            title: 'New product | Workshop #3',
+            title: 'New product',
           },
           {
             path: '',
             component: ProductsComponent,
             pathMatch: 'full',
-            title: 'Products | Workshop #3',
+            title: 'Products',
           },
         ],
       },
@@ -39,7 +59,7 @@ const routes: Routes = [
       {
         path: 'home',
         component: DashboardComponent,
-        title: 'Home | Workshop #3',
+        title: 'Home',
       },
 
       {
@@ -48,12 +68,12 @@ const routes: Routes = [
           {
             path: '',
             component: UsersComponent,
-            title: 'Users | Workshop #3',
+            title: 'Users',
           },
           {
             path: 'add',
             component: AddUserComponent,
-            title: 'New user | Workshop #3',
+            title: 'New user',
           },
         ],
       },
@@ -65,5 +85,11 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
+  providers: [
+    {
+      provide: TitleStrategy,
+      useClass: TemplatePageTitleStrategy,
+    },
+  ],
 })
 export class AppRoutingModule {}
