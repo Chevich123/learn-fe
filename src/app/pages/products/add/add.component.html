@@ -8,6 +8,7 @@
         <mat-icon style="font-size: 15vh; width: fit-content; height: fit-content;">photo_camera</mat-icon>
       </div>
       <button mat-raised-button color="primary" type="button" (click)="fileInput.click()">Select Image</button>
+      <p>{{productForm.get('image')?.value}}</p>
     </div>
     <div class="field-container">
       <mat-form-field>

@@ -36,10 +36,10 @@ export class AddProductComponent {
   onDragPrevent(event: DragEvent){ event.preventDefault(); }
   
   onDrop(event: DragEvent) {
+    if(!event.dataTransfer?.files[0].type.includes('image/')) return;
     event.preventDefault();
     const file = event.dataTransfer?.files[0];
     this.uploadImage(file);
-    this.previewImage(file);
   }
   uploadImage(file: File | undefined) {
     if(!file) return;
@@ -57,8 +57,5 @@ export class AddProductComponent {
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
     this.uploadImage(file);
-    this.previewImage(file);
   }
-
-  previewImage(file: File | undefined) { }
 }
