@@ -24,6 +24,8 @@ export class TemplatePageTitleStrategy extends TitleStrategy {
     const title = this.buildTitle(routerState);
     if (title !== undefined) {
       this.title.setTitle(`${title} | Workshop #3`);
+    } else {
+      this.title.setTitle('Workshop #3');
     }
   }
 }
