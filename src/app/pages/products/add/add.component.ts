@@ -32,4 +32,33 @@ export class AddProductComponent {
   positiveNumberValidator(control: FormControl) {
     return (control.value === '' || control.value > 0) ? null : { positiveNumber: true };
   }
+
+  onDragPrevent(event: DragEvent){ event.preventDefault(); }
+  
+  onDrop(event: DragEvent) {
+    event.preventDefault();
+    const file = event.dataTransfer?.files[0];
+    this.uploadImage(file);
+    this.previewImage(file);
+  }
+  uploadImage(file: File | undefined) {
+    if(!file) return;
+    const formdata = new FormData();
+    formdata.append('file', file);
+    this.productsService.uploadImage(formdata).subscribe({
+      next: (result) => {
+        console.log(result.filename)
+        this.productForm.patchValue({ image: result.filename });
+      },
+      error: (err) => console.error(err),
+    });
+  }
+
+  onFileSelected(event: any) {
+    const file: File = event.target.files[0];
+    this.uploadImage(file);
+    this.previewImage(file);
+  }
+
+  previewImage(file: File | undefined) { }
 }

@@ -1,34 +1,45 @@
-<form [formGroup]="productForm" (ngSubmit)="onSubmit()">
-    <h1>Create a new product</h1>
-    
-    <mat-form-field>
-      <input matInput formControlName="name" placeholder="Name" required>
-      <mat-error *ngIf="productForm.get('name')?.hasError('required')">Is required</mat-error>
-    </mat-form-field>
-    
-    <mat-form-field>
-      <input matInput formControlName="manufacturer" placeholder="Manufacturer" required>
-      <mat-error *ngIf="productForm.get('manufacturer')?.hasError('required')">Is required</mat-error>
-    </mat-form-field>
-    
-    <mat-form-field>
-      <input matInput formControlName="width" placeholder="Width" type="number">
-      <mat-error *ngIf="productForm.get('width')?.hasError('positiveNumber')">Must be a positive number</mat-error>
-    </mat-form-field>
-    
-    <mat-form-field>
-      <input matInput formControlName="height" placeholder="Height" type="number">
-      <mat-error *ngIf="productForm.get('height')?.hasError('positiveNumber')">Must be a positive number</mat-error>
-    </mat-form-field>
-    
-    <mat-form-field>
-      <input matInput formControlName="depth" placeholder="Depth" type="number">
-      <mat-error *ngIf="productForm.get('depth')?.hasError('positiveNumber')">Must be a positive number</mat-error>
-    </mat-form-field>
-    
-    <mat-form-field>
-      <input matInput formControlName="country_of_origin" placeholder="Country of Origin">
-    </mat-form-field>
-    
-    <button mat-raised-button color="primary" type="submit" [disabled]="productForm.invalid">Add Product</button>
+<form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="field-container">
+  <h1>Create a new product</h1>
+  <div class="detached-container" style="display: flex">
+    <div class="field-container">
+      <input type="file" (change)="onFileSelected($event)" accept="image/*" style="display: none" #fileInput>
+      <div class="drop-zone" (dragover)="onDragPrevent($event)" (dragleave)="onDragPrevent($event)" (drop)="onDrop($event)">
+        <p>Drag and drop an image here</p>
+        <mat-icon style="font-size: 15vh; width: fit-content; height: fit-content;">photo_camera</mat-icon>
+      </div>
+      <button mat-raised-button color="primary" type="button" (click)="fileInput.click()">Select Image</button>
+    </div>
+    <div class="field-container">
+      <mat-form-field>
+        <input matInput formControlName="name" placeholder="Name" required>
+        <mat-error *ngIf="productForm.get('name')?.hasError('required')">Is required</mat-error>
+      </mat-form-field>
+      
+      <mat-form-field>
+        <input matInput formControlName="manufacturer" placeholder="Manufacturer" required>
+        <mat-error *ngIf="productForm.get('manufacturer')?.hasError('required')">Is required</mat-error>
+      </mat-form-field>
+      
+      <mat-form-field>
+        <input matInput formControlName="width" placeholder="Width" type="number">
+        <mat-error *ngIf="productForm.get('width')?.hasError('positiveNumber')">Must be a positive number</mat-error>
+      </mat-form-field>
+      
+      <mat-form-field>
+        <input matInput formControlName="height" placeholder="Height" type="number">
+        <mat-error *ngIf="productForm.get('height')?.hasError('positiveNumber')">Must be a positive number</mat-error>
+      </mat-form-field>
+      
+      <mat-form-field>
+        <input matInput formControlName="depth" placeholder="Depth" type="number">
+        <mat-error *ngIf="productForm.get('depth')?.hasError('positiveNumber')">Must be a positive number</mat-error>
+      </mat-form-field>
+      
+      <mat-form-field>
+        <input matInput formControlName="country_of_origin" placeholder="Country of Origin">
+      </mat-form-field>
+      
+      <button mat-raised-button color="primary" type="submit" [disabled]="productForm.invalid">Add Product</button>
+    </div>
+  </div>
 </form>
