@@ -11,11 +11,7 @@ import { ConfirmDeleteComponent } from '../products/confirm-delete/confirm-delet
   styleUrls: ['./users.component.scss'],
 })
 export class UsersComponent implements OnInit {
-  constructor(
-    private userService: UserService,
-    private rout: Router,
-    private dialog: MatDialog,
-  ) {}
+  constructor(private userService: UserService, private dialog: MatDialog) {}
 
   columns = [
     {
@@ -27,11 +23,6 @@ export class UsersComponent implements OnInit {
       columnDef: 'name',
       header: 'Name',
       cell: (user: IUser) => user.username,
-    },
-    {
-      columnDef: 'password',
-      header: 'Password',
-      cell: (user: IUser) => user.password,
     },
     {
       columnDef: 'email',
