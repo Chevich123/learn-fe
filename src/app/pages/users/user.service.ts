@@ -16,11 +16,11 @@ export class UserService {
   }
 
   create(user: Omit<IUser, 'userId'>): Observable<IUser> {
-    return this.http.post<IUser>('http://localhost:3000/users', user);
+    return this.http.post<IUser>(this.url, user);
   }
 
-  delete(userID: string): Observable<void> {
+  delete(userID: string): Observable<string> {
     const url = `${this.url}/${userID}`;
-    return this.http.delete<void>(url);
+    return this.http.delete<string>(url);
   }
 }

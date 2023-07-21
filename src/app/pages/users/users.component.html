@@ -2,15 +2,15 @@
 
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
   <ng-container
-    *ngFor="let column of columns; let i = index"
+    *ngFor="let column of columns"
     [matColumnDef]="column.columnDef"
   >
     <th mat-header-cell *matHeaderCellDef>{{ column.header }}</th>
     <td mat-cell *matCellDef="let row">
-      <ng-container *ngIf="i !== columns.length - 1; else actionsCell">
+      <ng-container *ngIf="column.columnDef !== 'delete'; else deleteCell">
         {{ column.cell(row) }}
       </ng-container>
-      <ng-template #actionsCell>
+      <ng-template #deleteCell>
         <button mat-icon-button color="warn" (click)="deleteUser(row.userId)">
           <mat-icon>delete</mat-icon>
         </button>

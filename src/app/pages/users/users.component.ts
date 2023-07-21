@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { IUser } from '../../shared/interfaces/user';
 import { UserService } from './user.service';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDeleteComponent } from '../products/confirm-delete/confirm-delete.component';
 
 @Component({
   selector: 'app-users',
@@ -9,7 +11,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./users.component.scss'],
 })
 export class UsersComponent implements OnInit {
-  constructor(private userService: UserService, private rout: Router) {}
+  constructor(
+    private userService: UserService,
+    private rout: Router,
+    private dialog: MatDialog,
+  ) {}
 
   columns = [
     {
@@ -20,27 +26,32 @@ export class UsersComponent implements OnInit {
     {
       columnDef: 'name',
       header: 'Name',
-      cell: (user: IUser) => `${user.username}`,
+      cell: (user: IUser) => user.username,
     },
     {
       columnDef: 'password',
       header: 'Password',
-      cell: (user: IUser) => `${user.password}`,
+      cell: (user: IUser) => user.password,
     },
     {
       columnDef: 'email',
       header: 'Email',
-      cell: (user: IUser) => `${user.email}`,
+      cell: (user: IUser) => user.email,
     },
     {
       columnDef: 'phone',
       header: 'Phone',
-      cell: (user: IUser) => `${user.phone}`,
+      cell: (user: IUser) => user.phone,
     },
     {
       columnDef: 'site',
       header: 'Site',
-      cell: (user: IUser) => `${user.site}`,
+      cell: (user: IUser) => user.site,
+    },
+    {
+      columnDef: 'delete',
+      header: 'Delete',
+      cell: () => '',
     },
   ];
   dataSource: IUser[] = [];
@@ -58,19 +69,24 @@ export class UsersComponent implements OnInit {
   }
 
   deleteUser(userID: string): void {
-    let bool = confirm('Вы уверены что хотите удалить?');
-    if (bool) {
-      this.userService.delete(userID).subscribe(
-        () => {
-          this.getUsers();
-        },
-        (error) => {
-          console.log(error);
-        },
-      );
-    } else {
-      return;
-    }
+    const dialogRef = this.dialog.open(ConfirmDeleteComponent, {
+      data: {
+        confirmationText: 'Are you really sure you want to delete this user?',
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.userService.delete(userID).subscribe(
+          () => {
+            this.getUsers();
+          },
+          (error) => {
+            console.log(error);
+          },
+        );
+      }
+    });
   }
 
   ngOnInit(): void {

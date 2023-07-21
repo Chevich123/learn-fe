@@ -10,18 +10,28 @@ import { ConfirmDeleteComponent } from './confirm-delete/confirm-delete.componen
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
-  styleUrls: ['./products.component.scss']
+  styleUrls: ['./products.component.scss'],
 })
-
 export class ProductsComponent implements AfterViewInit, OnInit {
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
   @ViewChild(MatSort)
   sort!: MatSort;
 
-  displayedColumns: string[] = ['country_of_origin', 'manufacturer', 'name', 'width', 'height', 'depth', 'delete'];
+  displayedColumns: string[] = [
+    'country_of_origin',
+    'manufacturer',
+    'name',
+    'width',
+    'height',
+    'depth',
+    'delete',
+  ];
   dataSource = new MatTableDataSource<Product>([]);
-  constructor(private productsService: ProductsService, private dialog: MatDialog) { }
+  constructor(
+    private productsService: ProductsService,
+    private dialog: MatDialog,
+  ) {}
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
@@ -32,13 +42,18 @@ export class ProductsComponent implements AfterViewInit, OnInit {
 
   private getProducts() {
     this.productsService.getProducts().subscribe({
-      next: (products) => this.dataSource.data = products.data,
-      error: (err) => console.log(err)
+      next: (products) => (this.dataSource.data = products.data),
+      error: (err) => console.log(err),
     });
   }
 
   confirmDelete(productId: string): void {
-    const dialogRef = this.dialog.open(ConfirmDeleteComponent);
+    const dialogRef = this.dialog.open(ConfirmDeleteComponent, {
+      data: {
+        confirmationText:
+          'Are you really sure you want to delete this product?',
+      },
+    });
 
     dialogRef.afterClosed().subscribe((result) => {
       result && this.deleteProduct(productId);
@@ -47,8 +62,11 @@ export class ProductsComponent implements AfterViewInit, OnInit {
 
   private deleteProduct(productId: string) {
     this.productsService.deleteProduct(productId).subscribe({
-      next: () => this.dataSource.data = this.dataSource.data.filter(el => el._id != productId),
-      error: (err) => console.log(err)
+      next: () =>
+        (this.dataSource.data = this.dataSource.data.filter(
+          (el) => el._id != productId,
+        )),
+      error: (err) => console.log(err),
     });
   }
 }
