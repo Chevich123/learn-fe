@@ -38,24 +38,19 @@ export class AddProductComponent {
   onDrop(event: DragEvent) {
     if(!event.dataTransfer?.files[0].type.includes('image/')) return;
     event.preventDefault();
-    const file = event.dataTransfer?.files[0];
-    this.uploadImage(file);
+    this.uploadImage(event.dataTransfer?.files[0]);
   }
   uploadImage(file: File | undefined) {
     if(!file) return;
     const formdata = new FormData();
     formdata.append('file', file);
     this.productsService.uploadImage(formdata).subscribe({
-      next: (result) => {
-        console.log(result.filename)
-        this.productForm.patchValue({ image: result.filename });
-      },
+      next: (result) => this.productForm.patchValue({ image: result.filename }),
       error: (err) => console.error(err),
     });
   }
 
   onFileSelected(event: any) {
-    const file: File = event.target.files[0];
-    this.uploadImage(file);
+    this.uploadImage(event.target.files[0]);
   }
 }
