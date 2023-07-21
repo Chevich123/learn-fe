@@ -32,8 +32,6 @@ export class AddProductComponent {
   positiveNumberValidator(control: FormControl) {
     return (control.value === '' || control.value > 0) ? null : { positiveNumber: true };
   }
-
-  onDragPrevent(event: DragEvent){ event.preventDefault(); }
   
   onDrop(event: DragEvent) {
     if(!event.dataTransfer?.files[0].type.includes('image/')) return;
