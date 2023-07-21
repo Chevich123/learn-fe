@@ -39,14 +39,9 @@ export class UsersComponent implements OnInit {
       header: 'Site',
       cell: (user: IUser) => user.site,
     },
-    {
-      columnDef: 'delete',
-      header: 'Delete',
-      cell: () => '',
-    },
   ];
   dataSource: IUser[] = [];
-  displayedColumns = this.columns.map((c) => c.columnDef);
+  displayedColumns = [...this.columns.map((c) => c.columnDef), 'delete'];
 
   getUsers() {
     this.userService.getUsers().subscribe(

@@ -7,14 +7,16 @@
   >
     <th mat-header-cell *matHeaderCellDef>{{ column.header }}</th>
     <td mat-cell *matCellDef="let row">
-      <ng-container *ngIf="column.columnDef !== 'delete'; else deleteCell">
-        {{ column.cell(row) }}
-      </ng-container>
-      <ng-template #deleteCell>
-        <button mat-icon-button color="warn" (click)="deleteUser(row.userId)">
-          <mat-icon>delete</mat-icon>
-        </button>
-      </ng-template>
+      {{ column.cell(row) }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="delete">
+    <th mat-header-cell *matHeaderCellDef>Delete</th>
+    <td mat-cell *matCellDef="let row">
+      <button mat-icon-button color="warn" (click)="deleteUser(row.userId)">
+        <mat-icon>delete</mat-icon>
+      </button>
     </td>
   </ng-container>
 
