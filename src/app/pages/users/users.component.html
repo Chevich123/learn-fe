@@ -1,14 +1,22 @@
 <a mat-button color="primary" routerLink="add">Add User</a>
+
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
   <ng-container
     *ngFor="let column of columns"
     [matColumnDef]="column.columnDef"
   >
-    <th mat-header-cell *matHeaderCellDef>
-      {{ column.header }}
-    </th>
+    <th mat-header-cell *matHeaderCellDef>{{ column.header }}</th>
     <td mat-cell *matCellDef="let row">
       {{ column.cell(row) }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="delete">
+    <th mat-header-cell *matHeaderCellDef>Delete</th>
+    <td mat-cell *matCellDef="let row">
+      <button mat-icon-button color="warn" (click)="deleteUser(row.userId)">
+        <mat-icon>delete</mat-icon>
+      </button>
     </td>
   </ng-container>
 

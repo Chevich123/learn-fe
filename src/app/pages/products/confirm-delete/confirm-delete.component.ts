@@ -1,11 +1,14 @@
-import { Component } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-confirm-delete',
   templateUrl: './confirm-delete.component.html',
-  styleUrls: ['./confirm-delete.component.scss']
+  styleUrls: ['./confirm-delete.component.scss'],
 })
 export class ConfirmDeleteComponent {
-  constructor(public dialogRef: MatDialogRef<ConfirmDeleteComponent>) {}
+  constructor(
+    public dialogRef: MatDialogRef<ConfirmDeleteComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: { confirmationText: string },
+  ) {}
 }

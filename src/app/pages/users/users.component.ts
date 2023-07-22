@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { IUser } from '../../shared/interfaces/user';
-import { UserService } from '../../user.service';
+import { UserService } from './user.service';
+import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDeleteComponent } from '../products/confirm-delete/confirm-delete.component';
 
 @Component({
   selector: 'app-users',
@@ -8,7 +11,8 @@ import { UserService } from '../../user.service';
   styleUrls: ['./users.component.scss'],
 })
 export class UsersComponent implements OnInit {
-  constructor(private usService: UserService) {}
+  constructor(private userService: UserService, private dialog: MatDialog) {}
+
   columns = [
     {
       columnDef: 'UserID',
@@ -18,34 +22,29 @@ export class UsersComponent implements OnInit {
     {
       columnDef: 'name',
       header: 'Name',
-      cell: (user: IUser) => `${user.username}`,
-    },
-    {
-      columnDef: 'password',
-      header: 'Password',
-      cell: (user: IUser) => `${user.password}`,
+      cell: (user: IUser) => user.username,
     },
     {
       columnDef: 'email',
       header: 'Email',
-      cell: (user: IUser) => `${user.email}`,
+      cell: (user: IUser) => user.email,
     },
     {
       columnDef: 'phone',
       header: 'Phone',
-      cell: (user: IUser) => `${user.phone}`,
+      cell: (user: IUser) => user.phone,
     },
     {
       columnDef: 'site',
       header: 'Site',
-      cell: (user: IUser) => `${user.site}`,
+      cell: (user: IUser) => user.site,
     },
   ];
   dataSource: IUser[] = [];
-  displayedColumns = this.columns.map((c) => c.columnDef);
+  displayedColumns = [...this.columns.map((c) => c.columnDef), 'delete'];
 
   getUsers() {
-    this.usService.getUsers().subscribe(
+    this.userService.getUsers().subscribe(
       (usersResponse) => {
         this.dataSource = usersResponse.data;
       },
@@ -53,6 +52,27 @@ export class UsersComponent implements OnInit {
         console.error('Error fetching users:', error);
       },
     );
+  }
+
+  deleteUser(userID: string): void {
+    const dialogRef = this.dialog.open(ConfirmDeleteComponent, {
+      data: {
+        confirmationText: 'Are you really sure you want to delete this user?',
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.userService.delete(userID).subscribe(
+          () => {
+            this.getUsers();
+          },
+          (error) => {
+            console.log(error);
+          },
+        );
+      }
+    });
   }
 
   ngOnInit(): void {
