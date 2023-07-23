@@ -20,4 +20,7 @@ export class ProductsService {
   deleteProduct(productId: string): Observable<string> {
     return this.http.delete<string>("http://localhost:3000/products/" + productId);
   }
+  uploadImage(formData: FormData): Observable<{ originalname: string; filename: string }> {
+    return this.http.post<{ originalname: string; filename: string }>("http://localhost:3000/images",formData);
+  }
 }
