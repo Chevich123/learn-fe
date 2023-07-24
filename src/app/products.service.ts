@@ -6,21 +6,36 @@ import { IPaginatedResponse } from './shared/interfaces/paginated';
 import { AuthService } from './auth.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProductsService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
+
+  private readonly url = 'http://localhost:3000/products';
 
   getProducts(): Observable<IPaginatedResponse<Product[]>> {
-    return this.http.get<IPaginatedResponse<Product[]>>("http://localhost:3000/products");
+    return this.http.get<IPaginatedResponse<Product[]>>(
+      'http://localhost:3000/products',
+    );
   }
   createProduct(product: Product): Observable<Product> {
-    return this.http.post<Product>("http://localhost:3000/products", product);
+    return this.http.post<Product>('http://localhost:3000/products', product);
   }
   deleteProduct(productId: string): Observable<string> {
-    return this.http.delete<string>("http://localhost:3000/products/" + productId);
+    return this.http.delete<string>(`${this.url}/${productId}`);
   }
-  uploadImage(formData: FormData): Observable<{ originalname: string; filename: string }> {
-    return this.http.post<{ originalname: string; filename: string }>("http://localhost:3000/images",formData);
+  getProduct(id: string): Observable<Product> {
+    return this.http.get<Product>(`${this.url}/${id}`);
+  }
+  patchProduct(id: string, product: Omit<Product, '_id'>): Observable<void> {
+    return this.http.patch<void>(`${this.url}/${id}`, product);
+  }
+  uploadImage(
+    formData: FormData,
+  ): Observable<{ originalname: string; filename: string }> {
+    return this.http.post<{ originalname: string; filename: string }>(
+      'http://localhost:3000/images',
+      formData,
+    );
   }
 }
