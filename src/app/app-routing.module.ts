@@ -13,6 +13,8 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { UsersComponent } from './pages/users/users.component';
 import { AddUserComponent } from './pages/users/add-user/add-user.component';
 import { Title } from '@angular/platform-browser';
+import { authGuard } from './guards/auth.guard';
+import { loginGuard } from './guards/login.guard';
 
 @Injectable()
 export class TemplatePageTitleStrategy extends TitleStrategy {
@@ -33,10 +35,12 @@ export class TemplatePageTitleStrategy extends TitleStrategy {
 const routes: Routes = [
   {
     path: '',
+    canActivate: [authGuard],
     component: WrapperComponent,
     children: [
       {
         path: 'login',
+        canActivate: [loginGuard],
         component: LoginComponent,
         title: 'Login',
       },
