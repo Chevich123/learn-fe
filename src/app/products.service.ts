@@ -38,4 +38,8 @@ export class ProductsService {
       formData,
     );
   }
+  loadProductImage(imageUrl: string | undefined): Observable<Blob> {
+    const fullImageUrl = 'http://localhost:3000/images/' + imageUrl;
+    return this.http.get(fullImageUrl, { responseType: 'blob' });
+  }
 }

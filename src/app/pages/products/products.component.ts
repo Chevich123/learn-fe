@@ -6,6 +6,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDeleteComponent } from './confirm-delete/confirm-delete.component';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-products',
@@ -33,6 +34,7 @@ export class ProductsComponent implements AfterViewInit, OnInit {
   constructor(
     private productsService: ProductsService,
     private dialog: MatDialog,
+    private sanitizer: DomSanitizer,
   ) {}
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
@@ -44,7 +46,10 @@ export class ProductsComponent implements AfterViewInit, OnInit {
 
   private getProducts() {
     this.productsService.getProducts().subscribe({
-      next: (products) => (this.dataSource.data = products.data),
+      next: (products) => {
+        this.dataSource.data = products.data;
+        this.loadProductImages();
+      },
       error: (err) => console.log(err),
     });
   }
@@ -69,6 +74,26 @@ export class ProductsComponent implements AfterViewInit, OnInit {
           (el) => el._id != productId,
         )),
       error: (err) => console.log(err),
+    });
+  }
+
+  loadProductImages() {
+    this.dataSource.data.forEach((product) => {
+      this.productsService.loadProductImage(product.image).subscribe(
+        (imageBlob) => {
+          const reader = new FileReader();
+          reader.onload = (event: any) => {
+            const imageUrl = event.target.result;
+            const safeImageUrl =
+              this.sanitizer.bypassSecurityTrustUrl(imageUrl);
+            this.productImages[product._id] = safeImageUrl;
+          };
+          reader.readAsDataURL(imageBlob);
+        },
+        (error) => {
+          console.error('Error loading image:', error);
+        },
+      );
     });
   }
 }
