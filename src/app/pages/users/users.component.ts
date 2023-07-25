@@ -11,7 +11,7 @@ import { ConfirmDeleteComponent } from '../products/confirm-delete/confirm-delet
   styleUrls: ['./users.component.scss'],
 })
 export class UsersComponent implements OnInit {
-  constructor(private userService: UserService, private dialog: MatDialog) {}
+  constructor(private userService: UserService, private dialog: MatDialog, private router: Router) {}
 
   columns = [
     {
@@ -41,16 +41,12 @@ export class UsersComponent implements OnInit {
     },
   ];
   dataSource: IUser[] = [];
-  displayedColumns = [...this.columns.map((c) => c.columnDef), 'delete'];
+  displayedColumns = [...this.columns.map((c) => c.columnDef), 'edit', 'delete'];
 
   getUsers() {
-    this.userService.getUsers().subscribe(
-      (usersResponse) => {
-        this.dataSource = usersResponse.data;
-      },
-      (error) => {
-        console.error('Error fetching users:', error);
-      },
+    this.userService.getUsers().subscribe({
+      next: (usersResponse) => this.dataSource = usersResponse.data,
+      error : (error) => console.error('Error fetching users:', error)}
     );
   }
 
@@ -62,16 +58,14 @@ export class UsersComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.userService.delete(userID).subscribe(
-          () => {
-            this.getUsers();
-          },
-          (error) => {
-            console.log(error);
-          },
-        );
-      }
+      result && this.completeDeletion(userID);
+    });
+  }
+
+  completeDeletion(userID: string) {
+    this.userService.delete(userID).subscribe({
+      next: () => { this.getUsers(); },
+      error: (error) => { console.log(error);}
     });
   }
 
@@ -79,3 +73,4 @@ export class UsersComponent implements OnInit {
     this.getUsers();
   }
 }
+
