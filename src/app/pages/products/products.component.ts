@@ -18,7 +18,17 @@ export class ProductsComponent implements AfterViewInit, OnInit {
   @ViewChild(MatSort)
   sort!: MatSort;
 
-  displayedColumns: string[] = ['name', 'manufacturer', 'country_of_origin', 'image', 'width', 'height', 'depth', 'delete'];
+  displayedColumns: string[] = [
+    'country_of_origin',
+    'manufacturer',
+    'name',
+    'image',
+    'width',
+    'height',
+    'depth',
+    'edit',
+    'delete',
+  ];
   dataSource = new MatTableDataSource<Product>([]);
   constructor(
     private productsService: ProductsService,

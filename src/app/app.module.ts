@@ -23,6 +23,7 @@ import { MatTableModule } from '@angular/material/table';
 import { AddUserComponent } from './pages/users/add-user/add-user.component';
 import { AddProductComponent } from './pages/products/add/add.component';
 import { ConfirmDeleteComponent } from './pages/products/confirm-delete/confirm-delete.component';
+import { EditingComponent } from './pages/products/editing/editing.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { ConfirmDeleteComponent } from './pages/products/confirm-delete/confirm-
     AddUserComponent,
     AddProductComponent,
     ConfirmDeleteComponent,
+    EditingComponent,
   ],
   imports: [
     BrowserModule,
