@@ -18,7 +18,7 @@ export class ProductsComponent implements AfterViewInit, OnInit {
   paginator!: MatPaginator;
   @ViewChild(MatSort)
   sort!: MatSort;
-
+  productImages: { [productId: string]: SafeUrl } = {};
   displayedColumns: string[] = [
     'country_of_origin',
     'manufacturer',
