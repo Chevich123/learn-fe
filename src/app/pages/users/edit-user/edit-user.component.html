@@ -48,6 +48,6 @@
 
   <div class="button-container">
     <button mat-raised-button color="primary" type="submit" [disabled]="userForm.invalid || !this.userForm.dirty">Edit User</button>
-    <button mat-raised-button color="primary" (click)="userForm.patchValue(initialUser)">Reset</button>
+    <button mat-raised-button color="primary" type="button" (click)="userForm.patchValue(initialUser)">Reset</button>
   </div>
 </form>

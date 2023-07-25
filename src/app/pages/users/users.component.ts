@@ -11,7 +11,7 @@ import { ConfirmDeleteComponent } from '../products/confirm-delete/confirm-delet
   styleUrls: ['./users.component.scss'],
 })
 export class UsersComponent implements OnInit {
-  constructor(private userService: UserService, private dialog: MatDialog, private router: Router) {}
+  constructor(private userService: UserService, private dialog: MatDialog) {}
 
   columns = [
     {
