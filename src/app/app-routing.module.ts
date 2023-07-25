@@ -16,6 +16,7 @@ import { Title } from '@angular/platform-browser';
 import { authGuard } from './guards/auth.guard';
 import { loginGuard } from './guards/login.guard';
 import { EditingComponent } from './pages/products/editing/editing.component';
+import { EditUserComponent } from './pages/users/edit-user/edit-user.component';
 
 @Injectable()
 export class TemplatePageTitleStrategy extends TitleStrategy {
@@ -85,6 +86,11 @@ const routes: Routes = [
             path: 'add',
             component: AddUserComponent,
             title: 'New user',
+          },
+          {
+            path: 'edit/:id',
+            component: EditUserComponent,
+            title: 'Edit user',
           },
         ],
       },

@@ -1,6 +1,6 @@
 <a mat-button color="primary" routerLink="/users">Back</a>
-<form class="example-form" [formGroup]="userForm" (ngSubmit)="submit()">
-  <h1>Add a new user</h1>
+<form class="example-form" [formGroup]="userForm" (ngSubmit)="onSubmit()">
+  <h1>Edit user</h1>
   <mat-form-field class="example-full-width">
     <mat-label>Username</mat-label>
     <input matInput formControlName="username" placeholder="Your_Username" />
@@ -12,17 +12,6 @@
     </mat-error>
     <mat-error *ngIf="userForm.controls['username'].hasError('required')">
       Username <strong>required</strong>
-    </mat-error>
-  </mat-form-field>
-
-  <mat-form-field class="example-full-width">
-    <mat-label>Password</mat-label>
-    <input matInput formControlName="password" placeholder="Your_Password" />
-    <mat-error *ngIf="userForm.controls['password'].hasError('minlength')">
-      Your password less then 6
-    </mat-error>
-    <mat-error *ngIf="userForm.controls['password'].hasError('required')">
-      Password <strong>required</strong>
     </mat-error>
   </mat-form-field>
 
@@ -41,7 +30,7 @@
 
   <mat-form-field class="example-full-width">
     <mat-label>Site</mat-label>
-    <input formControlName="site" matInput placeholder="google.com" value="" />
+    <input formControlName="site" matInput placeholder="google.com"/>
   </mat-form-field>
 
   <mat-form-field class="example-full-width">
@@ -57,5 +46,8 @@
     </mat-error>
   </mat-form-field>
 
-  <button mat-raised-button color="primary" type="submit" [disabled]="userForm.invalid">Add User</button>
+  <div class="button-container">
+    <button mat-raised-button color="primary" type="submit" [disabled]="userForm.invalid || !this.userForm.dirty">Edit User</button>
+    <button mat-raised-button color="primary" type="button" (click)="userForm.patchValue(initialUser)">Reset</button>
+  </div>
 </form>

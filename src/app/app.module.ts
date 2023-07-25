@@ -24,6 +24,7 @@ import { AddUserComponent } from './pages/users/add-user/add-user.component';
 import { AddProductComponent } from './pages/products/add/add.component';
 import { ConfirmDeleteComponent } from './pages/products/confirm-delete/confirm-delete.component';
 import { EditingComponent } from './pages/products/editing/editing.component';
+import { EditUserComponent } from './pages/users/edit-user/edit-user.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { EditingComponent } from './pages/products/editing/editing.component';
     AddProductComponent,
     ConfirmDeleteComponent,
     EditingComponent,
+    EditUserComponent,
   ],
   imports: [
     BrowserModule,

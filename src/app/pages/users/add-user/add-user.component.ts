@@ -16,39 +16,30 @@ import { Router } from '@angular/router';
 export class AddUserComponent {
   constructor(
     private formBuilder: FormBuilder,
-    private userServ: UserService,
+    private userService: UserService,
     private router: Router,
   ) {}
 
   userForm: FormGroup = this.formBuilder.group({
-    name: ['', [Validators.required, Validators.minLength(4)]],
+    username: ['', [Validators.required, Validators.minLength(4)]],
     email: ['', Validators.email],
     password: ['', [Validators.required, Validators.minLength(6)]],
     site: [''],
-    tel: ['', this.phoneVal],
+    phone: ['', AddUserComponent.phoneVal],
   });
 
-  phoneVal(control: FormControl): { isPhoneValid: boolean } | null {
-    const phoneRegex = /^\+?\d{1,3}\s*\(?\d{2}\)?\s*?\d{3}-?\d{2}-?\d{2}$/;
+  static phoneVal(control: FormControl): { isPhoneValid: boolean } | null {
+    const phoneRegex = /^\+?\d{1,3}\s*\(?\d{2}\)?[\s-]*?\d{3}-?\d{2}-?\d{2}$/;
     const value = control.value;
-    if (!phoneRegex.test(value)) {
+    if (value && !phoneRegex.test(value)) {
       return { isPhoneValid: true };
     }
     return null;
   }
 
   submit() {
-    const { name, email, password, site, tel } = this.userForm.value;
-    this.userServ
-      .create({
-        username: name,
-        password: password,
-        email: email,
-        phone: tel,
-        site: site,
-      })
-      .subscribe(() => {
-        this.router.navigate(['/users']);
-      });
+    this.userService.create(this.userForm.value).subscribe(() => {
+      this.router.navigate(['/users']);
+    });
   }
 }
