@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
+<<<<<<< HEAD
 import { AuthService } from 'src/app/services/auth.service';
+=======
+import { AuthService } from 'src/app/auth.service';
+import { ErrorService } from '../error.service';
+>>>>>>> 4019841 (basic ngFor errors in wrapper)
 
 @Component({
   selector: 'app-wrapper',
@@ -7,7 +12,7 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./wrapper.component.scss'],
 })
 export class WrapperComponent {
-  constructor(private auth: AuthService) {}
+  constructor(private auth: AuthService, public errorService: ErrorService) {}
   loginVisible(): boolean {
     return !this.auth.username;
   }
