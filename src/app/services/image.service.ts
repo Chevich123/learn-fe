@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of, Subject, switchMap } from 'rxjs';
+import { Observable, Subject, switchMap } from 'rxjs';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Injectable({
@@ -20,11 +20,7 @@ export class ImageService {
     );
   }
 
-  imagePreview(imageUrl: string | undefined): Observable<SafeUrl> {
-    if (!imageUrl) {
-      return of(''); // Возвращайте пустую строку, если imageUrl не определен
-    }
-
+  imagePreview(imageUrl: string): Observable<SafeUrl> {
     return this.http
       .get(`${this.url}/${imageUrl}`, { responseType: 'blob' })
       .pipe(
