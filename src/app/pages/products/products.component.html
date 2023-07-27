@@ -24,7 +24,7 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Image file</th>
       <td mat-cell *matCellDef="let product">
         <ng-container *ngIf="product.imagePreview; else noImage">
-          <img [src]="product.imagePreview" alt="Product Image" width="130" />
+          <img [src]="product.imagePreview" alt="Product Image" />
         </ng-container>
         <ng-template #noImage> No image available</ng-template>
       </td>
