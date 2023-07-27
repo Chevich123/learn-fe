@@ -1,6 +1,14 @@
 * {
   z-index: 1;
 }
+
+.error-bar {
+  background: red;
+  width: 100%;
+  color: white;
+  display: flex;
+  flex-direction: column;
+}
 .header {
   background: linear-gradient(to right, rgb(173, 173, 255), #ff6a00, black 80%);
   height: 40px;

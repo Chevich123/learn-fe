@@ -1,4 +1,10 @@
-<div class="error-bar" *ngFor='let error of errorService.errorHistory'> {{error}} </div>
+<div style="position: absolute; z-index: 3; width: 100%;">
+  <div class="error-bar" *ngFor="let error of errorService.errorHistory;">
+    {{error}}
+  </div>
+  <button *ngIf="errorService.errorHistory.length > 0" mat-raised-button style="border: 2px red solid"
+  (click)="errorService.clear()">Clear logs</button>
+</div>
 <div class="header">
   <div>
     <button class="leftblock" routerLink="/">

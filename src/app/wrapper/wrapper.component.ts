@@ -1,10 +1,6 @@
 import { Component } from '@angular/core';
-<<<<<<< HEAD
 import { AuthService } from 'src/app/services/auth.service';
-=======
-import { AuthService } from 'src/app/auth.service';
 import { ErrorService } from '../error.service';
->>>>>>> 4019841 (basic ngFor errors in wrapper)
 
 @Component({
   selector: 'app-wrapper',

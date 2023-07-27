@@ -32,10 +32,7 @@ export class AddProductComponent {
 
   onSubmit(): void {
     this.productForm.valid &&
-      this.productsService.createProduct(this.productForm.value).subscribe({
-        next: () => this.router.navigateByUrl('/products'),
-        error: (err) => console.log(err),
-      });
+    this.productsService.createProduct(this.productForm.value).subscribe(() => this.router.navigateByUrl('/products'));
   }
 
   positiveNumberValidator(control: FormControl) {
