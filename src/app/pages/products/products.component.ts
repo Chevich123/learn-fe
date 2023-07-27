@@ -6,7 +6,6 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDeleteComponent } from './confirm-delete/confirm-delete.component';
-import { SafeUrl } from '@angular/platform-browser';
 import { map, mergeAll, mergeMap, of, toArray } from 'rxjs';
 import { ImageService } from '../../services/image.service';
 
@@ -20,7 +19,6 @@ export class ProductsComponent implements AfterViewInit, OnInit {
   paginator!: MatPaginator;
   @ViewChild(MatSort)
   sort!: MatSort;
-  productImages: { [productId: string]: SafeUrl } = {};
   displayedColumns: string[] = [
     'country_of_origin',
     'manufacturer',
