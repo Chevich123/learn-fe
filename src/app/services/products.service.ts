@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Product } from './shared/interfaces/product';
-import { IPaginatedResponse } from './shared/interfaces/paginated';
-import { AuthService } from './auth.service';
+import { Product } from '../shared/interfaces/product';
+import { IPaginatedResponse } from '../shared/interfaces/paginated';
 
 @Injectable({
   providedIn: 'root',
@@ -29,13 +28,5 @@ export class ProductsService {
   }
   patchProduct(id: string, product: Omit<Product, '_id'>): Observable<void> {
     return this.http.patch<void>(`${this.url}/${id}`, product);
-  }
-  uploadImage(
-    formData: FormData,
-  ): Observable<{ originalname: string; filename: string }> {
-    return this.http.post<{ originalname: string; filename: string }>(
-      'http://localhost:3000/images',
-      formData,
-    );
   }
 }

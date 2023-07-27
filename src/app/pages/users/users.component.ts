@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IUser } from '../../shared/interfaces/user';
-import { UserService } from './user.service';
+import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDeleteComponent } from '../products/confirm-delete/confirm-delete.component';
@@ -41,13 +41,17 @@ export class UsersComponent implements OnInit {
     },
   ];
   dataSource: IUser[] = [];
-  displayedColumns = [...this.columns.map((c) => c.columnDef), 'edit', 'delete'];
+  displayedColumns = [
+    ...this.columns.map((c) => c.columnDef),
+    'edit',
+    'delete',
+  ];
 
   getUsers() {
     this.userService.getUsers().subscribe({
-      next: (usersResponse) => this.dataSource = usersResponse.data,
-      error : (error) => console.error('Error fetching users:', error)}
-    );
+      next: (usersResponse) => (this.dataSource = usersResponse.data),
+      error: (error) => console.error('Error fetching users:', error),
+    });
   }
 
   deleteUser(userID: string): void {
@@ -64,8 +68,12 @@ export class UsersComponent implements OnInit {
 
   completeDeletion(userID: string) {
     this.userService.delete(userID).subscribe({
-      next: () => { this.getUsers(); },
-      error: (error) => { console.log(error);}
+      next: () => {
+        this.getUsers();
+      },
+      error: (error) => {
+        console.log(error);
+      },
     });
   }
 
@@ -73,4 +81,3 @@ export class UsersComponent implements OnInit {
     this.getUsers();
   }
 }
-
