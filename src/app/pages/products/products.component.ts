@@ -1,12 +1,14 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { ProductsService } from 'src/app/products.service';
+import { ProductsService } from 'src/app/services/products.service';
 import { Product } from 'src/app/shared/interfaces/product';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDeleteComponent } from './confirm-delete/confirm-delete.component';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { SafeUrl } from '@angular/platform-browser';
+import { map, mergeAll, mergeMap, of, toArray } from 'rxjs';
+import { ImageService } from '../../services/image.service';
 
 @Component({
   selector: 'app-products',
@@ -31,27 +33,41 @@ export class ProductsComponent implements AfterViewInit, OnInit {
     'delete',
   ];
   dataSource = new MatTableDataSource<Product>([]);
+
   constructor(
     private productsService: ProductsService,
     private dialog: MatDialog,
-    private sanitizer: DomSanitizer,
+    private imageService: ImageService,
   ) {}
+
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
   }
+
   ngOnInit(): void {
     this.getProducts();
   }
 
   private getProducts() {
-    this.productsService.getProducts().subscribe({
-      next: (products) => {
-        this.dataSource.data = products.data;
-        this.loadProductImages();
-      },
-      error: (err) => console.log(err),
-    });
+    this.productsService
+      .getProducts()
+      .pipe(
+        map((data) => data.data),
+        mergeAll(),
+        mergeMap((product: Product) => {
+          if (product.image) {
+            return this.imageService
+              .imagePreview(product.image)
+              .pipe(map((safeUrl) => ({ ...product, imagePreview: safeUrl })));
+          }
+          return of(product);
+        }),
+        toArray(),
+      )
+      .subscribe((array) => {
+        this.dataSource.data = array;
+      });
   }
 
   confirmDelete(productId: string): void {
@@ -74,26 +90,6 @@ export class ProductsComponent implements AfterViewInit, OnInit {
           (el) => el._id != productId,
         )),
       error: (err) => console.log(err),
-    });
-  }
-
-  loadProductImages() {
-    this.dataSource.data.forEach((product) => {
-      this.productsService.loadProductImage(product.image).subscribe(
-        (imageBlob) => {
-          const reader = new FileReader();
-          reader.onload = (event: any) => {
-            const imageUrl = event.target.result;
-            const safeImageUrl =
-              this.sanitizer.bypassSecurityTrustUrl(imageUrl);
-            this.productImages[product._id] = safeImageUrl;
-          };
-          reader.readAsDataURL(imageBlob);
-        },
-        (error) => {
-          console.error('Error loading image:', error);
-        },
-      );
     });
   }
 }
