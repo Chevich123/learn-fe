@@ -1,9 +1,13 @@
-<div style="position: absolute; z-index: 3; width: 100%;">
-  <div class="error-bar" *ngFor="let error of errorService.errorHistory;">
-    {{error}}
+<div class="error-container mat-app-background" *ngIf="errorService.isOpen">
+  <div style="max-height: 20vh; overflow-y: auto;">
+    <div class="error-bar" *ngFor="let error of errorService.errorHistory;">
+      {{error}}
+    </div>
   </div>
-  <button *ngIf="errorService.errorHistory.length > 0" mat-raised-button style="border: 2px red solid"
-  (click)="errorService.clear()">Clear logs</button>
+  <div class="error-buttons">
+    <button mat-button (click)="errorService.clear()">Clear errors</button>
+    <button mat-button (click)="errorService.isOpen = false">Close</button>
+  </div>
 </div>
 <div class="header">
   <div>
@@ -18,8 +22,13 @@
   <a routerLink="/login" *ngIf="loginVisible()">
     <button>Login</button>
   </a>
-  <a *ngIf="!loginVisible()">
-    <button (click)="logout()" routerLink="/login">Logout</button>
-  </a>
+  <div style="display: flex; align-items: center">
+    <button mat-icon-button matTooltip="Show errors" (click)="errorService.open()">
+      <mat-icon>error</mat-icon>
+    </button>
+    <a *ngIf="!loginVisible()">
+      <button (click)="logout()" routerLink="/login">Logout</button>
+    </a>
+  </div>
 </div>
 <router-outlet></router-outlet>

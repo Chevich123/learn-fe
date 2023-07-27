@@ -26,6 +26,7 @@ import { ConfirmDeleteComponent } from './pages/products/confirm-delete/confirm-
 import { EditingComponent } from './pages/products/editing/editing.component';
 import { EditUserComponent } from './pages/users/edit-user/edit-user.component';
 import { ErrorInterceptor } from './shared/interceptors/error.interceptor';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { ErrorInterceptor } from './shared/interceptors/error.interceptor';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
+    MatTooltipModule,
     MatIconModule,
     MatTableModule,
     MatSortModule,
