@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ProductsService } from 'src/app/services/products.service';
+import { ImageService } from 'src/app/services/image.service';
 import {
   FormControl,
   FormBuilder,
@@ -17,6 +18,7 @@ export class AddProductComponent {
   constructor(
     private formBuilder: FormBuilder,
     private productsService: ProductsService,
+    private imagesService: ImageService,
     private router: Router,
   ) {}
 
@@ -50,7 +52,7 @@ export class AddProductComponent {
     if (!file) return;
     const formdata = new FormData();
     formdata.append('file', file);
-    this.productsService.uploadImage(formdata).subscribe({
+    this.imagesService.uploadImage(formdata).subscribe({
       next: (result) => this.productForm.patchValue({ image: result.filename }),
       error: (err) => console.error(err),
     });

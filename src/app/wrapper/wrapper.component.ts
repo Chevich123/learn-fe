@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
-import { ErrorService } from '../error.service';
+import { ErrorService } from 'src/app/services/error.service';
 
 @Component({
   selector: 'app-wrapper',
