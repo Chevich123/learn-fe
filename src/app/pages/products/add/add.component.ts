@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ProductsService } from 'src/app/services/products.service';
+import { ImageService } from 'src/app/services/image.service';
 import {
   FormControl,
   FormBuilder,
@@ -17,6 +18,7 @@ export class AddProductComponent {
   constructor(
     private formBuilder: FormBuilder,
     private productsService: ProductsService,
+    private imagesService: ImageService,
     private router: Router,
   ) {}
 
@@ -32,10 +34,7 @@ export class AddProductComponent {
 
   onSubmit(): void {
     this.productForm.valid &&
-      this.productsService.createProduct(this.productForm.value).subscribe({
-        next: () => this.router.navigateByUrl('/products'),
-        error: (err) => console.log(err),
-      });
+    this.productsService.createProduct(this.productForm.value).subscribe(() => this.router.navigateByUrl('/products'));
   }
 
   positiveNumberValidator(control: FormControl) {
@@ -53,7 +52,7 @@ export class AddProductComponent {
     if (!file) return;
     const formdata = new FormData();
     formdata.append('file', file);
-    this.productsService.uploadImage(formdata).subscribe({
+    this.imagesService.uploadImage(formdata).subscribe({
       next: (result) => this.productForm.patchValue({ image: result.filename }),
       error: (err) => console.error(err),
     });
