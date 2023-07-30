@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subject, switchMap } from 'rxjs';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -9,13 +10,13 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 export class ImageService {
   constructor(private http: HttpClient, private sanitizer: DomSanitizer) {}
 
-  private readonly url = 'http://localhost:3000/images';
+  private readonly url = `${environment.apiURL}/images`;
 
   uploadImage(
     formData: FormData,
   ): Observable<{ originalname: string; filename: string }> {
     return this.http.post<{ originalname: string; filename: string }>(
-      'http://localhost:3000/images',
+      this.url,
       formData,
     );
   }

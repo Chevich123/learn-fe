@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
+import { SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-editing',
@@ -38,8 +39,9 @@ export class EditingComponent {
     this.id = route.snapshot.params['id'];
     this.productsService
       .getProduct(this.id!)
-      .subscribe((product) => this.productForm.patchValue(product));
+      .subscribe((product) => {this.productForm.patchValue(product); product.image && this.showPreview(product.image)});
   }
+  preview: SafeUrl | undefined;
 
   onSubmit(): void {
     this.productsService
@@ -68,7 +70,8 @@ export class EditingComponent {
     formdata.append('file', file);
     this.imageService.uploadImage(formdata).subscribe({
       next: (result) => {
-        this.productForm.patchValue({ image: result.filename });
+        this.productForm.patchValue({ image: result.filename })
+        this.showPreview(result.filename)
         this.productForm.markAsDirty();
       },
       error: (err) => console.error(err),
@@ -77,5 +80,9 @@ export class EditingComponent {
 
   onFileSelected(event: any) {
     this.uploadImage(event.target.files[0]);
+  }
+
+  showPreview(image: string){
+    this.imageService.imagePreview(image).subscribe((safeUrl)=> this.preview = safeUrl);
   }
 }
