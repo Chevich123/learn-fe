@@ -41,9 +41,7 @@ export class EditingComponent {
     this.productsService.getProduct(this.id!).pipe(
       switchMap((product) => {
         this.productForm.patchValue(product);
-        if (product.image) {
-          return this.imageService.imagePreview(product.image);
-        } else { return of(undefined); }
+        return product.image ? this.imageService.imagePreview(product.image) : of(undefined);
       })
     ).subscribe((safeUrl) => { this.preview = safeUrl; });
   }
@@ -75,7 +73,7 @@ export class EditingComponent {
     const formdata = new FormData();
     formdata.append('file', file);
     this.imageService.uploadImage(formdata).pipe(
-      switchMap((result: any) => {
+      switchMap((result: { originalname: string; filename: string; }) => {
         this.productForm.patchValue({ image: result.filename })
         return this.imageService.imagePreview(result.filename);
       })

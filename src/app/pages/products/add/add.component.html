@@ -6,7 +6,7 @@
         <img class="preview" [src]="preview" alt="Product Image" />
       </ng-container>
       <input type="file" (change)="onFileSelected($event)" accept="image/*" style="display: none" #fileInput>
-      <div class="drop-zone" [ngClass]="{zonesmaller: preview}" (dragover)="$event.preventDefault()" (drop)="onDrop($event)">
+      <div class="drop-zone" [ngClass]="{'zone-smaller': preview}" (dragover)="$event.preventDefault()" (drop)="onDrop($event)">
         <p>Drag and drop an image here</p>
         <mat-icon class="camera-icon">photo_camera</mat-icon>
       </div>

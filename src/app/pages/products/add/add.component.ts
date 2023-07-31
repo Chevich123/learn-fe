@@ -56,7 +56,7 @@ export class AddProductComponent {
     const formdata = new FormData();
     formdata.append('file', file);
     this.imagesService.uploadImage(formdata).pipe(
-      switchMap((result: any) => {
+      switchMap((result: { originalname: string; filename: string; }) => {
         this.productForm.patchValue({ image: result.filename })
         return this.imagesService.imagePreview(result.filename);
       })
