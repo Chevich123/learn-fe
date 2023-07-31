@@ -22,6 +22,16 @@ form {
   min-height: 30vh;
 }
 
+.zonesmaller { min-height: fit-content; }
+
 .camera-icon {
-  font-size: 15vh; width: fit-content; height: fit-content;
+  font-size: 15vh;
+  width: fit-content;
+  height: fit-content;
+}
+
+.preview {
+  width: 30vh;
+  height: 30vh;
+  object-fit: contain;
 }

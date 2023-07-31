@@ -10,6 +10,7 @@ import {
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { SafeUrl } from '@angular/platform-browser';
+import { of, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-editing',
@@ -37,9 +38,14 @@ export class EditingComponent {
     private route: ActivatedRoute,
   ) {
     this.id = route.snapshot.params['id'];
-    this.productsService
-      .getProduct(this.id!)
-      .subscribe((product) => {this.productForm.patchValue(product); product.image && this.showPreview(product.image)});
+    this.productsService.getProduct(this.id!).pipe(
+      switchMap((product) => {
+        this.productForm.patchValue(product);
+        if (product.image) {
+          return this.imageService.imagePreview(product.image);
+        } else { return of(undefined); }
+      })
+    ).subscribe((safeUrl) => { this.preview = safeUrl; });
   }
   preview: SafeUrl | undefined;
 
@@ -68,21 +74,18 @@ export class EditingComponent {
     if (!file) return;
     const formdata = new FormData();
     formdata.append('file', file);
-    this.imageService.uploadImage(formdata).subscribe({
-      next: (result) => {
+    this.imageService.uploadImage(formdata).pipe(
+      switchMap((result: any) => {
         this.productForm.patchValue({ image: result.filename })
-        this.showPreview(result.filename)
-        this.productForm.markAsDirty();
-      },
-      error: (err) => console.error(err),
+        return this.imageService.imagePreview(result.filename);
+      })
+    ).subscribe((safeUrl) => {
+      this.preview = safeUrl;
+      this.productForm.markAsDirty();
     });
   }
 
   onFileSelected(event: any) {
     this.uploadImage(event.target.files[0]);
-  }
-
-  showPreview(image: string){
-    this.imageService.imagePreview(image).subscribe((safeUrl)=> this.preview = safeUrl);
   }
 }
