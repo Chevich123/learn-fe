@@ -2,13 +2,15 @@
   <h1>Create a new product</h1>
   <div class="detached-container" style="display: flex">
     <div class="field-container">
+      <ng-container *ngIf="preview">
+        <img class="preview" [src]="preview" alt="Product Image" />
+      </ng-container>
       <input type="file" (change)="onFileSelected($event)" accept="image/*" style="display: none" #fileInput>
-      <div class="drop-zone" (dragover)="$event.preventDefault()" (drop)="onDrop($event)">
+      <div class="drop-zone" [ngClass]="{'zone-smaller': preview}" (dragover)="$event.preventDefault()" (drop)="onDrop($event)">
         <p>Drag and drop an image here</p>
-        <mat-icon style="font-size: 15vh; width: fit-content; height: fit-content;">photo_camera</mat-icon>
+        <mat-icon class="camera-icon">photo_camera</mat-icon>
       </div>
       <button mat-raised-button color="primary" type="button" (click)="fileInput.click()">Select Image</button>
-      <p>{{productForm.get('image')?.value}}</p>
     </div>
     <div class="field-container">
       <mat-form-field>

@@ -8,6 +8,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { SafeUrl } from '@angular/platform-browser';
+import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-product-add',
@@ -31,6 +33,7 @@ export class AddProductComponent {
     image: [''],
     country_of_origin: [''],
   });
+  preview: SafeUrl | undefined;
 
   onSubmit(): void {
     this.productForm.valid &&
@@ -52,10 +55,12 @@ export class AddProductComponent {
     if (!file) return;
     const formdata = new FormData();
     formdata.append('file', file);
-    this.imagesService.uploadImage(formdata).subscribe({
-      next: (result) => this.productForm.patchValue({ image: result.filename }),
-      error: (err) => console.error(err),
-    });
+    this.imagesService.uploadImage(formdata).pipe(
+      switchMap((result: { originalname: string; filename: string; }) => {
+        this.productForm.patchValue({ image: result.filename })
+        return this.imagesService.imagePreview(result.filename);
+      })
+    ).subscribe((safeUrl) => { this.preview = safeUrl;});
   }
 
   onFileSelected(event: any) {

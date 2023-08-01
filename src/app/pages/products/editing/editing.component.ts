@@ -9,6 +9,8 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
+import { SafeUrl } from '@angular/platform-browser';
+import { of, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-editing',
@@ -36,10 +38,14 @@ export class EditingComponent {
     private route: ActivatedRoute,
   ) {
     this.id = route.snapshot.params['id'];
-    this.productsService
-      .getProduct(this.id!)
-      .subscribe((product) => this.productForm.patchValue(product));
+    this.productsService.getProduct(this.id!).pipe(
+      switchMap((product) => {
+        this.productForm.patchValue(product);
+        return product.image ? this.imageService.imagePreview(product.image) : of(undefined);
+      })
+    ).subscribe((safeUrl) => { this.preview = safeUrl; });
   }
+  preview: SafeUrl | undefined;
 
   onSubmit(): void {
     this.productsService
@@ -66,12 +72,14 @@ export class EditingComponent {
     if (!file) return;
     const formdata = new FormData();
     formdata.append('file', file);
-    this.imageService.uploadImage(formdata).subscribe({
-      next: (result) => {
-        this.productForm.patchValue({ image: result.filename });
-        this.productForm.markAsDirty();
-      },
-      error: (err) => console.error(err),
+    this.imageService.uploadImage(formdata).pipe(
+      switchMap((result: { originalname: string; filename: string; }) => {
+        this.productForm.patchValue({ image: result.filename })
+        return this.imageService.imagePreview(result.filename);
+      })
+    ).subscribe((safeUrl) => {
+      this.preview = safeUrl;
+      this.productForm.markAsDirty();
     });
   }
 

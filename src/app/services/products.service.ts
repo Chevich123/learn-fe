@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Product } from '../shared/interfaces/product';
 import { IPaginatedResponse } from '../shared/interfaces/paginated';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -10,15 +11,15 @@ import { IPaginatedResponse } from '../shared/interfaces/paginated';
 export class ProductsService {
   constructor(private http: HttpClient) {}
 
-  private readonly url = 'http://localhost:3000/products';
+  private readonly url = `${environment.apiURL}/products`;
 
   getProducts(): Observable<IPaginatedResponse<Product[]>> {
     return this.http.get<IPaginatedResponse<Product[]>>(
-      'http://localhost:3000/products',
+      this.url,
     );
   }
   createProduct(product: Product): Observable<Product> {
-    return this.http.post<Product>('http://localhost:3000/products', product);
+    return this.http.post<Product>(this.url, product);
   }
   deleteProduct(productId: string): Observable<string> {
     return this.http.delete<string>(`${this.url}/${productId}`);
