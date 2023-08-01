@@ -4,11 +4,8 @@ import { UserService } from '../../services/user.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDeleteComponent } from '../products/confirm-delete/confirm-delete.component';
 import { map, mergeAll, mergeMap, of, toArray } from 'rxjs';
-import { Product } from '../../shared/interfaces/product';
 import { ImageService } from '../../services/image.service';
 import { MatTableDataSource } from '@angular/material/table';
-import { tap } from 'rxjs/operators';
-
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',

@@ -8,7 +8,7 @@ import {
 import { UserService } from '../../../services/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ImageService } from '../../../services/image.service';
-import { of, switchMap } from 'rxjs';
+import { switchMap } from 'rxjs';
 import { SafeUrl } from '@angular/platform-browser';
 
 @Component({
