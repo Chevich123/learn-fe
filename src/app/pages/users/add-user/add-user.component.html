@@ -1,13 +1,46 @@
 <a mat-button color="primary" routerLink="/users">Back</a>
 <form class="example-form" [formGroup]="userForm" (ngSubmit)="submit()">
   <h1>Add a new user</h1>
+
+  <div class="field-container">
+    <ng-container *ngIf="preview">
+      <img class="preview" [src]="preview" alt="User Avatar" />
+    </ng-container>
+    <input
+      type="file"
+      (change)="onFileSelected($event)"
+      accept="image/*"
+      style="display: none"
+      #fileInput
+    />
+    <div
+      class="drop-zone"
+      [ngClass]="{ 'zone-smaller': preview }"
+      (dragover)="$event.preventDefault()"
+      (drop)="onDrop($event)"
+    >
+      <p>Drag and drop an image here</p>
+      <mat-icon class="camera-icon">photo_camera</mat-icon>
+    </div>
+    <button
+      mat-raised-button
+      color="primary"
+      type="button"
+      (click)="fileInput.click()"
+    >
+      Select Image
+    </button>
+  </div>
+
   <mat-form-field class="example-full-width">
     <mat-label>Username</mat-label>
     <input matInput formControlName="username" placeholder="Your_Username" />
-    <mat-error *ngIf="
+    <mat-error
+      *ngIf="
         userForm.controls['username'].hasError('minlength') &&
         !userForm.controls['username'].hasError('required')
-    ">
+      "
+    >
       Username less then 4 symbols
     </mat-error>
     <mat-error *ngIf="userForm.controls['username'].hasError('required')">
@@ -57,5 +90,12 @@
     </mat-error>
   </mat-form-field>
 
-  <button mat-raised-button color="primary" type="submit" [disabled]="userForm.invalid">Add User</button>
+  <button
+    mat-raised-button
+    color="primary"
+    type="submit"
+    [disabled]="userForm.invalid"
+  >
+    Add User
+  </button>
 </form>
