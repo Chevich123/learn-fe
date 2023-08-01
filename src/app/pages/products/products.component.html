@@ -1,5 +1,6 @@
 <div class="productpage">
   <a mat-raised-button color="primary" routerLink="add">Add Product</a>
+  <div class="table-container">
   <table mat-table [dataSource]="dataSource" matSort>
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
@@ -66,6 +67,7 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
+  </div>
   <mat-paginator
     [pageSizeOptions]="[5, 10, 20]"
     showFirstLastButtons
