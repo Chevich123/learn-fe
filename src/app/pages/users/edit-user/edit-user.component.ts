@@ -49,7 +49,6 @@ export class EditUserComponent implements OnInit {
 
   ngOnInit(): void {
     this.userId = this.route.snapshot.params['id'];
-    this.loadUser(this.userId);
   }
 
   loadUser(userId: string) {

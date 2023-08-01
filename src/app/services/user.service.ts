@@ -13,22 +13,22 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   getUsers(): Observable<{ data: IUser[]; total: number }> {
-    return this.http.get<{ data: IUser[]; total: number }>(`${this.url}/users`);
+    return this.http.get<{ data: IUser[]; total: number }>(this.url);
   }
 
   updateUser(id: string, user: Partial<IUser>): Observable<Partial<IUser>> {
-    return this.http.patch<IUser>(`${this.url}/users/${id}`, user);
+    return this.http.patch<IUser>(`${this.url}/${id}`, user);
   }
 
   getUser(id: string): Observable<IUser> {
-    return this.http.get<IUser>(`${this.url}/users/${id}`);
+    return this.http.get<IUser>(`${this.url}/${id}`);
   }
 
   create(user: Omit<IUser, 'userId'>): Observable<IUser> {
-    return this.http.post<IUser>(`${this.url}/users`, user);
+    return this.http.post<IUser>(this.url, user);
   }
 
   delete(userID: string): Observable<string> {
-    return this.http.delete<string>(`${this.url}/users/${userID}`);
+    return this.http.delete<string>(`${this.url}/${userID}`);
   }
 }

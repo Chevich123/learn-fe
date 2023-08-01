@@ -6,24 +6,26 @@ form {
   * {
     min-width: 30%;
   }
-}
-
-.button-container {
-  display: flex;
-  justify-content: space-between;
-}
-
-mat-form-field {
-  margin-bottom: 8px;
-}
-
-mat-error {
-  color: #ff0000;
-  font-weight: bold;
-  font-size: 12px;
-}
-.preview {
-  width: 30vh;
-  height: 30vh;
-  object-fit: contain;
+  .button-container {
+    display: flex;
+    justify-content: space-between;
+  }
+  mat-form-field {
+    margin-bottom: 8px;
+  }
+  mat-error {
+    color: #ff0000;
+    font-weight: bold;
+    font-size: 12px;
+  }
+  .preview {
+    width: 20vh;
+    height: 20vh;
+    object-fit: contain;
+  }
+  mat-icon {
+    font-size: 15vh;
+    width: fit-content;
+    height: fit-content;
+  }
 }

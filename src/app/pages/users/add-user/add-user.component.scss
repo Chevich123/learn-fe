@@ -6,19 +6,20 @@ form {
   * {
     min-width: 30%;
   }
-}
-
-mat-form-field {
-  margin-bottom: 8px;
-}
-
-mat-error {
-  color: #ff0000;
-  font-weight: bold;
-  font-size: 12px;
-}
-.preview {
-  width: 30vh;
-  height: 30vh;
-  object-fit: contain;
+  mat-form-field {
+    margin-bottom: 8px;
+  }
+  mat-error {
+    color: #ff0000;
+    font-weight: bold;
+    font-size: 12px;
+  }
+  .preview {
+    width: 20vh;
+    height: 20vh;
+    object-fit: contain;
+  }
+  input {
+    display: none;
+  }
 }
