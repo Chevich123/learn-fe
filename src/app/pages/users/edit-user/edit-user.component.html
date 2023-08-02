@@ -1,13 +1,44 @@
 <a mat-button color="primary" routerLink="/users">Back</a>
 <form class="example-form" [formGroup]="userForm" (ngSubmit)="onSubmit()">
   <h1>Edit user</h1>
+
+  <div class="field-container">
+    <input
+      type="file"
+      (change)="onFileSelected($event)"
+      accept="image/*"
+      style="display: none"
+      #fileInput
+    />
+    <div
+      *ngIf="preview"
+      class="drop-zone"
+      (dragover)="$event.preventDefault()"
+      (drop)="onDrop($event)"
+    >
+      <img class="preview" [src]="preview" alt="Product Image" />
+      <p>Drag and drop an image here</p>
+      <mat-icon>photo_camera </mat-icon>
+    </div>
+    <button
+      mat-raised-button
+      color="primary"
+      type="button"
+      (click)="fileInput.click()"
+    >
+      Select Image
+    </button>
+  </div>
+
   <mat-form-field class="example-full-width">
     <mat-label>Username</mat-label>
     <input matInput formControlName="username" placeholder="Your_Username" />
-    <mat-error *ngIf="
+    <mat-error
+      *ngIf="
         userForm.controls['username'].hasError('minlength') &&
         !userForm.controls['username'].hasError('required')
-    ">
+      "
+    >
       Username less then 4 symbols
     </mat-error>
     <mat-error *ngIf="userForm.controls['username'].hasError('required')">
@@ -30,7 +61,7 @@
 
   <mat-form-field class="example-full-width">
     <mat-label>Site</mat-label>
-    <input formControlName="site" matInput placeholder="google.com"/>
+    <input formControlName="site" matInput placeholder="google.com" />
   </mat-form-field>
 
   <mat-form-field class="example-full-width">
@@ -47,7 +78,21 @@
   </mat-form-field>
 
   <div class="button-container">
-    <button mat-raised-button color="primary" type="submit" [disabled]="userForm.invalid || !this.userForm.dirty">Edit User</button>
-    <button mat-raised-button color="primary" type="button" (click)="userForm.patchValue(initialUser)">Reset</button>
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="userForm.invalid || !this.userForm.dirty"
+    >
+      Edit User
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      type="button"
+      (click)="userForm.patchValue(initialUser)"
+    >
+      Reset
+    </button>
   </div>
 </form>

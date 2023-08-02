@@ -1,25 +1,31 @@
 form {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    align-items: center;
-    * {
-        min-width: 30%;
-    }
-}
-
-.button-container {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  * {
+    min-width: 30%;
+  }
+  .button-container {
     display: flex;
     justify-content: space-between;
-}
-
-mat-form-field {
+  }
+  mat-form-field {
     margin-bottom: 8px;
-}
-
-mat-error {
+  }
+  mat-error {
     color: #ff0000;
     font-weight: bold;
     font-size: 12px;
+  }
+  .preview {
+    width: 20vh;
+    height: 20vh;
+    object-fit: contain;
+  }
+  mat-icon {
+    font-size: 15vh;
+    width: fit-content;
+    height: fit-content;
+  }
 }
-  

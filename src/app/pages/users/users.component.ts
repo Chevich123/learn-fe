@@ -1,17 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { IUser } from '../../shared/interfaces/user';
 import { UserService } from '../../services/user.service';
-import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDeleteComponent } from '../products/confirm-delete/confirm-delete.component';
-
+import { map, mergeAll, mergeMap, of, toArray } from 'rxjs';
+import { ImageService } from '../../services/image.service';
+import { MatTableDataSource } from '@angular/material/table';
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss'],
 })
 export class UsersComponent implements OnInit {
-  constructor(private userService: UserService, private dialog: MatDialog) {}
+  constructor(
+    private userService: UserService,
+    private dialog: MatDialog,
+    private imageService: ImageService,
+  ) {}
 
   columns = [
     {
@@ -40,18 +45,33 @@ export class UsersComponent implements OnInit {
       cell: (user: IUser) => user.site,
     },
   ];
-  dataSource: IUser[] = [];
+  dataSource = new MatTableDataSource<IUser>([]);
   displayedColumns = [
     ...this.columns.map((c) => c.columnDef),
+    'image',
     'edit',
     'delete',
   ];
 
-  getUsers() {
-    this.userService.getUsers().subscribe({
-      next: (usersResponse) => (this.dataSource = usersResponse.data),
-      error: (error) => console.error('Error fetching users:', error),
-    });
+  private getUsers() {
+    this.userService
+      .getUsers()
+      .pipe(
+        map((data) => data.data),
+        mergeAll(),
+        mergeMap((user: IUser) => {
+          if (user.avatar) {
+            return this.imageService
+              .imagePreview(user.avatar)
+              .pipe(map((safeUrl) => ({ ...user, imagePreview: safeUrl })));
+          }
+          return of(user);
+        }),
+        toArray(),
+      )
+      .subscribe((array) => {
+        this.dataSource.data = array;
+      });
   }
 
   deleteUser(userID: string): void {
