@@ -1,31 +1,5 @@
-.field-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.drop-zone {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border: 2px dashed #ccc;
-    padding: 20px;
-    margin: 5px;
-    min-width: 30vh;
-    min-height: 30vh;
-}
-
-.zone-smaller { min-height: fit-content; }
-
 .camera-icon {
-  font-size: 15vh;
-  width: fit-content;
-  height: fit-content;
-}
-
-.preview {
-  width: 30vh;
-  height: 30vh;
-  object-fit: contain;
+    font-size: 15vh;
+    width: fit-content;
+    height: fit-content;
 }
