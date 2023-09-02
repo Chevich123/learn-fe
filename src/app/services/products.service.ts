@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Product } from '../shared/interfaces/product';
 import { IPaginatedResponse } from '../shared/interfaces/paginated';
@@ -13,7 +13,13 @@ export class ProductsService {
 
   private readonly url = `${environment.apiURL}/products`;
 
-  getProducts(): Observable<IPaginatedResponse<Product[]>> {
+  getProducts(
+    index: number,
+    size: number,
+  ): Observable<IPaginatedResponse<Product[]>> {
+    const params = new HttpParams()
+      .set('start', index * size)
+      .set('limit', size);
     return this.http.get<IPaginatedResponse<Product[]>>(
       this.url,
     );
@@ -22,12 +28,12 @@ export class ProductsService {
     return this.http.post<Product>(this.url, product);
   }
   deleteProduct(productId: string): Observable<string> {
-    return this.http.delete<string>(`${this.url}/${productId}`);
+    return this.http.delete<string>(`${this.url}/products/${productId}`);
   }
   getProduct(id: string): Observable<Product> {
-    return this.http.get<Product>(`${this.url}/${id}`);
+    return this.http.get<Product>(`${this.url}/products/${id}`);
   }
   patchProduct(id: string, product: Omit<Product, '_id'>): Observable<void> {
-    return this.http.patch<void>(`${this.url}/${id}`, product);
+    return this.http.patch<void>(`${this.url}/products/${id}`, product);
   }
 }
