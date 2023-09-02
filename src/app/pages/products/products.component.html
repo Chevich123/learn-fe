@@ -64,14 +64,16 @@
         </td>
       </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-    </table>
-  </div>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
   <mat-paginator
-    [pageSizeOptions]="[5, 10, 20]"
+    [pageSizeOptions]="pageSizeOptions"
+    aria-label="Select page"
+    (page)="pageChanged($event)"
     showFirstLastButtons
-    aria-label="Select page of products table"
+    [length]="length"
   >
   </mat-paginator>
 </div>

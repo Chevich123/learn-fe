@@ -3,10 +3,10 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ProductsService } from 'src/app/services/products.service';
 import { Product } from 'src/app/shared/interfaces/product';
 import { MatSort } from '@angular/material/sort';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDeleteComponent } from './confirm-delete/confirm-delete.component';
-import { map, mergeAll, mergeMap, of, toArray } from 'rxjs';
+import { map, mergeAll, mergeMap, of, tap, toArray } from 'rxjs';
 import { ImageService } from '../../services/image.service';
 
 @Component({
@@ -15,10 +15,9 @@ import { ImageService } from '../../services/image.service';
   styleUrls: ['./products.component.scss'],
 })
 export class ProductsComponent implements AfterViewInit, OnInit {
-  @ViewChild(MatPaginator)
-  paginator!: MatPaginator;
   @ViewChild(MatSort)
   sort!: MatSort;
+  length = 0;
   displayedColumns: string[] = [
     'country_of_origin',
     'manufacturer',
@@ -38,19 +37,25 @@ export class ProductsComponent implements AfterViewInit, OnInit {
     private imageService: ImageService,
   ) {}
 
+  pageSizeOptions = [5, 10, 20];
+
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
   }
 
   ngOnInit(): void {
-    this.getProducts();
+    this.getProducts(0, this.pageSizeOptions[0]);
   }
 
-  private getProducts() {
+  pageChanged(event: PageEvent) {
+    this.getProducts(event.pageIndex, event.pageSize);
+  }
+
+  private getProducts(index: number, size: number) {
     this.productsService
-      .getProducts()
+      .getProducts(index, size)
       .pipe(
+        tap((data) => (this.length = data.total)),
         map((data) => data.data),
         mergeAll(),
         mergeMap((product: Product) => {
